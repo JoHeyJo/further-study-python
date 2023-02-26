@@ -23,3 +23,10 @@ def div(a, b):
     """Divide a by b."""
 
     return a / b
+
+operations = {
+      "add":add,
+      "sub":sub,
+      "mult":mult,
+      "div":div
+    }
