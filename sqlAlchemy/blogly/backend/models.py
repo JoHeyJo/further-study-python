@@ -19,7 +19,7 @@ class User(db.Model):
 
     def serialize(self):
         """Serialize to dict"""
-        return {"id":self.id, "firstName":self.first_name, "lastName":self.last_name}
+        return {"id":self.id, "firstName":self.first_name, "lastName":self.last_name, "imageUrl":self.image_url}
 
 
 

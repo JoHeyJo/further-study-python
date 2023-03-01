@@ -3,7 +3,7 @@ import './Form.css';
 import { IUser } from './interface';
 import { getUser, addUser } from './api';
 
-const defaultUser = { firstName: '', lastName: '', image: '' };
+const defaultUser = { id:0, firstName: '', lastName: '', image: '' };
 
 /** Handles user information
  * 
