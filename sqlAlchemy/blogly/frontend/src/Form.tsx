@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Form.css';
 import { IUser } from './interface';
-import { getUser } from './api';
+import { getUser, addUser } from './api';
 
 const defaultUser = { firstName: '', lastName: '', image: '' };
 
@@ -34,6 +34,12 @@ function Form() {
     setUserData(res);
   }
 
+  async function pushUser(){
+    let res = await addUser(user)
+    console.log(res);
+    setUser(defaultUser);
+  }
+
   return (
     <>
     <form className='Form-input'>
@@ -43,6 +49,7 @@ function Form() {
       <input onChange={handleChange} name="lastName"id="last-name-input" className='Form-last-name' placeholder='Last Name:'></input>
       <label htmlFor='image-input'>Image URL</label>
       <input onChange={handleChange} name="image" className='Form-imgUrl' placeholder='Image URL:'></input>
+      <button onClick={pushUser}>Add User</button>
     </form>
       <button onClick={getUsers}>Get all users</button>
     </>

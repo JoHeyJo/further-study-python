@@ -29,8 +29,9 @@ def get_users():
 @app.post("/user")
 def add_user():
     """Adds new user to database"""
-    first_name = request.args['first_name']
-    last_name = request.args['last_name']
+    print('###############################',request.json['firstName'],request.json['lastName'])
+    first_name = request.json['firstName']
+    last_name = request.json['lastName']
 
     user = User(first_name=first_name, last_name=last_name)
     db.session.add(user)
