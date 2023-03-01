@@ -17,5 +17,10 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
 
+    def serialize(self):
+        """Serialize to dict"""
+        return {"id":self.id, "firstName":self.first_name, "lastName":self.last_name}
+
+
 
     
