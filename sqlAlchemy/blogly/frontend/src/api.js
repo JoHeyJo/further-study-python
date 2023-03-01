@@ -14,4 +14,10 @@ async function addUser(data){
   return res
 }
 
-export { getUser, addUser };
+/** API returns user with matching ID */
+async function getUser(id){
+  const res = await axios.get(`${BASE_URL}/user/${id}`)
+  return res
+}
+
+export { getUser, addUser, getUser };

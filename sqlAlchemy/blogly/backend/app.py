@@ -25,6 +25,13 @@ def get_users():
     serialized = [User.serialize(user) for user in users]
     return jsonify(serialized)
 
+@app.get("/user/<int:id>")
+def get_user(id):
+  """Retrieves user with matching ID"""
+  user = User.query.get_or_404(id)
+  serialized = User.serialize(user)
+  return jsonify(serialized)
+
 
 @app.post("/user")
 def add_user():

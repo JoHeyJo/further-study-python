@@ -30,7 +30,7 @@ function Users() {
 
   return (
     <div>
-      {users.map(u => <div> {u.firstName} {u.lastName}</div>)}
+      {users.map(u => <div key={u.id}> {u.firstName} {u.lastName}</div>)}
     </div>
   )
 }
