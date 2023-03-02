@@ -13,22 +13,22 @@ app.app_context().push()
 connect_db(app)
 db.create_all()
 
-@app.get("/")
-def root():
-  return "root"
-
 ######### User routes ###########
+@app.get("/")
+def get_all_users():
+    """Retrieves all users in database"""
+    users = User.query.order_by(User.last_name, User.first_name)
+    serialized = [User.serialize(user) for user in users]
+    user_name = [{'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized]
+    print('>>>>>>>>>>>>',user_name)
+    return jsonify(user_name)
+
 @app.get("/user")
 def get_users():
     """Fetches all user data"""
     users = User.query.all()
-    serialized = [User.serialize(user) for user in users]
+    serialized = [User.serialize(User) for user in users]
     return jsonify(serialized)
-
-@app.get("/")
-def get_all_users():
-    """Retrieves all users in database"""
-     users = User.query.all()
 
 @app.get("/user/<int:id>")
 def get_user(id):
