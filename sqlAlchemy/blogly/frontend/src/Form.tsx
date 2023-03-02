@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Form.css';
 import { IUser } from './interface';
-import { getUser, addUser } from './api';
+import { getUsers, addUser } from './api';
 
 const defaultUser = { id:0, firstName: '', lastName: '', image: '' };
 
@@ -28,8 +28,8 @@ function Form() {
   }
 
   /** Handles submission of form */
-  async function getUsers(){
-    let res = await getUser()
+  async function getUserss(){
+    let res = await getUsers()
     console.log('res',res)
     setUserData(res);
   }
@@ -51,7 +51,7 @@ function Form() {
       <input onChange={handleChange} name="image" className='Form-imgUrl' placeholder='Image URL:'></input>
       <button onClick={pushUser}>Add User</button>
     </form>
-      <button onClick={getUsers}>Get all users</button>
+      <button onClick={getUserss}>Get all users</button>
     </>
   )
 }

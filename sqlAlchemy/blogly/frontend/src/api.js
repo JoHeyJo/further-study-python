@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = "http://localhost:5000";
 
 /** API function to get all Users */
-async function getUser() {
+async function getUsers() {
   const res = await axios.get(`${BASE_URL}/user` )
   return res.data
 }
@@ -20,4 +20,4 @@ async function getUser(id){
   return res
 }
 
-export { getUser, addUser, getUser };
+export { getUsers, addUser, getUser };
