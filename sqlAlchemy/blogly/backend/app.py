@@ -20,7 +20,6 @@ def get_all_users():
     users = User.query.order_by(User.last_name, User.first_name)
     serialized = [User.serialize(user) for user in users]
     user_name = [{'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized]
-    print('>>>>>>>>>>>>',user_name)
     return jsonify(user_name)
 
 @app.get("/user")

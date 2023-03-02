@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IUser } from './interface'
-import { getUsers, getUser } from "./api";
+import { getUsersl } from "./api";
 
 /** displays list of all users
  * 
