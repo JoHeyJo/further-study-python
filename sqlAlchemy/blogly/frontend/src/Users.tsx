@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { IUser } from './interface'
 import { getUsers } from "./api";
+import './Users.css';
 
 /** displays list of all users
  * 
@@ -20,16 +21,16 @@ function Users() {
   }, [])
 
   return (
-    <>
-    <h1>
-      Users
-    </h1>
-      <div>
-        {users.map(u => <li key={u.id}> {u.firstName} {u.lastName}</li>)}
+    <div className="Users-container">
+      <h1>
+        Users
+      </h1>
+      <div className="Users-box">
+        {users.map(u => <li key={u.id} className="Users-user"> {u.firstName} {u.lastName}</li>)}
       </div>
       <button>Add user</button>
 
-    </>
+    </div>
   )
 }
 
