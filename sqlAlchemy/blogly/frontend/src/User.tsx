@@ -24,7 +24,7 @@ function User() {
       const res = await getUser(id)
       setUser(res)
     }
-    fetchUser(+params.id)
+    fetchUser(+params.id!)
   }, [])
   return (
     <div className="User-container">

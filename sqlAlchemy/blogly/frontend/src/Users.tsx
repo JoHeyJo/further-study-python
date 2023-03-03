@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { IUser } from './interface'
 import { getUsers } from "./api";
 import './Users.css';
@@ -27,7 +28,7 @@ function Users() {
         Users
       </h1>
       <div className="Users-box">
-        {users.map(u => <li key={u.id} className="Users-user"> {u.firstName} {u.lastName}</li>)}
+        {users.map(u => <li><Link to={`/user/${u.id}`} key={u.id} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
       </div>
       <button>Add user</button>
 
