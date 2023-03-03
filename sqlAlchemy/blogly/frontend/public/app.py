@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from models import db, connect_db, User
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_fs'
@@ -22,12 +23,12 @@ def get_all_users():
     user_name = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized]
     return jsonify(user_name)
 
-@app.get("/user")
-def get_users():
-    """Fetches all user data"""
-    users = User.query.all()
-    serialized = [User.serialize(User) for user in users]
-    return jsonify(serialized)
+# @app.get("/user")
+# def get_users():
+#     """Fetches all user data"""
+#     users = User.query.all()
+#     serialized = [User.serialize(User) for user in users]
+#     return jsonify(serialized)
 
 @app.get("/user/<int:id>")
 def get_user(id):
@@ -46,5 +47,4 @@ def add_user():
     user = User(first_name=first_name, last_name=last_name)
     db.session.add(user)
     db.session.commit()
-     
     return User.serialize(user)

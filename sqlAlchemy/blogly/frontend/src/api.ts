@@ -12,16 +12,16 @@ async function getUsers() {
 /**Routes new user data to /user */
 async function addUser(data: IUser) {
   const res = await axios.post(`${BASE_URL}/user`, data)
-  return res
+  return res.data
 }
 
 /**returns user with matching ID */
-async function getUser(id: number) {
+async function getUser(id: number | undefined) {
   const res = await axios.get(`${BASE_URL}/user/${id}`)
-  return res
+  return res.data
 }
 
 /**Returns first and last of all users in object */
 
 
-export { getUsers, addUser };
+export { getUser, getUsers, addUser };

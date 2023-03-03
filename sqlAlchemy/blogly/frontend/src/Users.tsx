@@ -12,6 +12,7 @@ import './Users.css';
 function Users() {
   const [users, setUsers] = useState<IUser[]>([]);
 
+  /**Fetches all users from database */
   useEffect(() => {
     async function fetchUsers() {
       const res = await getUsers();
