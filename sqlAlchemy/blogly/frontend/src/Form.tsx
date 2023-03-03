@@ -1,7 +1,10 @@
+//dependencies
 import React, { useState } from 'react';
-import './Form.css';
+//components
 import { IUser } from './interface';
 import { getUsers, addUser } from './api';
+// style
+import './style/Form.css';
 
 const defaultUser = { id:0, firstName: '', lastName: '', image: '' };
 

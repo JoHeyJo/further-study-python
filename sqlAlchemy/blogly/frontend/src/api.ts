@@ -21,7 +21,11 @@ async function getUser(id: number | undefined) {
   return res.data
 }
 
-/**Returns first and last of all users in object */
+/**Updates user information with matching id */
+async function updateUser(id: number, data: IUser){
+  const res = await axios.post(`${BASE_URL}/user/id`, data)
+  return res.data;
+}
 
 
 export { getUser, getUsers, addUser };

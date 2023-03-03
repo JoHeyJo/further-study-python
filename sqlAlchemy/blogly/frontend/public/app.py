@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify 
+from flask import Flask, request, redirect, jsonify 
 from models import db, connect_db, User
 from flask_cors import CORS
 
@@ -48,3 +48,24 @@ def add_user():
     db.session.add(user)
     db.session.commit()
     return User.serialize(user)
+
+@app.post("/user/<int:id>")
+def edit_user(id):
+    """Update user's information"""
+    user = User.query.get_or_404(id) 
+    first_name = request.json('firstName')
+    last_name = request.json('lastName')
+    image_url = request.json('imageUrl')
+
+    user['first_name'] = first_name
+    user['last_name'] = last_name
+    user['image_url'] = image_url
+
+    db.session.add(user)
+    db.session.commit()
+
+    serialized = User.serialize(user)
+
+    return jsonify(serialized)
+
+

@@ -1,8 +1,11 @@
+//dependencies
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+//components
 import { IUser } from './interface'
 import { getUsers } from "./api";
-import './Users.css';
+// style
+import './style/Users.css';
 
 /** displays list of all users
  * 
@@ -30,7 +33,9 @@ function Users() {
       <div className="Users-box">
         {users.map(u => <li><Link to={`/user/${u.id}`} key={u.id} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
       </div>
-      <button>Add user</button>
+      <Link to='/form'>
+        <button>Add user</button>
+      </Link>
 
     </div>
   )

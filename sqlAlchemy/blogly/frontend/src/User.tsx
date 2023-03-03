@@ -1,9 +1,12 @@
+//dependencies 
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
+//components 
 import { IUser } from './interface'
 import { getUser } from './api'
-import './User.css'
+// style
+import './style/User.css'
 import img from './default.png'
 
 const defaultUser = { id: 0, firstName: '', lastName: '', image: '' }

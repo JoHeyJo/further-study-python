@@ -1,9 +1,12 @@
+//dependencies
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// components
 import Form from './Form';
 import Users from './Users';
 import User from './User'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// style
+import './style/App.css';
 
 function App() {
   return (
