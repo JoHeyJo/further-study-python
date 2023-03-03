@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IUser } from './interface'
-import { getUsersl } from "./api";
+import { getUsers } from "./api";
 
 /** displays list of all users
  * 
@@ -11,35 +11,24 @@ import { getUsersl } from "./api";
 function Users() {
   const [users, setUsers] = useState<IUser[]>([]);
 
-
-  /** fetches all users in database on every render */
-  // async function fetchUsers(){
-  //   const res = await getUsers();
-  //   setUsers(res)
-  // }
-
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchUsers() {
       const res = await getUsers();
       setUsers(res)
     }
     fetchUsers();
-  },[])
-
-
-  async function fetchUser(id: number){
-    await getUser(id);
-  }
+  }, [])
 
   return (
     <>
-    <div>
-      {users.map(u => <div key={u.id}> {u.firstName} {u.lastName}</div>)}
+    <h1>
+      Users
+    </h1>
+      <div>
+        {users.map(u => <li key={u.id}> {u.firstName} {u.lastName}</li>)}
+      </div>
+      <button>Add user</button>
 
-    </div>
-      <div>Get User</div>
-      <input></input>
-    
     </>
   )
 }

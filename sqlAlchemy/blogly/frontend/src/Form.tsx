@@ -34,6 +34,7 @@ function Form() {
     setUserData(res);
   }
 
+  /** send user data to api */
   async function pushUser(){
     let res = await addUser(user)
     console.log(res);
