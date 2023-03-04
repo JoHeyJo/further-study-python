@@ -31,7 +31,7 @@ function Form() {
   }
 
   /** Handles submission of form */
-  async function getUserss(){
+  async function fetchUsers(){
     let res =  getUsers()
     console.log('res',res)
     setUserData(res);
@@ -55,7 +55,7 @@ function Form() {
       <input onChange={handleChange} name="image" className='Form-imgUrl' placeholder='Image URL:'></input>
       <button onClick={pushUser}>Add User</button>
     </form>
-      <button onClick={getUserss}>Get all users</button>
+      <button onClick={fetchUsers}>Get all users</button>
     </>
   )
 }

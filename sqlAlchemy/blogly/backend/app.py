@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, jsonify
 from models import db, connect_db, User
 from flask_cors import CORS
 
-
+######## Double check exception key works ########
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_fs'
@@ -57,18 +57,14 @@ def add_user():
         return jsonify({"error": f"Missing {str(e)}"})
 
 
-@app.post("/user/<int:id>")
-def edit_user(id):
+@app.post("/user/<int:user_id>")
+def edit_user(user_id):
     """Update user's information"""
     try:
-        user = User.query.get_or_404(id) 
-        first_name = request.json('firstName')
-        last_name = request.json('lastName')
-        image_url = request.json('imageUrl')
-
-        user['first_name'] = first_name
-        user['last_name'] = last_name
-        user['image_url'] = image_url
+        user = User.query.get_or_404(user_id) 
+        user.first_name = request.json['firstName']
+        user.last_name= request.json['lastName']
+        # image_url = request.json['imageUrl']
 
         db.session.add(user)
         db.session.commit()
@@ -80,5 +76,3 @@ def edit_user(id):
         print("Lookup error", error)
         return jsonify({"error":error})
 
-
-# ADD TRY EXCEPT DON'T PROCRATINATE 
