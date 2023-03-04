@@ -32,7 +32,7 @@ function Form() {
 
   /** Handles submission of form */
   async function getUserss(){
-    let res = await getUsers()
+    let res =  getUsers()
     console.log('res',res)
     setUserData(res);
   }
