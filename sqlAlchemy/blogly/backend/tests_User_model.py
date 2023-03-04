@@ -60,14 +60,11 @@ class UsersTests(TestCase):
         """Does basic model work?"""
 
         u = User(first_name='Eli',last_name='Craig')
+        u2 = 1
 
         db.session.add(u)
         db.session.commit()
 
-        self.assertEqual
+        self.assertIsInstance(u, User)
 
-    def test_get(self):
-      with app.test_client() as client:
-        resp = client.get('/')
-        html = resp
-        print('>>>>>>>>',resp)  
+
