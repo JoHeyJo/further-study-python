@@ -30,11 +30,11 @@ class UsersRouteTests(TestCase):
         
         self.client = app.test_client()
 
-        self.u1 = User(first_name='Eli', last_name='Craig')
+        self.u1 = User(first_name='first_one', last_name='last_one')
         self.uid1 = 1111
         self.u1.id = self.uid1
 
-        self.u2 = User(first_name='Chew', last_name='Bean')
+        self.u2 = User(first_name='first_second', last_name='last_second')
         self.uid2 = 2222
         self.u2.id  = self.uid2
 
