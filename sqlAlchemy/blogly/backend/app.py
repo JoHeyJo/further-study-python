@@ -1,21 +1,27 @@
 from flask import Flask, request, redirect, jsonify 
 from models import db, connect_db, User
 from flask_cors import CORS
+from flask_debugtoolbar import DebugToolbarExtension
 
 ######## Double check exception key works ########
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_fs'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_fs"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True #prints how alchemy  is talking to your database
-app.config['TESTING'] = True
-app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-
+app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.app_context().push()
 
-connect_db(app)
-db.create_all()
+# Having the Debug Toolbar show redirects explicitly is often useful;
+# however, if you want to turn it off, you can uncomment this line:
+#
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
+toolbar = DebugToolbarExtension(app)
+print('**********************')
+print('app.config[SQLALCHEMY_DATABASE_URI====]',app.config['SQLALCHEMY_DATABASE_URI'])
+print('**********************')
+connect_db(app)
+    
 ######### User routes ###########
 @app.get("/")
 def get_all_users():

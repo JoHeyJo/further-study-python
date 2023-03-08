@@ -2,11 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def connect_db(app):
-    """Connect to database."""
-    db.app = app
-    db.init_app(app)
-
 class User(db.Model):
     """User model."""
 
@@ -26,6 +21,10 @@ class User(db.Model):
         """Serialize to dict"""
         return {"id":self.id, "firstName":self.first_name, "lastName":self.last_name, "imageUrl":self.image_url}
 
+def connect_db(app):
+    """Connect to database."""
+    db.app = app
+    db.init_app(app)
 
 
     

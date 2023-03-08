@@ -9,7 +9,7 @@ import { getUser } from './api'
 import './style/User.css'
 import img from './default.png'
 
-const defaultUser = { id: 0, firstName: '', lastName: '', image: '' }
+const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
 
 /** Displays user information
  * 
@@ -31,7 +31,7 @@ function User() {
   }, [])
   return (
     <div className="User-container">
-      <img src={img} alt={`${user.firstName || 'default profile picture'} profile picture`} height="400px" width="400px"></img>
+      <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
       <div className="User-user">
         <div className="User-fn">{user.firstName}</div>
         <div className="User-ln">{user.lastName}</div>

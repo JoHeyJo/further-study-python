@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app, db
-from models import DEFAULT_IMAGE_URL, User
+from models import User
 
 # Let's configure our app to use a different database for tests
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
@@ -38,7 +38,7 @@ class UserViewTestCase(TestCase):
         second_user = User(first_name="test_first_two", last_name="test_last_two",
                            image_url=None)
 
-        db.session.add_all([test_user, second_user])
+        db.session.add_all([test_user,second_user])
         db.session.commit()
 
         # We can hold onto our test_user's id by attaching it to self (which is
@@ -54,6 +54,7 @@ class UserViewTestCase(TestCase):
     def test_list_users(self):
         with self.client as c:
             resp = c.get("/users")
+            print('........', resp.status_code)
             self.assertEqual(resp.status_code, 200)
             html = resp.get_data(as_text=True)
             self.assertIn("test_first", html)

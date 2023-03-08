@@ -8,29 +8,17 @@
 
 # (venv) $ python -m unittest tests_cats.CatViewTestCase.test_meow
 
-import os
 from unittest import TestCase
-from sqlalchemy import except_
 
-from models import db, User
+from app import app, db
+from models import User
 
-# BEFORE we import our app, let's set an environmental variable
-# to use a different database for tests (we need to do this
-# before we import our app, since that will have already
-# connected to the database
-
-os.environ['DATABASE_URL'] = "postgresql:///blogly_test"
-
-# Now we can import app
-
-from app import app
-
-# Create our tables (we do this here, so we only create the tables
-# once for all tests --- in each test, we'll delete the data
-# and create fresh new clean test data
-
-db.create_all()
-
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
+app.config['TESTING'] = True
+app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
+print('**********************')
+print('app.config[SQLALCHEMY_DATABASE_URI]',app.config['SQLALCHEMY_DATABASE_URI'])
+print('**********************')
 
 class UsersTests(TestCase):
     """Integration tests for User model"""
@@ -60,7 +48,6 @@ class UsersTests(TestCase):
         """Does basic model work?"""
 
         u = User(first_name='Eli',last_name='Craig')
-        u2 = 1
 
         db.session.add(u)
         db.session.commit()

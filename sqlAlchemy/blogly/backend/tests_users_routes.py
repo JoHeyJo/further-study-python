@@ -1,5 +1,4 @@
 """users routes tests."""
-
 # run tests using these commands:
 
 # (venv) $ python -m unittest tests_cats
@@ -8,34 +7,22 @@
 
 # (venv) $ python -m unittest tests_cats.CatViewTestCase.test_meow
 
-import os
 from unittest import TestCase
-from sqlalchemy import except_
-
-from models import db, User
-
-# BEFORE we import our app, let's set an environmental variable
-# to use a different database for tests (we need to do this
-# before we import our app, since that will have already
-# connected to the database
-
-os.environ['DATABASE_URL'] = "postgresql:///blogly_test"
-
-# Now we can import app
 
 from app import app
+from db import db, create_all
+from models import User
 
-# Create our tables (we do this here, so we only create the tables
-# once for all tests --- in each test, we'll delete the data
-# and create fresh new clean test data
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
+app.config['TESTING'] = True
+app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
-db.create_all()
-
-class UserRouteTests(TestCase):
-    """Integration tests for User model"""
+class UsersRouteTests(TestCase):
+    """Tests for users routes"""
 
     def setUp(self):
         """Add users to database before every test."""
+        User.query.delete
         db.drop_all()
         db.create_all()
         
@@ -55,9 +42,9 @@ class UserRouteTests(TestCase):
 
     def tearDown(self): 
          """Stuff to do after every test."""
-         res = super().tearDown()
+        #  res = super().tearDown()
          db.session.rollback()
-         return res
+        #  return res
 
     def test_get_all_users(self):
       with app.test_client() as client:
@@ -77,4 +64,4 @@ class UserRouteTests(TestCase):
     "id": 1111,
     "lastName": "Craig"
   }
-])x
+])
