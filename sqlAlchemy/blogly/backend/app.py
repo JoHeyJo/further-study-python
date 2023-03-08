@@ -6,7 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 ######## Double check exception key works ########
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_fs"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_testing"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.app_context().push()
@@ -60,9 +60,9 @@ def add_user():
         db.session.add(user)
         db.session.commit()
         return User.serialize(user)
-    except KeyError:
+    except KeyError as e:
         print("keyerror>>>>>>", e)
-        return jsonify({"error": f"Missing {str(e)}"})
+        # return jsonify({"error": f"Missing {str(e)}"})
 
 
 @app.post("/user/<int:user_id>")

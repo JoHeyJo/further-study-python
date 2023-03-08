@@ -13,7 +13,7 @@ from app import app
 from db import db, create_all
 from models import User
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_testing"
 app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
