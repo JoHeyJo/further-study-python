@@ -1,22 +1,24 @@
 """users routes tests."""
 # run tests using these commands:
 
-# (venv) $ python -m unittest tests_cats
+# (venv) $ python -m unittest tests_users_routes
 
-# (venv) $ python -m unittest tests_cats.CatViewTestCase
+# (venv) $ python -m unittest tests_users_routes.UsersRouteTests
 
-# (venv) $ python -m unittest tests_cats.CatViewTestCase.test_meow
+# (venv) $ python -m unittest tests_users_routes.UsersRouteTests.test_get_all_users
 
+import os
 from unittest import TestCase
 
-from app import app
-from db import db, create_all
-from models import User
+from models import User,connect_db, db
+os.environ['DATABASE_URL'] =  "postgresql:///blogly_testing"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_testing"
+from app import app
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_testing"
 app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-
+# connect_db(app)
+db.create_all() 
 class UsersRouteTests(TestCase):
     """Tests for users routes"""
 
@@ -47,9 +49,9 @@ class UsersRouteTests(TestCase):
         #  return res
 
     def test_get_all_users(self):
-      with app.test_client() as client:
-        resp = client.get('/')
-        html = resp.get_data(as_text=True)
+        with self.client as c:
+            resp = c.get('/')
+            html = resp.get_data(as_text=True)
         
         self.assertEqual(resp.status_code, 200)
         print('>>>>>>>',html)

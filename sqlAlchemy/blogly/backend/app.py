@@ -1,12 +1,15 @@
+import os
 from flask import Flask, request, redirect, jsonify 
 from models import db, connect_db, User
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 
+print('**************',os)
 ######## Double check exception key works ########
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_testing"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_fs"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.app_context().push()
@@ -17,9 +20,7 @@ app.app_context().push()
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 toolbar = DebugToolbarExtension(app)
-print('**********************')
-print('app.config[SQLALCHEMY_DATABASE_URI====]',app.config['SQLALCHEMY_DATABASE_URI'])
-print('**********************')
+
 connect_db(app)
     
 ######### User routes ###########
@@ -35,12 +36,6 @@ def get_all_users():
         print('Lookup error >>>>>>>>>', error )
         return jsonify({"error": error})
 
-# @app.get("/user")
-# def get_users():
-#     """Fetches all user data"""
-#     users = User.query.all()
-#     serialized = [User.serialize(User) for user in users]
-#     return jsonify(serialized)
 
 @app.get("/user/<int:id>")
 def get_user(id):

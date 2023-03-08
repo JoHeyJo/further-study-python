@@ -16,6 +16,7 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 # once for all tests --- in each test, we'll delete the data
 # and create fresh new clean test data
 
+db.drop_all()
 db.create_all()
 
 class UserViewTestCase(TestCase):
@@ -38,7 +39,7 @@ class UserViewTestCase(TestCase):
         second_user = User(first_name="test_first_two", last_name="test_last_two",
                            image_url=None)
 
-        db.session.add_all([test_user])
+        db.session.add_all([test_user,second_user])
         db.session.commit()
 
         # We can hold onto our test_user's id by attaching it to self (which is
