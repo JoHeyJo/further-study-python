@@ -4,7 +4,6 @@ from models import db, connect_db, User
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 
-print('**************',os)
 ######## Double check exception key works ########
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +21,7 @@ app.app_context().push()
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-    
+# change decorator names to start with model it reflects
 ######### User routes ###########
 @app.get("/")
 def get_all_users():
@@ -36,7 +35,6 @@ def get_all_users():
         print('Lookup error >>>>>>>>>', error )
         return jsonify({"error": error})
 
-
 @app.get("/user/<int:id>")
 def get_user(id):
     """Retrieves user with matching ID"""
@@ -44,7 +42,7 @@ def get_user(id):
     serialized = User.serialize(user)
     return jsonify(serialized)
 
-
+# this should be changed to redirect
 @app.post("/user")
 def add_user():
     """Adds new user to database"""
@@ -57,7 +55,7 @@ def add_user():
         return User.serialize(user)
     except KeyError as e:
         print("keyerror>>>>>>", e)
-        # return jsonify({"error": f"Missing {str(e)}"})
+        return jsonify({"error": f"Missing {str(e)}"})
 
 
 @app.post("/user/<int:user_id>")

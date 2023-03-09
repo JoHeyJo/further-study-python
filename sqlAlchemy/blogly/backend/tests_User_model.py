@@ -1,57 +1,58 @@
 """User model tests."""
-
 # run tests using these commands:
 
-# (venv) $ python -m unittest tests_cats
+# (venv) $ python -m unittest tests_user_routes
 
-# (venv) $ python -m unittest tests_cats.CatViewTestCase
+# (venv) $ python -m unittest tests_user_routes.UserTestCase
 
-# (venv) $ python -m unittest tests_cats.CatViewTestCase.test_meow
+# (venv) $ python -m unittest tests_user_routes.UserTestCase.test_user_model
 
+import os
 from unittest import TestCase
 
-from app import app, db
-from models import User
+from models import User,connect_db, db
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test"
+os.environ['DATABASE_URL'] =  "postgresql:///blogly_testing"
+
+from app import app
+
 app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-print('**********************')
-print('app.config[SQLALCHEMY_DATABASE_URI]',app.config['SQLALCHEMY_DATABASE_URI'])
-print('**********************')
+app.config['FLASK_DEBUG'] = True
 
-class UsersTests(TestCase):
+db.create_all() 
+
+class UserTestCase(TestCase):
     """Integration tests for User model"""
 
-    def setUP(self):
+    def setUp(self):
         """Add users to database before every test."""
         db.drop_all()
         db.create_all()
 
-        u1 = User(first_name='Eli', last_name='Craig')
+        self.client = app.test_client()
+
+        u1 = User(first_name='test_first_one', last_name='test_last_one')
         uid1 = 1111
         u1.id = uid1
 
-        u2 = User(first_name='Chew', last_name='Bean')
+        u2 = User(first_name='test_first_second', last_name='test_last_second')
         uid2 = 2222
         u2.id  = uid2
 
-        self.client = app.test_client()
+        db.session.add_all([u1,u2])
+        db.session.commit()
+
+        self.u1 = db.session.get(User,uid1)
+        self.u2 = db.session.get(User,uid2)
 
     def tearDown(self): 
          """Stuff to do after every test."""
-         res = super().tearDown()
          db.session.rollback()
-         return res
 
     def test_user_model(self):
         """Does basic model work?"""
-
-        u = User(first_name='Eli',last_name='Craig')
-
-        db.session.add(u)
-        db.session.commit()
-
-        self.assertIsInstance(u, User)
+        self.assertIsInstance(self.u1, User)
+        self.assertEqual(self.u1.first_name,'test_first_one')
 
 
