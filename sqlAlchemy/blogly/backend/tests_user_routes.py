@@ -52,9 +52,7 @@ class UsersRouteTests(TestCase):
         with self.client as c:
             resp = c.get('/')
             # html = resp.get_data(as_text=True)
-        print(resp)
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.json,[
+            self.assertEqual(resp.json,[
             {
               "firstName": "test_first_one",
               "id": 1111,
@@ -73,8 +71,8 @@ class UsersRouteTests(TestCase):
         with self.client as c:
             resp = c.get(f"/user/{self.u1.id}")
             html = resp.get_data(as_text=True)
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.json, 
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json, 
             {
                 "firstName": "test_first_one",
                 "id": 1111,
@@ -90,5 +88,29 @@ class UsersRouteTests(TestCase):
                               "firstName": "test_first_post",
                               "lastName": "test_last_post"
                           })
-            print('***************',resp)
             self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json, {
+                             'firstName': 'test_first_post',
+                              'id': 1,
+                              'imageUrl': None,
+                              'lastName': 'test_last_post'
+                              }
+                            )
+
+    def test_update_user(self):
+        """Test: user can be updated"""
+        with self.client as c:
+            resp = c.post(f"user/{self.u1.id}",
+                            json={
+                                "firstName": "test_first_update",
+                                "lastName": "test_last_update"
+                            }
+                          )
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json,  {
+                            'firstName': 'test_first_update',
+                            'id': 1111, 
+                            'imageUrl': None, 
+                            'lastName': 'test_last_update'
+                             }
+                            )
