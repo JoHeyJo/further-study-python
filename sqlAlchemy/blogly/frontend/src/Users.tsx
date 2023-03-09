@@ -23,7 +23,7 @@ function Users() {
       setUsers(res)
     }
     fetchUsers();
-  }, [])
+  },[])
 
   return (
     <div className="Users-container">

@@ -23,7 +23,7 @@ async function userGetAll() {
 /**Routes new user data to /user */
 async function userAdd(data: IUser) {
   try {
-      const res = await axios.post(`${BASE_URL}/user`, data)
+      const res = await axios.post(`${BASE_URL}/users`, data)
       return res.data
   } catch (error: any) {
     console.error("API Error:" + error.response);
@@ -33,7 +33,7 @@ async function userAdd(data: IUser) {
 /**returns user with matching ID */
 async function userGet(id: number | undefined) {
   try {
-    const res = await axios.get(`${BASE_URL}/user/${id}`)
+    const res = await axios.get(`${BASE_URL}/users/${id}`)
     return res.data
 
   } catch (error: any){
@@ -44,7 +44,7 @@ async function userGet(id: number | undefined) {
 /**Updates user information with matching id */
 async function userUpdate(id: number, data: IUser) {
   try{
-    const res = await axios.post(`${BASE_URL}/user/id`, data)
+    const res = await axios.post(`${BASE_URL}/users/${id}`, data)
     return res.data;
   } catch(error: any){
     console.error("API Error:"+ error.message)
