@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 //components
 import { IUser } from './interface'
-import { getUsers } from "./api";
+import { userGetAll } from "./api";
 // style
 import './style/Users.css';
 
@@ -19,7 +19,7 @@ function Users() {
   /**Fetches all users from database */
   useEffect(() => {
     async function fetchUsers() {
-      const res = await getUsers();
+      const res = await userGetAll();
       setUsers(res)
     }
     fetchUsers();

@@ -21,10 +21,9 @@ app.app_context().push()
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-# change decorator names to start with model it reflects
 ######### User routes ###########
 @app.get("/")
-def get_all_users():
+def user_all():
     """Retrieves all users in database"""
     try:
         users = User.query.order_by(User.last_name, User.first_name)
@@ -36,7 +35,7 @@ def get_all_users():
         return jsonify({"error": error})
 
 @app.get("/user/<int:id>")
-def get_user(id):
+def user_get(id):
     """Retrieves user with matching ID"""
     user = User.query.get_or_404(id)
     serialized = User.serialize(user)
@@ -44,7 +43,7 @@ def get_user(id):
 
 # this should be changed to redirect
 @app.post("/user")
-def add_user():
+def user_add():
     """Adds new user to database"""
     first_name = request.json['firstName']
     last_name = request.json['lastName']
@@ -59,7 +58,7 @@ def add_user():
 
 
 @app.post("/user/<int:user_id>")
-def edit_user(user_id):
+def user_edit(user_id):
     """Update user's information"""
     try:
         user = User.query.get_or_404(user_id) 

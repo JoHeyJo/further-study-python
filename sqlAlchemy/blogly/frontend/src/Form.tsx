@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 //components
 import { IUser } from './interface';
-import { getUsers, addUser } from './api';
+import { userGetAll, userAdd } from './api';
 // style
 import './style/Form.css';
 
@@ -32,14 +32,14 @@ function Form() {
 
   /** Handles submission of form */
   async function fetchUsers(){
-    let res =  getUsers()
+    let res =  userGetAll()
     console.log('res',res)
     setUserData(res);
   }
 
   /** send user data to api */
   async function pushUser(){
-    let res = await addUser(user)
+    let res = await userAdd(user)
     console.log(res);
     setUser(defaultUser);
   }

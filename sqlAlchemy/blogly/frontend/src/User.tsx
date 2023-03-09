@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 //components 
 import { IUser } from './interface'
-import { getUser } from './api'
+import { userGet } from './api'
 // style
 import './style/User.css'
 import img from './default.png'
@@ -24,7 +24,7 @@ function User() {
   /** fetches user with matching ID from database */
   useEffect(() => {
     async function fetchUser(id: number | undefined) {
-      const res = await getUser(id)
+      const res = await userGet(id)
       setUser(res)
     }
     fetchUser(+params.id!)

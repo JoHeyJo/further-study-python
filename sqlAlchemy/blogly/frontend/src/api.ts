@@ -11,7 +11,7 @@ const BASE_URL = "http://localhost:5000";
 // }
 
 /**Returns first and last of all users */
-async function getUsers() {
+async function userGetAll() {
   try {
       const res = await axios.get(`${BASE_URL}/`);
       return res.data;
@@ -21,7 +21,7 @@ async function getUsers() {
 }
 
 /**Routes new user data to /user */
-async function addUser(data: IUser) {
+async function userAdd(data: IUser) {
   try {
       const res = await axios.post(`${BASE_URL}/user`, data)
       return res.data
@@ -31,7 +31,7 @@ async function addUser(data: IUser) {
 }
 
 /**returns user with matching ID */
-async function getUser(id: number | undefined) {
+async function userGet(id: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/user/${id}`)
     return res.data
@@ -42,7 +42,7 @@ async function getUser(id: number | undefined) {
 }
 
 /**Updates user information with matching id */
-async function updateUser(id: number, data: IUser) {
+async function userUpdate(id: number, data: IUser) {
   try{
     const res = await axios.post(`${BASE_URL}/user/id`, data)
     return res.data;
@@ -52,6 +52,5 @@ async function updateUser(id: number, data: IUser) {
 }
 
 
-export { getUser, getUsers, addUser };
+export { userGet, userGetAll, userAdd };
 
-//ADD TRY CATCH DON'T PROCRASTINATE
