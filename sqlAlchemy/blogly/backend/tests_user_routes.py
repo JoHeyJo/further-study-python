@@ -59,9 +59,9 @@ class UsersRouteTests(TestCase):
               "lastName": "test_last_one"
             },
             {
-                "firstName": "test_first_second",
-                "id": 2222,
-                "lastName": "test_last_second"
+              "firstName": "test_first_second",
+              "id": 2222,
+              "lastName": "test_last_second"
             }
           ]
         )
@@ -69,8 +69,8 @@ class UsersRouteTests(TestCase):
     def test_get_user(self):
         """Tests that a user corresponding an ID is returned"""
         with self.client as c:
-            resp = c.get(f"/user/{self.u1.id}")
-            html = resp.get_data(as_text=True)
+            resp = c.get(f"/users/{self.u1.id}")
+            # html = resp.get_data(as_text=True)
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.json, 
             {
@@ -80,32 +80,69 @@ class UsersRouteTests(TestCase):
                 "lastName": "test_last_one"
             }
         )
-    def test_add_user(self):
-        """Test: user can be added to database"""
+
+    def test_add_user_redirect(self):
+        """Test: user can be added to database and redirects"""
         with self.client as c:
-            resp = c.post("/user",
+            resp = c.post("/users",
                           json={
                               "firstName": "test_first_post",
                               "lastName": "test_last_post"
-                          })
+                          },
+            )
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location,'/')
+
+    def test_add_user_redirect_follow(self):
+        """Test: user can be added to database and redirected to root"""
+        with self.client as c:
+            resp = c.post("/users",
+                          json={
+                              "firstName": "test_first_post",
+                              "lastName": "test_last_post"
+                          },
+                          follow_redirects=True
+            )
             self.assertEqual(resp.status_code, 200)
-            self.assertEqual(resp.json, {
-                             'firstName': 'test_first_post',
-                              'id': 1,
-                              'imageUrl': None,
-                              'lastName': 'test_last_post'
-                              }
-                            )
+            self.assertEqual(resp.json, [
+              {
+                'firstName': 'test_first_one',
+                 'id': 1111, 'lastName': 'test_last_one'
+                 }, 
+                 {
+                  'firstName': 'test_first_post',
+                  'id': 1, 'lastName': 'test_last_post'
+                  }, 
+                  {
+                    'firstName': 'test_first_second',
+                     'id': 2222,
+                      'lastName': 'test_last_second'
+                  }
+                ]
+              )
 
     def test_update_user(self):
-        """Test: user can be updated"""
+        """Test: user can be updated and redirects"""
         with self.client as c:
-            resp = c.post(f"user/{self.u1.id}",
+            resp = c.patch(f"users/{self.u1.id}",
                             json={
                                 "firstName": "test_first_update",
                                 "lastName": "test_last_update"
                             }
                           )
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, f"/users/{self.u1.id}")
+
+    def test_update_user_redirect_follow(self):
+        with self.client as c:
+            resp = c.patch(f"users/{self.u1.id}",
+                           json={
+                               "firstName": "test_first_update",
+                               "lastName": "test_last_update"
+                           },
+                           follow_redirects=True
+            )
+            print('((((((((((((',resp.json,'))))))))))))')
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.json,  {
                             'firstName': 'test_first_update',

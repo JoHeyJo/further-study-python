@@ -10,6 +10,7 @@ CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_fs"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.app_context().push()
 
@@ -34,7 +35,7 @@ def user_all():
         print('Lookup error >>>>>>>>>', error )
         return jsonify({"error": error})
 
-@app.get("/user/<int:id>")
+@app.get("/users/<int:id>")
 def user_get(id):
     """Retrieves user with matching ID"""
     user = User.query.get_or_404(id)
@@ -42,7 +43,7 @@ def user_get(id):
     return jsonify(serialized)
 
 # this should be changed to redirect
-@app.post("/user")
+@app.post("/users")
 def user_add():
     """Adds new user to database"""
     first_name = request.json['firstName']
@@ -51,13 +52,12 @@ def user_add():
         user = User(first_name=first_name, last_name=last_name)
         db.session.add(user)
         db.session.commit()
-        return User.serialize(user)
+        return redirect("/")
     except KeyError as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
-
-@app.post("/user/<int:user_id>")
+@app.patch("/users/<int:user_id>")
 def user_edit(user_id):
     """Update user's information"""
     try:
@@ -69,9 +69,10 @@ def user_edit(user_id):
         db.session.add(user)
         db.session.commit()
 
-        serialized = User.serialize(user)
+        # serialized = User.serialize(user)
 
-        return jsonify(serialized)
+        return redirect(f"/users/{user_id}")
+
     except LookupError as error:
         print("Lookup error", error)
         return jsonify({"error":error})
