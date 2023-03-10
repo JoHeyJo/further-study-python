@@ -23,12 +23,9 @@ function Form() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(defaultUser);
   const [userData, setUserData] = useState<{}>({})
-  let userId = 0;
 
-  // if(user !== defaultUser){
-  //   const location = useLocation();
-  //   const {userId } = location.state
-  // }
+  const location = useLocation();
+  const userId = location.state?.userId;
 
   /** Handles changes to form state */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -61,29 +58,23 @@ function Form() {
     } catch (error: any) {
       console.error(error)
     }
-    navigate('/')
+    // navigate('/')
   }
 
-  // useEffect(() => {
-  //   try {
-  //       if (user.id !== 0)
-  //       console.log(user.id)
-  //       fetchUser(userId);
-  //     } catch (error: any) {
-  //       console.error(error)
-  //     }
-  // }, [userData])
-
-  console.log('in here')
+  useEffect(() => {
+    try {
+        if (user.id){
+          console.log('*********',user.id)
+          fetchUser(userId);
+        }
+      } catch (error: any) {
+        console.error(error)
+      }
+  }, [])
 
   return (
     <>
-      <form className='Form-input' onSubmit={() => {
-        submitUser()
-        // navigate('/')
-        // redirect('/')
-      }
-      }>
+      <form className='Form-input' onSubmit={submitUser}>
         <label htmlFor='first-name-input'>First Name</label>
         <input onChange={handleChange}
           name="firstName"

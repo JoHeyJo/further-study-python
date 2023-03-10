@@ -34,6 +34,12 @@ function User() {
     fetchUser(+params.id!)
   }, [])
 
+  const handleClick = () => {
+    navigate('/Form', {
+      state: { userId: user.id }
+    });
+  };
+
   return (
     <div className="User-container">
       <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
@@ -41,8 +47,7 @@ function User() {
         <div className="User-fn">{user.firstName}</div>
         <div className="User-ln">{user.lastName}</div>
       </div>
-      <Button onClick={()=>navigate('Form')}>
-        {/* <Link to={`/form/`} state={{ userId: user.id } || 0}>Edit</Link> */}
+      <Button onClick={handleClick}>
         Edit
       </Button>
 
