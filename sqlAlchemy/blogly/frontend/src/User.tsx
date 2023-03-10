@@ -34,7 +34,7 @@ function User() {
   }, [])
 
   const handleClick = () => {
-    navigate('/Form', {
+    navigate(`/users/${user.id}/edit`, {
       state: { userId: user.id }
     });
   };

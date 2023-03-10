@@ -1,7 +1,8 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 // import { redirect } from 'react-router-dom';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 //components
 import { IUser } from './interface';
 import { userAdd, userGet, userUpdate } from './api';
@@ -63,7 +64,6 @@ function Form() {
     }
   }
 
-
   /** calls fetchUser on mount, if a user id is passed on render */
   useEffect(() => {
     try {
@@ -100,7 +100,12 @@ function Form() {
           className='Form-imgUrl'
           placeholder='Image URL:'>
         </input>
-        <button >Add User</button>
+
+        <button>{!user.id ? 'Add User' : 'Update User'}</button>
+
+        {/* <Link to={`/users/${user.id}/`}> */}
+        <button onClick={() =>navigate(`/users/${user.id}/`)}>Cancel</button>
+        {/* </Link> */}
       </form>
     </>
   )

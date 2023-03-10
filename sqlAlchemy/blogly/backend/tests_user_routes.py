@@ -124,7 +124,7 @@ class UsersRouteTests(TestCase):
     def test_update_user(self):
         """Test: user can be updated and redirects"""
         with self.client as c:
-            resp = c.patch(f"users/{self.u1.id}",
+            resp = c.patch(f"users/{self.u1.id}/edit",
                             json={
                                 "firstName": "test_first_update",
                                 "lastName": "test_last_update"
@@ -135,14 +135,13 @@ class UsersRouteTests(TestCase):
 
     def test_update_user_redirect_follow(self):
         with self.client as c:
-            resp = c.patch(f"users/{self.u1.id}",
+            resp = c.patch(f"users/{self.u1.id}/edit",
                            json={
                                "firstName": "test_first_update",
                                "lastName": "test_last_update"
                            },
                            follow_redirects=True
             )
-            print('((((((((((((',resp.json,'))))))))))))')
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.json,  {
                             'firstName': 'test_first_update',
@@ -151,3 +150,9 @@ class UsersRouteTests(TestCase):
                             'lastName': 'test_last_update'
                              }
                             )
+    def test_delete_user(self):
+        with self.client as c:
+            resp = c.delete(f"/users/{self.u1.id}")
+            print('*************',resp.json)
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(None, resp.json)

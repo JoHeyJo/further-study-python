@@ -57,7 +57,7 @@ def user_add():
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
-@app.patch("/users/<int:user_id>")
+@app.patch("/users/<int:user_id>/edit")
 def user_edit(user_id):
     """Update user's information"""
     try:
@@ -77,3 +77,9 @@ def user_edit(user_id):
         print("Lookup error", error)
         return jsonify({"error":error})
 
+@app.delete("/users/<int:user_id>")
+def user_delete(user_id):
+    User.query.filter_by(id=user_id).delete()
+    # db.session.delete(user)
+    db.session.commit()
+    return redirect("/")

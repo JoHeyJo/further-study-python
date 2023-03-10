@@ -31,9 +31,9 @@ function Users() {
         Users
       </h1>
       <div className="Users-box">
-        {users.map(u => <li key={u.id}><Link to={`/user/${u.id}`} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
+        {users.map(u => <li key={u.id}><Link to={`/users/${u.id}`} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
       </div>
-      <Link to='/form'>
+      <Link to="/form">
         <button>Add user</button>
       </Link>
 

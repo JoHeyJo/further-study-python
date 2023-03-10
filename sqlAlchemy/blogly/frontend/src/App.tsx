@@ -17,8 +17,8 @@ function App() {
           <Route path='/' element={<Users />}/>
           <Route path='/form' element={<Form/>}/>
           <Route path='/users' element={<Users/>}/>
-          <Route path='/user/:id' element={<User/>}/>
-          <Route path='/user/:id/edit' element={<EditUser/>}/>
+          <Route path='/users/:id' element={<User/>}/>
+          <Route path='/users/:id/edit' element={<Form/>}/>
         </Routes>
       </BrowserRouter>
     </div>
