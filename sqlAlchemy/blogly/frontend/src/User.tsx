@@ -1,10 +1,11 @@
 //dependencies 
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
+import { useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 //components 
 import { IUser } from './interface'
 import { userGet } from './api'
+import Form from './Form'
 // style
 import './style/User.css'
 import img from './default.png'
@@ -15,6 +16,8 @@ const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
  * 
  * State:
  * - user: {id: number, firstName: string, lastName: string}
+ * 
+ * Users -> User
  */
 function User() {
   const [user, setUser] = useState<IUser>(defaultUser)
@@ -36,7 +39,10 @@ function User() {
         <div className="User-fn">{user.firstName}</div>
         <div className="User-ln">{user.lastName}</div>
       </div>
-      <Button>Add</Button>
+      <Button>
+        <Link to={`/form/`} state={{ userId: user.id }}>Edit</Link>
+      </Button>
+
       <Button>Delete</Button>
     </div>
   )

@@ -52,5 +52,5 @@ async function userUpdate(id: number, data: IUser) {
 }
 
 
-export { userGet, userGetAll, userAdd };
+export { userGet, userGetAll, userAdd, userUpdate };
 

@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 
 /** updates users information
  * 
+ * State: user information
+ * 
+ * Props: submitUser()
  * 
  */
 function EditUser(){
