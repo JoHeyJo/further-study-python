@@ -1,6 +1,6 @@
 //dependencies 
 import React, { useState, useEffect } from "react";
-import { useParams, Routes, Route, Link } from 'react-router-dom'
+import { useNavigate, useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 //components 
 import { IUser } from './interface'
@@ -21,6 +21,7 @@ const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
  */
 function User() {
   const [user, setUser] = useState<IUser>(defaultUser)
+  const navigate = useNavigate();
 
   const params = useParams();
 
@@ -32,6 +33,7 @@ function User() {
     }
     fetchUser(+params.id!)
   }, [])
+
   return (
     <div className="User-container">
       <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
@@ -39,8 +41,9 @@ function User() {
         <div className="User-fn">{user.firstName}</div>
         <div className="User-ln">{user.lastName}</div>
       </div>
-      <Button>
-        <Link to={`/form/`} state={{ userId: user.id }}>Edit</Link>
+      <Button onClick={()=>navigate('Form')}>
+        {/* <Link to={`/form/`} state={{ userId: user.id } || 0}>Edit</Link> */}
+        Edit
       </Button>
 
       <Button>Delete</Button>

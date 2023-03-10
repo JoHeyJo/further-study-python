@@ -22,10 +22,13 @@ const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
 function Form() {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(defaultUser);
-  const [userData, setUserData] = useState<undefined | number>(0)
-  const location = useLocation();
-  const { userId } = location.state
+  const [userData, setUserData] = useState<{}>({})
+  let userId = 0;
 
+  // if(user !== defaultUser){
+  //   const location = useLocation();
+  //   const {userId } = location.state
+  // }
 
   /** Handles changes to form state */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -49,23 +52,27 @@ function Form() {
       if (user.id) {
         let res = await userUpdate(user.id, user)
         setUser(defaultUser)
+        navigate('/')
       } else {
         let res = await userAdd(user)
         setUser(defaultUser);
+        navigate('/')
       }
     } catch (error: any) {
       console.error(error)
     }
+    navigate('/')
   }
 
-  useEffect(() => {
-    if (user.id !== 0)
-      try {
-        fetchUser(userId);
-      } catch (error: any) {
-        console.error(error)
-      }
-  }, [])
+  // useEffect(() => {
+  //   try {
+  //       if (user.id !== 0)
+  //       console.log(user.id)
+  //       fetchUser(userId);
+  //     } catch (error: any) {
+  //       console.error(error)
+  //     }
+  // }, [userData])
 
   console.log('in here')
 
@@ -73,6 +80,7 @@ function Form() {
     <>
       <form className='Form-input' onSubmit={() => {
         submitUser()
+        // navigate('/')
         // redirect('/')
       }
       }>
