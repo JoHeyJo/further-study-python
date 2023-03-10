@@ -20,9 +20,9 @@ const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
  * App -> Form
  */
 function Form() {
-  const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(defaultUser);
   const [userData, setUserData] = useState<{}>({})
+  const navigate = useNavigate();
 
   const location = useLocation();
   const userId = location.state?.userId;
@@ -44,13 +44,16 @@ function Form() {
   }
 
   /** send user data to api */
-  async function submitUser() {
+  async function submitUser(e: any) {
+    e.preventDefault();
     try {
-      if (user.id) {
+      if (userId) {
+        // update user
         let res = await userUpdate(user.id, user)
         setUser(defaultUser)
         navigate('/')
       } else {
+        // add user
         let res = await userAdd(user)
         setUser(defaultUser);
         navigate('/')
@@ -58,18 +61,18 @@ function Form() {
     } catch (error: any) {
       console.error(error)
     }
-    // navigate('/')
   }
 
+
+  /** calls fetchUser on mount, if a user id is passed on render */
   useEffect(() => {
     try {
-        if (user.id){
-          console.log('*********',user.id)
-          fetchUser(userId);
-        }
-      } catch (error: any) {
-        console.error(error)
+      if (userId) {
+        fetchUser(userId);
       }
+    } catch (error: any) {
+      console.error(error)
+    }
   }, [])
 
   return (
@@ -97,7 +100,7 @@ function Form() {
           className='Form-imgUrl'
           placeholder='Image URL:'>
         </input>
-        <button>Add User</button>
+        <button >Add User</button>
       </form>
     </>
   )

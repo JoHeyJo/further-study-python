@@ -44,7 +44,7 @@ async function userGet(id: number | undefined) {
 /**Updates user information with matching id */
 async function userUpdate(id: number, data: IUser) {
   try{
-    const res = await axios.post(`${BASE_URL}/users/${id}`, data)
+    const res = await axios.patch(`${BASE_URL}/users/${id}`, data)
     return res.data;
   } catch(error: any){
     console.error("API Error:"+ error.message)

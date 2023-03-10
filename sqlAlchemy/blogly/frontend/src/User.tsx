@@ -22,7 +22,6 @@ const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
 function User() {
   const [user, setUser] = useState<IUser>(defaultUser)
   const navigate = useNavigate();
-
   const params = useParams();
 
   /** fetches user with matching ID from database */
