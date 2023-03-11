@@ -20,17 +20,17 @@ app.app_context().push()
 
 toolbar = DebugToolbarExtension(app)
 
-#### do this when you want to have your root route be a certain page/component
-# @app.get('/')
-# def root():
-#     """Homepage redirects to list of users."""
-
-#     return redirect("/users")
-
 connect_db(app)
+#### do this when you want to have your root route be a certain page/component
+@app.get('/')
+def root():
+    """Homepage redirects to list of users."""
+
+    return redirect("/users")
+
 ######### User routes ###########
-@app.get("/")
-def user_all():
+@app.get("/users")
+def users_all():
     """Retrieves all users in database"""
     try:
         # gets all users
@@ -44,15 +44,14 @@ def user_all():
         return jsonify({"error": error})
 
 @app.get("/users/<int:id>")
-def user_get(id):
+def users_get(id):
     """Retrieves user with matching ID"""
     user = User.query.get_or_404(id)
     serialized = User.serialize(user)
     return jsonify(serialized)
 
-# users/new might be a better name for the route
-@app.post("/users")
-def user_add():
+@app.post("/users/new")
+def users_add():
     """Adds new user to database"""
     first_name = request.json['firstName']
     last_name = request.json['lastName']
@@ -64,18 +63,17 @@ def user_add():
     except KeyError as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
-# Have the route to get a user to edit be its own route
 
 
-# @app.get('/users/<int:user_id>/edit')
-# def users_edit(user_id):
-#     """Show a form to edit an existing user"""
-
-#     user = User.query.get_or_404(user_id)
-#     return render_template('users/edit.html', user=user)
+@app.get('/users/<int:user_id>/edit')
+def users_edit(user_id):
+    """Retrieves user with matching ID to populate edit form"""
+    user = User.query.get_or_404(user_id)
+    serialized = User.serialize(user)
+    return jsonify(serialized)
 
 @app.patch("/users/<int:user_id>/edit")
-def user_edit(user_id):
+def users_update(user_id):
     """Update user's information"""
     try:
         user = User.query.get_or_404(user_id) 
@@ -93,9 +91,10 @@ def user_edit(user_id):
         return jsonify({"error":error})
 
 # add delete to end of route
-@app.delete("/users/<int:user_id>")
+@app.delete("/users/<int:user_id>/delete")
 def user_delete(user_id):
-    # user = User.query.get_or_404(user_id) possible better approach since it has an error built in
-    User.query.filter_by(id=user_id).delete()
+    # User.query.filter_by(id=user_id).delete()
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
     db.session.commit()
     return redirect("/")

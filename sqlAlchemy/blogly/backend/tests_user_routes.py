@@ -47,11 +47,19 @@ class UsersRouteTests(TestCase):
          """Stuff to do after every test."""
          db.session.rollback()
 
-    def test_get_all_users(self):
-        """Tests that all users are returned """
+    def test_root(self):
+        """Tests that root is redirected to users"""
         with self.client as c:
             resp = c.get('/')
             # html = resp.get_data(as_text=True)
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, "/users")
+
+    def test_get_all_users_follow(self):
+        """Tests: root route follows to users """
+        with self.client as c:
+            resp = c.get("/users")
+            self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.json,[
             {
               "firstName": "test_first_one",
@@ -84,7 +92,7 @@ class UsersRouteTests(TestCase):
     def test_add_user_redirect(self):
         """Test: user can be added to database and redirects"""
         with self.client as c:
-            resp = c.post("/users",
+            resp = c.post("/users/new",
                           json={
                               "firstName": "test_first_post",
                               "lastName": "test_last_post"
@@ -96,7 +104,7 @@ class UsersRouteTests(TestCase):
     def test_add_user_redirect_follow(self):
         """Test: user can be added to database and redirected to root"""
         with self.client as c:
-            resp = c.post("/users",
+            resp = c.post("/users/new",
                           json={
                               "firstName": "test_first_post",
                               "lastName": "test_last_post"
@@ -120,7 +128,19 @@ class UsersRouteTests(TestCase):
                   }
                 ]
               )
-
+    
+    def test_edit_user(self):
+        """Test: user with corresponding id is retrieved to populate edit form"""
+        with self.client as c:
+            resp = c.get(f"/users/{self.u1.id}/edit")
+            self.assertEqual(resp.status_code,200)
+            self.assertEqual(resp.json, {
+                'firstName': 'test_first_one',
+                'id': 1111,
+                'imageUrl': None,
+                'lastName': 'test_last_one'
+                }
+            )
     def test_update_user(self):
         """Test: user can be updated and redirects"""
         with self.client as c:
@@ -152,7 +172,7 @@ class UsersRouteTests(TestCase):
                             )
     def test_delete_user(self):
         with self.client as c:
-            resp = c.delete(f"/users/{self.u1.id}")
+            resp = c.delete(f"/users/{self.u1.id}/delete")
             print('*************',resp.json)
             self.assertEqual(resp.status_code, 302)
             self.assertEqual(None, resp.json)

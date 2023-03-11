@@ -18,7 +18,7 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
 
-    # do some research on property
+    # gives "special" functionality to certain methods to make them act as getters, setters, or deleters when we define properties in a class
     @property
     def full_name(self):
         """Return full name of user"""

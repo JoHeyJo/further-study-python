@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 //components
 import { IUser } from './interface';
-import { userAdd, userGet, userUpdate } from './api';
+import { userAdd, userUpdate, userEdit } from './api';
 // style
 import './style/Form.css';
 
@@ -37,11 +37,14 @@ function Form() {
     }))
   }
 
-  /** Fetches existing through API*/
+  /** Fetches existing user to edit though API*/
   async function fetchUser(id: number | undefined) {
-    let res = await userGet(id)
-    setUser(res);
-    console.log(res)
+    try{
+      let res = await userEdit(id)
+      setUser(res);
+    } catch (error: any){
+      console.error(`Error: fetchUser => ${error}`)
+    }
   }
 
   /** send user data to api */
