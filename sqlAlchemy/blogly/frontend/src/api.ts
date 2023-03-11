@@ -16,7 +16,7 @@ async function userGetAll() {
       const res = await axios.get(`${BASE_URL}/`);
       return res.data;
   } catch (error: any) {
-    console.error("API Error:" + error.response);
+    console.error("API get all users Error:" + error.response);
   }
 }
 
@@ -26,7 +26,7 @@ async function userAdd(data: IUser) {
       const res = await axios.post(`${BASE_URL}/users`, data)
       return res.data
   } catch (error: any) {
-    console.error("API Error:" + error.response);
+    console.error("API add user Error:" + error.response);
   }
 }
 
@@ -37,7 +37,7 @@ async function userGet(id: number | undefined) {
     return res.data
 
   } catch (error: any){
-    console.error("API Error:" + error.message)
+    console.error("API get user Error:" + error.message)
   }
 }
 
@@ -47,10 +47,20 @@ async function userUpdate(id: number, data: IUser) {
     const res = await axios.patch(`${BASE_URL}/users/${id}/edit`, data)
     return res.data;
   } catch(error: any){
-    console.error("API Error:"+ error.message)
+    console.error("API update Error:"+ error.message)
+  }
+}
+
+/** deletes user with matching id */
+async function userDelete(id:number) {
+  try{
+    const res = await axios.delete(`${BASE_URL}/users/${id}`)
+    return res.data
+  } catch(error: any){
+    console.error(`API Delete error: ${error}`)
   }
 }
 
 
-export { userGet, userGetAll, userAdd, userUpdate };
+export { userGet, userGetAll, userAdd, userUpdate, userDelete };
 
