@@ -2,6 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
+# can contain a default img 
+# DEFAULT_IMAGE_URL = "https://tinyurl.com/y3rfozh8"
+
 class User(db.Model):
     """User model."""
 
@@ -14,7 +18,11 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
 
+    # do some research on property
+    @property
     def full_name(self):
+        """Return full name of user"""
+
         return f"{self.first_name} {self.last_name}"
 
     def serialize(self):
