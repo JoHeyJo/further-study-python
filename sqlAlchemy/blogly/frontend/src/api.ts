@@ -35,7 +35,6 @@ async function userGet(id: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${id}`)
     return res.data
-
   } catch (error: any){
     console.error("API get user Error:" + error.message)
   }

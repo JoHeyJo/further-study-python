@@ -83,7 +83,6 @@ def users_update(user_id):
         db.session.add(user)
         db.session.commit()
 
-
         return redirect(f"/users/{user_id}")
 
     except LookupError as error:

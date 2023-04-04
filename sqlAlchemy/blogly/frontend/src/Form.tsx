@@ -105,10 +105,12 @@ function Form() {
         </input>
 
         <button>{!user.id ? 'Add User' : 'Update User'}</button>
+        {user.id !== 0
+        ? <button onClick={() =>navigate(`/users/${user.id}/`)}>Cancel</button>
+        : <button onClick={() =>navigate('/')}>Cancel</button>
 
-        {/* <Link to={`/users/${user.id}/`}> */}
-        <button onClick={() =>navigate(`/users/${user.id}/`)}>Cancel</button>
-        {/* </Link> */}
+        }
+
       </form>
     </>
   )
