@@ -70,6 +70,15 @@ async function userDelete(id:number) {
   }
 }
 
+/** gets form for user to create post*/
+async function postAdd(id: number) {
+  try{
+    const res = await axios.get(`${BASE_URL}/users/${id}/posts/new`)
+    return res.data;
+  } catch(error: any){
+    console.error(`API get post form error: ${error}`)
+  }
+}
 
 export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit };
 

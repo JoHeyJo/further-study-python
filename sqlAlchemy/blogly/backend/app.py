@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, redirect, jsonify 
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -92,8 +92,29 @@ def users_update(user_id):
 # add delete to end of route
 @app.delete("/users/<int:user_id>/delete")
 def user_delete(user_id):
+    """Delete user"""
     # User.query.filter_by(id=user_id).delete()
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
     return redirect("/")
+
+######### Post routes ###########
+@app.post("/users/<int:user_id>/posts/new")
+def posts_add(user_id):
+    """Get form for user to post"""
+    try:
+        title = request.json['title']
+        content = request.json['content']
+        user_id = user_id
+        
+        post = Post(title=title, content=content, user_id=user_id)
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(f"/users/{user_id}")
+
+    except KeyError as e:
+        print("keyerror>>>>>>", e)
+        return jsonify({"error": f"Missing {str(e)}"})

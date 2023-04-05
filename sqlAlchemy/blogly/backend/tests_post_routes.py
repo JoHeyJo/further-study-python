@@ -37,15 +37,21 @@ class PostRouteTests(TestCase):
         db.session.commit()
 
         self.p1 = db.session.get(Post, p1id)
+        self.u1 = db.session.get(User, uid1)
 
     def tearDown(self):
         """Do after every test."""
 
-    def test_get_new_form_for_post(self):
-        """Test: form is shown for user to post"""
+    def test_add_post(self):
+        """Test: post is added to db and redirects"""
         with self.client as c:
-            resp = c.get(f"/users/{self.u1.id}/posts/new")
-            self.assertEqual(resp.status_code, 200)
+            resp = c.post(f"/users/{self.u1.id}/posts/new",
+            json={
+              'title':'hello again',
+              'content': 'hellow world again',
+              'user_id': self.u1.id
+            })
+            self.assertEqual(resp.status_code, 302)
             # self.assertEqual(resp.html)
 
 
