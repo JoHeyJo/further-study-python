@@ -35,7 +35,7 @@ class User(db.Model):
 class Post(db.Model):
     """Post model"""
 
-    __tablename__="users"
+    __tablename__="posts"
 
     id = db.Column(db.Integer,
                     primary_key=True,
@@ -45,6 +45,10 @@ class Post(db.Model):
     created_at = db.Column(DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User')
+
+    def serialize(self):
+        """Serialize to dict"""
+        return {"id": self.id, "title": self.title, "content": self.content, "created_at": self.created_at, "user_id": self.user_id}
 
 def connect_db(app):
     """Connect to database."""

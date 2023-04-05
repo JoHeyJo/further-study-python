@@ -12,7 +12,7 @@ from unittest import TestCase
 
 from models import User,connect_db, db
 
-os.environ['DATABASE_URL'] =  "postgresql:///blogly_testing"
+os.environ['DATABASE_URL'] = "postgresql:///blogly_testing"
 
 from app import app
 

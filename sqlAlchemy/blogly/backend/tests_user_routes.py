@@ -50,7 +50,7 @@ class UsersRouteTests(TestCase):
     def test_root(self):
         """Tests that root is redirected to users"""
         with self.client as c:
-            resp = c.get('/')
+            resp = c.get("/")
             # html = resp.get_data(as_text=True)
             self.assertEqual(resp.status_code, 302)
             self.assertEqual(resp.location, "/users")
