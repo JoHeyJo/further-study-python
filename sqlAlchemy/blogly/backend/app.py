@@ -8,6 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_fs'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
@@ -19,8 +20,8 @@ app.app_context().push()
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 toolbar = DebugToolbarExtension(app)
-
 connect_db(app)
+db.create_all()
 #### do this when you want to have your root route be a certain page/component
 @app.get('/')
 def root():
@@ -118,3 +119,15 @@ def posts_add(user_id):
     except KeyError as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
+
+
+@app.get("/posts/<int:post_id>")
+def posts_get_post(post_id):
+    """Retrieves post post"""
+    try:
+        post = Post.query.get_or_404(post_id)
+        serialized = Post.serialize(post)
+        return jsonify(serialized)
+    except LookupError as e:
+        print("Lookup error", error)
+        return jsonify({"error":error})
