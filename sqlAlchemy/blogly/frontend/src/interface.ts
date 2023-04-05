@@ -4,3 +4,8 @@ export interface IUser {
   lastName: string;
   image: string;
 }
+
+export interface IPost {
+  title: string;
+  content: string;
+}

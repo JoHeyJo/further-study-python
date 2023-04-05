@@ -71,9 +71,11 @@ class PostRouteTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             print('in test get post',resp.json)
             self.assertIn("title", resp.json)
+            self.assertIn("content", resp.json)
 
 # POST / users/[user-id]/posts/new
 # Handle add form
+
 # add post and redirect to the user detail page.
 # GET / posts/[post-id]
 # Show a post.
@@ -87,7 +89,9 @@ class PostRouteTests(TestCase):
 
 # GET / posts/[post-id]/edit
 # Show form to edit a post, and to cancel(back to user page).
+
 # POST / posts/[post-id]/edit
 # Handle editing of a post. Redirect back to the post view.
+
 # POST / posts/[post-id]/delete
 # Delete the post.

@@ -101,6 +101,11 @@ def user_delete(user_id):
     return redirect("/")
 
 ######### Post routes ###########
+@app.get("/users/<int:user_id>/posts/new")
+def post_get(user_id):
+    """Show form to add a post for that user"""
+
+
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):
     """Get form for user to post"""

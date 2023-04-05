@@ -20,7 +20,7 @@ const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
  * 
  * App -> Form
  */
-function Form() {
+function UserForm() {
   const [user, setUser] = useState<IUser>(defaultUser);
   const [userData, setUserData] = useState<{}>({})
   const navigate = useNavigate();
@@ -116,4 +116,4 @@ function Form() {
   )
 }
 
-export default Form;
+export default UserForm;

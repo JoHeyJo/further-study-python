@@ -1,11 +1,11 @@
-//dependencies 
+//modules 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
-//components 
+//components / modules
 import { IUser } from './interface'
 import { userGet, userDelete } from './api'
-import Form from './Form'
+import UserForm from './UserForm'
 // style
 import './style/User.css'
 import img from './default.png'
@@ -57,8 +57,8 @@ function User() {
         <div className="User-fn">{user.firstName}</div>
         <div className="User-ln">{user.lastName}</div>
       </div>
-      <Button onClick={handleClick}>Edit</Button>
-      <Button onClick={()=>removeUser(user.id)}>Delete</Button>
+      <Button variant="primary" onClick={handleClick}>Edit</Button>
+      <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
     </div>
   )
 }
