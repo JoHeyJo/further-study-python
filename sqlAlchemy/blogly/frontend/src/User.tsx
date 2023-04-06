@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { IUser } from './interface'
 import { userGet, userDelete } from './api'
 import UserForm from './UserForm'
+import Posts from './Posts';
 // style
 import './style/User.css'
 import img from './default.png'
@@ -59,6 +60,7 @@ function User() {
       </div>
       <Button variant="primary" onClick={handleClick}>Edit</Button>
       <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
+      <div className="User-posts"><Posts userId={+params.id!}/></div>
     </div>
   )
 }
