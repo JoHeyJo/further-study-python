@@ -1,6 +1,7 @@
 //dependencies
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // components
 import UserForm from './UserForm';
 import Users from './Users';
