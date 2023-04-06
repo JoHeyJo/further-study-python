@@ -136,8 +136,12 @@ def posts_get_post(post_id):
     """Retrieves post post"""
     try:
         post = Post.query.get_or_404(post_id)
-        serialized = Post.serialize(post)
-        return jsonify(serialized)
+        user = User.query.get_or_404(post.user_id)
+        post_serialized = Post.serialize(post)
+        user_serialized = User.serialize(user)
+        # doesn't return new object. overwrites first object including data from both dicts
+        user_serialized.update(post_serialized) 
+        return jsonify(user_serialized)
     except LookupError as e:
-        print("Lookup error", error)
-        return jsonify({"error":error})
+        print("Lookup error", e)
+        return jsonify({"error":e})
