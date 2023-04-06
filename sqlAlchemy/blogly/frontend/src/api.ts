@@ -81,6 +81,16 @@ async function getPosts(id: number){
   }
 }
 
+/**Get user post */
+async function getPost(id:number){
+  try{
+    const res = await axios.get(`${BASE_URL}/posts/${id}`)
+    return res.data;
+  } catch(error: any){
+    console.error(`API error getPost: ${error}`)
+  }
+}
+
 /** gets form for user to create post*/
 async function postAdd(id: number) {
   try{
@@ -91,5 +101,5 @@ async function postAdd(id: number) {
   }
 }
 
-export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, getPosts };
+export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, getPosts, getPost };
 

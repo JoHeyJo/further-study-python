@@ -4,9 +4,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // components
 import UserForm from './UserForm';
 import Users from './Users';
-import User from './User'
-import EditUser from './EditUser'
-import PostForm from './PostForm'
+import User from './User';
+import EditUser from './EditUser';
+import PostForm from './PostForm';
+import Post from './Post';
 // style
 import './style/App.css';
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/users/:id' element={<User/>}/>
           <Route path='/users/:id/edit' element={<UserForm/>}/>
           <Route path="/users/:id/posts/new" element={<PostForm/>}/>
+          <Route path="posts/:id" element={<Post/>}/>
         </Routes>
       </BrowserRouter>
     </div>

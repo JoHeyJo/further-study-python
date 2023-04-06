@@ -29,7 +29,7 @@ function Posts({userId}: IUserId) {
     <>
       <h3>Posts</h3>
       <div>{
-        posts.map(post => <Link to="/form"><li className="Posts-post">{post.title}</li></Link>)
+        posts.map(post => <Link to={`/posts/${post.id}`}><li className="Posts-post">{post.title}</li></Link>)
       }
       </div>
     </>
