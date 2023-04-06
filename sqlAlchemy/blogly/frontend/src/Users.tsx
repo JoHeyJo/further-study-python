@@ -1,6 +1,7 @@
 //dependencies
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { Button } from "react-bootstrap";
 //components
 import { IUser } from './interface'
 import { userGetAll } from "./api";
@@ -34,7 +35,7 @@ function Users() {
         {users.map(u => <li key={u.id}><Link to={`/users/${u.id}`} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
       </div>
       <Link to="/form">
-        <button>Add user</button>
+        <Button variant="primary">Add user</Button>
       </Link>
 
     </div>

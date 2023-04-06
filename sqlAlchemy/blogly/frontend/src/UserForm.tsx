@@ -1,6 +1,6 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button } from "react-bootstrap";
 // import { redirect } from 'react-router-dom';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 //components
@@ -39,10 +39,10 @@ function UserForm() {
 
   /** Fetches existing user to edit though API*/
   async function fetchUser(id: number | undefined) {
-    try{
+    try {
       let res = await userEdit(id)
       setUser(res);
-    } catch (error: any){
+    } catch (error: any) {
       console.error(`Error: fetchUser => ${error}`)
     }
   }
@@ -104,10 +104,10 @@ function UserForm() {
           placeholder='Image URL:'>
         </input>
 
-        <button>{!user.id ? 'Add User' : 'Update User'}</button>
+        <Button>{!user.id ? 'Add User' : 'Update User'}</Button>
         {user.id !== 0
-        ? <button onClick={() =>navigate(`/users/${user.id}/`)}>Cancel</button>
-        : <button onClick={() =>navigate('/')}>Cancel</button>
+          ? <Button onClick={() => navigate(`/users/${user.id}/`)}>Cancel</Button>
+          : <Button onClick={() => navigate('/')}>Cancel</Button>
 
         }
 
