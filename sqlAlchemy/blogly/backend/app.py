@@ -101,10 +101,16 @@ def user_delete(user_id):
     return redirect("/")
 
 ######### Post routes ###########
-@app.get("/users/<int:user_id>/posts/new")
-def post_get(user_id):
-    """Show form to add a post for that user"""
+# @app.get("/users/<int:user_id>/posts/new")
+# def posts_get(user_id):
+#     """Show form to add a post for that user"""
 
+@app.get("/users/<int:user_id>/posts")
+def posts_get(user_id):
+    """Get all user posts"""
+    posts = Post.query.filter(Post.user_id==user_id)
+    serialized = [Post.serialize(post) for post in posts]
+    return jsonify(serialized)
 
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):

@@ -77,6 +77,7 @@ class PostRouteTests(TestCase):
 # Handle add form
 
 # add post and redirect to the user detail page.
+
 # GET / posts/[post-id]
 # Show a post.
 
