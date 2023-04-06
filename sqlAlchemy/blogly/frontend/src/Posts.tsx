@@ -1,6 +1,6 @@
 //dependencies
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 // components/ modules
 import { IPost, IUserId } from './interface';
 import { getPosts } from './api'
@@ -16,7 +16,9 @@ import { Button } from "react-bootstrap";
  * - posts: [{title='',content=''},{},{}]
  */
 function Posts({userId}: IUserId) {
+  
   const [posts, setPosts] = useState<IPost[]>([])
+
   useEffect(() => {
     async function fetchPosts() {
       const res = await getPosts(userId)
@@ -33,7 +35,7 @@ function Posts({userId}: IUserId) {
         posts.map(post => <Link to={`/posts/${post.id}`}><li className="Posts-post">{post.title}</li></Link>)
       }
       </div>
-      <Button variant="primary" >Add Post</Button>
+      <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
     </>
   )
 }
