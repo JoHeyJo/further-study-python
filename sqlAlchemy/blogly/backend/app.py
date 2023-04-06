@@ -131,7 +131,6 @@ def posts_add(user_id):
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
-
 @app.get("/posts/<int:post_id>")
 def posts_get_post(post_id):
     """Retrieves post post"""
