@@ -51,6 +51,7 @@ function User() {
     }
   }
 
+  console.log('params',params.id)
   return (
     <div className="User-container">
       <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>

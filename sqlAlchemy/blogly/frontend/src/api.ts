@@ -73,7 +73,8 @@ async function userDelete(id:number) {
 /**Gets all user posts */
 async function getPosts(id: number){
   try{
-    const res = await axios.get(`${BASE_URL}/users${id}/posts`)
+    console.log(id)
+    const res = await axios.get(`${BASE_URL}/users/${id}/posts`)
     return res.data;
   } catch(error: any){
     console.error(`API get posts error: ${error}`)
