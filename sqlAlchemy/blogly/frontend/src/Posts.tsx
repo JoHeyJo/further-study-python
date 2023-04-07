@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom'
 // components/ modules
 import { IPost, IUserId } from './interface';
-import { getPosts } from './api'
+import { postsGet } from './api'
 import { Button } from "react-bootstrap";
 
 
@@ -14,14 +14,17 @@ import { Button } from "react-bootstrap";
  * 
  * State:
  * - posts: [{title='',content=''},{},{}]
+ * 
+ * User - Posts
  */
 function Posts({userId}: IUserId) {
-  
+
   const [posts, setPosts] = useState<IPost[]>([])
 
+  /** On mount fetches users' posts */
   useEffect(() => {
     async function fetchPosts() {
-      const res = await getPosts(userId)
+      const res = await postsGet(userId)
       setPosts(res)
     }
     fetchPosts();

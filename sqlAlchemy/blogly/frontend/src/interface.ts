@@ -11,6 +11,9 @@ export interface IPost {
   id: number;
   firstName: string;
   lastName: string;
+  user_id: number;
+  created_at: string;
+  imageUrl: string | null;
 }
 
 export interface IUserId {

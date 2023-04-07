@@ -11,7 +11,7 @@ import './style/Form.css';
 
 const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
 
-/** Handles user information
+/** Handles user information and renders form for new/edit user
  * 
  * Props:
  * 
@@ -22,7 +22,7 @@ const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
  */
 function UserForm() {
   const [user, setUser] = useState<IUser>(defaultUser);
-  const [userData, setUserData] = useState<{}>({})
+  // const [userData, setUserData] = useState<{}>({})
   const navigate = useNavigate();
 
   const location = useLocation();

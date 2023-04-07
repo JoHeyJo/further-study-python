@@ -71,7 +71,7 @@ async function userDelete(id:number) {
 }
 
 /**Gets all user posts */
-async function getPosts(id: number){
+async function postsGet(id: number){
   try{
     console.log(id)
     const res = await axios.get(`${BASE_URL}/users/${id}/posts`)
@@ -82,12 +82,12 @@ async function getPosts(id: number){
 }
 
 /**Get user post */
-async function getPost(id:number){
+async function postGet(id:number){
   try{
     const res = await axios.get(`${BASE_URL}/posts/${id}`)
     return res.data;
   } catch(error: any){
-    console.error(`API error getPost: ${error}`)
+    console.error(`API error postGet: ${error}`)
   }
 }
 
@@ -101,5 +101,5 @@ async function postAdd(id: number) {
   }
 }
 
-export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, getPosts, getPost };
+export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet };
 
