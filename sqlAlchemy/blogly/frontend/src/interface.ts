@@ -8,6 +8,10 @@ export interface IUser {
 export interface IPost {
   title: string;
   content: string;
+
+}
+
+export interface IPostData extends IPost {
   id: number;
   firstName: string;
   lastName: string;

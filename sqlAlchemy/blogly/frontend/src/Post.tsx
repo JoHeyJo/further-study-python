@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import { useParams, Link } from "react-router-dom";
 //components / modules
-import { IPost } from './interface';
+import { IPostData } from './interface';
 import { postGet } from './api';
 
 
@@ -15,7 +15,7 @@ import { postGet } from './api';
  * User -> Posts -> Post
  */
 function Post() {
-  const [post, setPost] = useState<IPost>(
+  const [post, setPost] = useState<IPostData>(
     {
       id: 0,
       title: '',

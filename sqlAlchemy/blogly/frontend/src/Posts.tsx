@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom'
 // components/ modules
-import { IPost, IUserId } from './interface';
+import { IPostData, IUserId } from './interface';
 import { postsGet } from './api'
 import { Button } from "react-bootstrap";
 
@@ -13,13 +13,24 @@ import { Button } from "react-bootstrap";
  * - userId: number
  * 
  * State:
- * - posts: [{title='',content=''},{},{}]
+ * - posts: [
+ * {
+ * id: number;
+ * title='',
+ * content='',  
+ * title: '', 
+  firstName: '';
+  lastName: '';
+  user_id: number;
+  created_at: '';
+  imageUrl: '' | null;}
+  ,{},{}]
  * 
  * User - Posts
  */
 function Posts({userId}: IUserId) {
 
-  const [posts, setPosts] = useState<IPost[]>([])
+  const [posts, setPosts] = useState<IPostData[]>([])
 
   /** On mount fetches users' posts */
   useEffect(() => {
