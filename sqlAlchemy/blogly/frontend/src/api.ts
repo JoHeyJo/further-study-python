@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUser } from './interface'
+import { IUser, IPost } from './interface'
 
 const BASE_URL = "http://localhost:5000";
 // try {
@@ -91,15 +91,15 @@ async function postGet(id:number){
   }
 }
 
-/** gets form for user to create post*/
-async function postAdd(id: number) {
+/** Adds form for user to create post*/
+async function postAdd(PostData: IPost) {
   try{
-    const res = await axios.get(`${BASE_URL}/users/${id}/posts/new`)
+    const res = await axios.post(`${BASE_URL}/users/${PostData.userId}/posts/new`)
     return res.data;
   } catch(error: any){
-    console.error(`API get post form error: ${error}`)
+    console.error(`API post post form error: ${error}`)
   }
 }
 
-export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet };
+export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd };
 

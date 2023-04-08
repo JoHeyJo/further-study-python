@@ -8,14 +8,14 @@ export interface IUser {
 export interface IPost {
   title: string;
   content: string;
-
+  userId: number;
+  
 }
 
 export interface IPostData extends IPost {
   id: number;
   firstName: string;
   lastName: string;
-  user_id: number;
   created_at: string;
   imageUrl: string | null;
 }

@@ -22,7 +22,7 @@ function Post() {
       content: '',
       firstName: '',
       lastName: '',
-      user_id: 0,
+      userId: 0,
       created_at: '',
       imageUrl: null
     })
@@ -46,7 +46,7 @@ function Post() {
       <h3 className="Post-content">{post.content}</h3>
       <h4 className="Post-author">By: {post.firstName} {post.lastName}</h4>
       <div className="Post-controls">
-        <Link to={`/users/${post.user_id}`}><Button variant="outline-primary">Cancel</Button></Link>
+        <Link to={`/users/${post.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
         <Button variant="primary">Edit</Button>
         <Button variant="danger">Delete</Button>
       </div>
