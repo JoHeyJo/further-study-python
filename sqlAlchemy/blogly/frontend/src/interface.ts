@@ -19,3 +19,8 @@ export interface IPost {
 export interface IUserId {
   userId: number;
 }
+
+export interface UserContextType {
+  firstName: string;
+  lastName: string;
+}
