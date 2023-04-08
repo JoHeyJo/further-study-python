@@ -139,7 +139,7 @@ def posts_get_post(post_id):
         user = User.query.get_or_404(post.user_id)
         post_serialized = Post.serialize(post)
         user_serialized = User.serialize(user)
-        # doesn't return new object. overwrites first object including data from both dicts
+        # update doesn't return new object. overwrites first object including data from both dicts
         user_serialized.update(post_serialized) 
         return jsonify(user_serialized)
     except LookupError as e:
