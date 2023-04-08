@@ -32,12 +32,16 @@ function PostForm({ }) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>){
     e.preventDefault();
     console.log(e.target.name)
-    const { name, value } = e.target
-    setUserData(u => ({
-      ...u,
-      [name]: value
+    const title = e.target.name;
+    const content = e.target.value;
+    // console.log(name,value)
+    setPostData(p => ({
+      ...p,
+      [title]: content
     }))
   }
+
+  /**Submit post data */
 
   return (
     <>
