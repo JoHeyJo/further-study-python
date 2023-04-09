@@ -38,8 +38,8 @@ def users_all():
         # users = User.query.order_by(User.last_name, User.first_name).all()
         users = User.query.order_by(User.last_name, User.first_name)
         serialized = [User.serialize(user) for user in users]   
-        user_name = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized] 
-        return jsonify(user_name)   
+        user_data = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized] 
+        return jsonify(user_data)   
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error )
         return jsonify({"error": error})
@@ -118,16 +118,15 @@ def posts_add(user_id):
     try:
         title = request.json['title']
         content = request.json['content']
-        user_id = user_id
         
         post = Post(title=title, content=content, user_id=user_id)
-
         db.session.add(post)
         db.session.commit()
 
         return redirect(f"/users/{user_id}")
 
     except KeyError as e:
+        print('***********',post)
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
