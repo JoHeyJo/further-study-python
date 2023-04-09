@@ -51,7 +51,8 @@ function PostForm({ }) {
   }
 
   /**Submit post data */
-  function handleSubmit() {
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     postAdd(postData);
   }
 
@@ -72,8 +73,8 @@ function PostForm({ }) {
           id="form-content"
           name="content" />
 
-        <Button variant="info">Cancel</Button>
-        <Button variant="success">Submit</Button>
+        <Button type='submit' variant="info">Cancel</Button>
+        <Button type='submit' variant="success">Submit</Button>
       </form>
     </>
   )

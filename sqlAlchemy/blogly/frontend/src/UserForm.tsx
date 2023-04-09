@@ -104,10 +104,10 @@ function UserForm() {
           placeholder='Image URL:'>
         </input>
 
-        <Button>{!user.id ? 'Add User' : 'Update User'}</Button>
+        <Button type='submit'>{!user.id ? 'Add User' : 'Update User'}</Button>
         {user.id !== 0
-          ? <Button onClick={() => navigate(`/users/${user.id}/`)}>Cancel</Button>
-          : <Button onClick={() => navigate('/')}>Cancel</Button>
+          ? <Button type='submit' onClick={() => navigate(`/users/${user.id}/`)}>Cancel</Button>
+          : <Button type='submit' onClick={() => navigate('/')}>Cancel</Button>
 
         }
 
