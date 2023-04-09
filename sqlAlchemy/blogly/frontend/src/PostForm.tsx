@@ -1,10 +1,12 @@
 //dependencies
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 //modules
 import { userGet, postAdd } from './api';
 import { IUser, IPost } from "./interface";
+
+const defaultPost: IPost = { title: '', content: '', userId: 0 }
 
 /** Handles/ submits post data & renders form for new post 
  * 
@@ -16,13 +18,12 @@ import { IUser, IPost } from "./interface";
 */
 function PostForm({ }) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
-  const [postData, setPostData] = useState<IPost>({ title: '', content: '', userId: 0 })
+  const [postData, setPostData] = useState<IPost>(defaultPost)
 
   const params = useParams();
   const userId = +params.id!
 
-
-
+  const navigate = useNavigate();
 
   /** fetches user data on mount*/
   useEffect(() => {
@@ -40,10 +41,8 @@ function PostForm({ }) {
   /** handles changes in form */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    console.log(e.target.name)
     const title = e.target.name;
     const content = e.target.value;
-    // console.log(name,value)
     setPostData(p => ({
       ...p,
       [title]: content
@@ -54,6 +53,8 @@ function PostForm({ }) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     postAdd(postData);
+    setPostData(defaultPost);
+    navigate(`/users/${userId}`);
   }
 
   return (
@@ -73,8 +74,8 @@ function PostForm({ }) {
           id="form-content"
           name="content" />
 
-        <Button type='submit' variant="info">Cancel</Button>
-        <Button type='submit' variant="success">Submit</Button>
+        <Button variant="info">Cancel</Button>
+        <Button type='submit'  variant="success">Submit</Button>
       </form>
     </>
   )

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 // import { redirect } from 'react-router-dom';
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 //components
 import { IUser } from './interface';
 import { userAdd, userUpdate, userEdit } from './api';
@@ -60,7 +60,7 @@ function UserForm() {
         // add user
         let res = await userAdd(user)
         setUser(defaultUser);
-        navigate('/')
+        navigate('/');
       }
     } catch (error: any) {
       console.error(error)

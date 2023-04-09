@@ -94,10 +94,10 @@ async function postGet(id:number){
 /** Adds form for user to create post*/
 async function postAdd(PostData: IPost) {
   try{
-    const res = await axios.post(`${BASE_URL}/users/${PostData.userId}/posts/new`)
+    const res = await axios.post(`${BASE_URL}/users/${PostData.userId}/posts/new`,PostData)
     return res.data;
   } catch(error: any){
-    console.error(`API post post form error: ${error}`)
+    console.error(`API post form error: ${error}`)
   }
 }
 

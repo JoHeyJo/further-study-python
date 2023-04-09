@@ -37,7 +37,6 @@ function Users() {
       <Link to="/form">
         <Button variant="primary">Add user</Button>
       </Link>
-
     </div>
   )
 }
