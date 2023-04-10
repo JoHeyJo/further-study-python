@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, jsonify, make_response 
+from flask import Flask, request, redirect, jsonify 
 from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
@@ -112,9 +112,9 @@ def posts_all(user_id):
     try:
         posts = Post.query.filter(Post.user_id==user_id)
         serialized = [Post.serialize(post) for post in posts]
-        response = make_response(jsonify(serialized))
-        response.headers["Cache-Control"] = "no-cache"
-        return response
+        print('get all posts>>>>>>',serialized)
+        print('get all posts>>>>>>', type(user_id))
+        return jsonify(serialized)
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error)
         return jsonify({"error": error})
@@ -129,17 +129,21 @@ def posts_add(user_id):
         post = Post(title=title, content=content, user_id=user_id)
         db.session.add(post)
         db.session.commit()
+        print(f"Added post with id {post.id}")
+        print(">>>>>>>>",Post.serialize(Post.query.get(post.id)))
+        # print('*****',Post.query())
 
+        print('add post>>>>>>', type(user_id))
         return redirect(f"/users/{user_id}/posts")
 
-    except KeyError as e:
+    except Exception as e:
         print('***********',post)
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
 @app.get("/posts/<int:post_id>")
 def posts_get(post_id):
-    """Retrieves post post"""
+    """Retrieves post"""
     try:
         post = Post.query.get_or_404(post_id)
         user = User.query.get_or_404(post.user_id)
