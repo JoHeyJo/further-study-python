@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, jsonify 
+from flask import Flask, request, redirect, jsonify, make_response 
 from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
@@ -38,7 +38,8 @@ def users_all():
         # users = User.query.order_by(User.last_name, User.first_name).all()
         users = User.query.order_by(User.last_name, User.first_name)
         serialized = [User.serialize(user) for user in users]   
-        user_data = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized] 
+        user_data = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized]
+        print('get all users>>>>>>>>',user_data) 
         return jsonify(user_data)   
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error )
@@ -54,9 +55,9 @@ def users_get(id):
 @app.post("/users/new")
 def users_add():
     """Adds new user to database"""
-    first_name = request.json['firstName']
-    last_name = request.json['lastName']
     try:
+        first_name = request.json['firstName']
+        last_name = request.json['lastName']
         user = User(first_name=first_name, last_name=last_name)
         db.session.add(user)
         db.session.commit()
@@ -106,11 +107,17 @@ def user_delete(user_id):
 #     """Show form to add a post for that user"""
 
 @app.get("/users/<int:user_id>/posts")
-def posts_get(user_id):
+def posts_all(user_id):
     """Get all user posts"""
-    posts = Post.query.filter(Post.user_id==user_id)
-    serialized = [Post.serialize(post) for post in posts]
-    return jsonify(serialized)
+    try:
+        posts = Post.query.filter(Post.user_id==user_id)
+        serialized = [Post.serialize(post) for post in posts]
+        response = make_response(jsonify(serialized))
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+    except LookupError as error:
+        print('Lookup error >>>>>>>>>', error)
+        return jsonify({"error": error})
 
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):
@@ -123,7 +130,7 @@ def posts_add(user_id):
         db.session.add(post)
         db.session.commit()
 
-        return redirect(f"/users/{user_id}")
+        return redirect(f"/users/{user_id}/posts")
 
     except KeyError as e:
         print('***********',post)
@@ -131,7 +138,7 @@ def posts_add(user_id):
         return jsonify({"error": f"Missing {str(e)}"})
 
 @app.get("/posts/<int:post_id>")
-def posts_get_post(post_id):
+def posts_get(post_id):
     """Retrieves post post"""
     try:
         post = Post.query.get_or_404(post_id)
