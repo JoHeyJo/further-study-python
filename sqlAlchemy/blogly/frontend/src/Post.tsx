@@ -35,7 +35,7 @@ function Post() {
     async function fetchPost() {
       const res = await postGet(postId)
       setPost(res)
-      console.log(res)
+      // console.log(res)
     };
     fetchPost()
   }, [])

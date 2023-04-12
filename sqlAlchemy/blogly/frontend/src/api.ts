@@ -11,9 +11,10 @@ const BASE_URL = "http://localhost:5000";
 // }
 
 /**Returns first and last of all users */
-async function userGetAll() {
+async function usersGet() {
   try {
       const res = await axios.get(`${BASE_URL}/users`);
+    console.log('user data', res.data)
       return res.data;
   } catch (error: any) {
     console.error("API get all users Error:" + error.response);
@@ -71,10 +72,11 @@ async function userDelete(id:number) {
 }
 
 /**Gets all user posts */
-async function postsGet(id: number){
+async function postsGet(userId: number){
   try{
-    console.log(id)
-    const res = await axios.get(`${BASE_URL}/users/${id}/posts`)
+    // console.log(id)
+    const res = await axios.get(`${BASE_URL}/users/${userId}/posts`)
+    console.log('post data',res.data)
     return res.data;
   } catch(error: any){
     console.error(`API get posts error: ${error}`)
@@ -91,15 +93,16 @@ async function postGet(id:number){
   }
 }
 
-/** Adds form for user to create post*/
-async function postAdd(PostData: IPost) {
+/** Adds post new post data*/
+async function postAdd(postData: IPost) {
   try{
-    const res = await axios.post(`${BASE_URL}/users/${PostData.userId}/posts/new`,PostData)
+    const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`,postData)
+    console.log(res.data.id)
     return res.data;
   } catch(error: any){
     console.error(`API post form error: ${error}`)
   }
 }
 
-export { userGet, userGetAll, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd };
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd };
 

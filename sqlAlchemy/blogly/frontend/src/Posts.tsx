@@ -6,7 +6,6 @@ import { IPostData, IUserId } from './interface';
 import { postsGet } from './api'
 import { Button } from "react-bootstrap";
 
-
 /** Renders list of posts by title
  * 
  * Props:
@@ -30,14 +29,10 @@ import { Button } from "react-bootstrap";
  */
 function Posts({userId}: IUserId) {
   const [posts, setPosts] = useState<IPostData[]>([])
-  console.log('userId', userId)
+  // console.log('userId', userId)
   /** On mount fetches users' posts */
   useEffect(() => {
-    // try{
-
-    // } catch(error:any){
-    //   console.log(error)
-    // }
+    console.log('userId',userId)
     async function fetchPosts() {
       const res = await postsGet(userId)
       console.log(res)
@@ -46,12 +41,11 @@ function Posts({userId}: IUserId) {
     fetchPosts();
   }, [])
 
-
   return (
     <>
       <h3>Posts</h3>
       <div>{
-        posts.map(post => <Link to={`/posts/${post.id}`}><li className="Posts-post">{post.title}</li></Link>)
+        posts.map(post => <li key={post.id}className="Posts-post"><Link to={`/posts/${post.id}`}>{post.title}</Link></li>)
       }
       </div>
       <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link>

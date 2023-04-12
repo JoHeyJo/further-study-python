@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 //components
 import { IUser } from './interface'
-import { userGetAll } from "./api";
+import { usersGet } from "./api";
 // style
 import './style/Users.css';
 
@@ -20,7 +20,7 @@ function Users() {
   /**Fetches all users from database */
   useEffect(() => {
     async function fetchUsers() {
-      const res = await userGetAll();
+      const res = await usersGet();
       setUsers(res)
     }
     fetchUsers();
@@ -32,7 +32,7 @@ function Users() {
         Users
       </h1>
       <div className="Users-box">
-        {users.map(u => <li key={u.id}><Link to={`/users/${u.id}`} className="Users-user"> {u.firstName} {u.lastName}</Link></li>)}
+        {users.map(u => <li key={u.id} className="Users-user"><Link to={`/users/${u.id}`} > {u.firstName} {u.lastName}</Link></li>)}
       </div>
       <Link to="/form">
         <Button variant="primary">Add user</Button>
