@@ -131,7 +131,7 @@ def posts_add(user_id):
         db.session.commit()
 
         print("FIRST >>>>>>>>",Post.serialize(Post.query.get(post.id)))
-        return redirect(f"/posts/{post.id}")
+        return redirect(f"/users/{post.id}/posts")
 
     except Exception as e:
         print("keyerror>>>>>>", e)
