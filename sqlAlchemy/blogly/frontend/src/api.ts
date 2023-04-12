@@ -96,7 +96,7 @@ async function postGet(id:number){
 /** Adds post new post data*/
 async function postAdd(postData: IPost) {
   try{
-    const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`,postData)
+    const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData)
     console.log(res)
     return res.data;
   } catch(error: any){

@@ -52,9 +52,13 @@ function PostForm({ }) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    postAdd(postData);
-    setPostData(defaultPost);
-    navigate(`/users/${userId}`);
+    try{
+      let res = await postAdd(postData);
+      setPostData(defaultPost);
+      navigate(`/users/${userId}`);
+    } catch(error:any){
+      console.error(error)
+    }
   }
 
   return (
