@@ -1,9 +1,9 @@
 import os
-from flask import Flask, request, redirect, jsonify 
+from flask import Flask, request, redirect, jsonify, url_for
 from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
-
+import time
 ######## Double check exception key works ##########
 app = Flask(__name__)
 CORS(app)
@@ -37,9 +37,9 @@ def users_all():
         # gets all users
         # users = User.query.order_by(User.last_name, User.first_name).all()
         users = User.query.order_by(User.last_name, User.first_name)
-        serialized = [User.serialize(user) for user in users]   
+        serialized = [User.serialize(user) for user in users]
+        print('SECOND get all posts>>>>>>', serialized)
         user_data = [{'id': user['id'], 'firstName':user['firstName'], 'lastName':user['lastName']} for user in serialized]
-        print('get all users>>>>>>>>',user_data) 
         return jsonify(user_data)   
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error )
@@ -112,8 +112,7 @@ def posts_all(user_id):
     try:
         posts = Post.query.filter(Post.user_id==user_id)
         serialized = [Post.serialize(post) for post in posts]
-        print('get all posts>>>>>>',serialized)
-        print('get all posts>>>>>>', type(user_id))
+        print('SECOND get all posts>>>>>>',serialized)
         return jsonify(serialized)
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error)
@@ -121,23 +120,20 @@ def posts_all(user_id):
 
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):
-    """Get form for user to post"""
+    """Adds new posts_"""
     try:
         title = request.json['title']
         content = request.json['content']
-        
-        post = Post(title=title, content=content, user_id=user_id)
+        user = User.query.get_or_404(user_id)
+        post = Post(title=title, content=content, user=user)
+
         db.session.add(post)
         db.session.commit()
-        print(f"Added post with id {post.id}")
-        print(">>>>>>>>",Post.serialize(Post.query.get(post.id)))
-        # print('*****',Post.query())
 
-        print('add post>>>>>>', type(user_id))
-        return redirect(f"/users/{user_id}/posts")
+        print("FIRST >>>>>>>>",Post.serialize(Post.query.get(post.id)))
+        return redirect(f"/posts/{post.id}")
 
     except Exception as e:
-        print('***********',post)
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
@@ -151,6 +147,7 @@ def posts_get(post_id):
         user_serialized = User.serialize(user)
         # update doesn't return new object. overwrites first object including data from both dicts
         user_serialized.update(post_serialized) 
+        print('***********', post.id)
         return jsonify(user_serialized)
     except LookupError as e:
         print("Lookup error", e)

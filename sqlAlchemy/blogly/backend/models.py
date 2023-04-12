@@ -19,7 +19,8 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
-    posts = db.relationship('Post')
+    posts = db.relationship("Post", backref="user")
+    # posts = db.relationship('Post')
 
     # gives "special" functionality to certain methods to make them act as getters, setters, or deleters when we define properties in a class
     @property
@@ -41,10 +42,10 @@ class Post(db.Model):
                     primary_key=True,
                     autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
-    content = db.Column(db.String(50), nullable=False)
-    created_at = db.Column(DateTime, default=datetime.now)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('User')
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # user = db.relationship('User')
 
     def serialize(self):
         """Serialize to dict"""
