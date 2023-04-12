@@ -52,9 +52,9 @@ function PostForm({ }) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    postAdd(postData)
+    postAdd(postData);
     setPostData(defaultPost);
-    navigate(`/posts/${1}`);
+    navigate(`/users/${userId}`);
   }
 
   return (
