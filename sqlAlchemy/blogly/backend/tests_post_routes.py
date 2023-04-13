@@ -33,15 +33,13 @@ class PostRouteTests(TestCase):
         u1 = User(first_name='test_first_one', last_name='test_last_one')
         uid1 = 1111
         u1.id = uid1
-        print("********",datetime.now())
        
         p1 = Post(title='hello', content='hello world', user_id=1111)
         p1id = 111
         p1.id = p1id
-        # p1.created_at = 'now'
+        created_at = 'now'
+        p1.created_at = created_at
 
-        print(Post.serialize(p1))
-        print("********",datetime.now())
         db.session.add_all([u1,p1])
         db.session.commit()
 
@@ -52,17 +50,32 @@ class PostRouteTests(TestCase):
         """Do after every test."""
         db.session.rollback()
 
-    def test_add_post(self):
+    def test_add_post_redirect(self):
         """Test: post is added to db and redirects"""
         with self.client as c:
             resp = c.post(f"/users/{self.u1.id}/posts/new",
-            json={
-              'title':'hello again',
-              'content': 'hello world again',
-              'user_id': self.u1.id
-            })
+                          json={
+                                'title':'hello again',
+                                'content': 'hello world again'
+                          },)
             self.assertEqual(resp.status_code, 302)
-            self.assertEqual(resp.location, f"/users/{self.u1.id}")
+            # hard coding 1 bc it's the expected pk of the newly created post
+            self.assertEqual(resp.location, "/users/1/posts")
+
+    def test_add_post_follow(self):
+        """Test: post is added to db and follows redirect"""
+        with self.client as c:
+            resp = c.post(f"/users/1111/posts/new",
+                          json={
+                              'title': 'hello again',
+                              'content': 'hello world again'
+                          }, 
+                            follow_redirects=True
+                          )
+            print('*******',resp.json)
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json, {'id': 1, 'title': 'hello again', 'content': 'hello world again',
+                             'created_at': 'now', 'user_id': 1111})
 
     def test_get_post(self):
         """Test: retrieve post of specific user"""
@@ -70,7 +83,6 @@ class PostRouteTests(TestCase):
             resp = c.get(f"/posts/{self.p1.id}")
             self.assertEqual(resp.status_code, 200)
             self.assertIn("title", resp.json)
-            # self.assertIn("content", resp.json)
 
 # POST / users/[user-id]/posts/new
 # Handle add form
@@ -79,7 +91,6 @@ class PostRouteTests(TestCase):
 
 # GET / posts/[post-id]
 # Show a post.
-
 
 # GET / users/[user-id]/posts/new
 # Show form to add a post for that user.
