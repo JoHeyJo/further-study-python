@@ -32,31 +32,34 @@ function PostForm({ }) {
   /** fetches data on mount*/
   useEffect(() => {
     //in response to new post, fetch user data and update state w/ user data
-    if(userId) {
-      setPostData(p => {
-        p.userId = userId
-        return p
-      })
-      fetchUser(); 
-    }
-    //in response to post edit, fetch post data and update state w/ post data
-    if(postId){
-      fetchPost();
-    }
+    async function fetchData(){
+      if(userId) {
+        setPostData(p => {
+          p.userId = userId
+          return p
+        })
+        fetchUser(userId); 
+      }
+      //in response to post edit, fetch post data and update state w/ post data
+      if(postId){
+        const post: IPost = await fetchPost();
+        fetchUser(post.userId);
+      }
+    };
+    fetchData();
   }, [])
-
-  // if in response to creating a new post
   
   /** Fetches user data*/
-  async function fetchUser() {
+  async function fetchUser(userId: number) {
     const res = await userGet(userId);
     setUserData(res);
   };
 
   /** Fetches post data*/
-  async function fetchPost(){
+  async function fetchPost(): Promise<IPost>{
     const res = await postEdit(postId);
     setPostData(res);
+    return res
   }
   
   /** handles changes in form */
@@ -84,13 +87,13 @@ function PostForm({ }) {
 
   return (
     <>
-      <h1>Add Post for {userData.firstName} {userData.lastName}</h1>
+      <h1>{userId ? 'Add' : 'Edit'} Post for {userData.firstName} {userData.lastName}</h1>
       <form onSubmit={handleSubmit} className="PostForm-form">
 
         <label htmlFor="form-title">Title:</label>
         <input className="PostForm-title"
           onChange={handleChange}
-          value={postData.content}
+          value={postData.title}
           id="form-title"
           name="title" />
 
