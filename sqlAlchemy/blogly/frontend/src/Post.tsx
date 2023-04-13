@@ -28,14 +28,13 @@ function Post() {
     })
   const params = useParams();
 
-  const postId = +params.id!
+  const postId = +params.post_id!
 
   /**On mount fetches post */
   useEffect(() => {
     async function fetchPost() {
       const res = await postGet(postId)
       setPost(res)
-      // console.log(res)
     };
     fetchPost()
   }, [])
@@ -47,8 +46,9 @@ function Post() {
       <h4 className="Post-author">By: {post.firstName} {post.lastName}</h4>
       <div className="Post-controls">
         <Link to={`/users/${post.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
-        <Button variant="primary">Edit</Button>
-        <Button variant="danger">Delete</Button>
+        <Link to={`/posts/${postId}/edit`}><Button variant="primary">Edit</Button></Link>
+        <Link to={`/users/${post.userId}`}><Button variant="danger">Delete</Button></Link>
+        
       </div>
     </div>
   )

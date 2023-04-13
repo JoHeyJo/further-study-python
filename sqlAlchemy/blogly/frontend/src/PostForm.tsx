@@ -21,21 +21,26 @@ function PostForm({ }) {
   const [postData, setPostData] = useState<IPost>(defaultPost)
 
   const params = useParams();
-  const userId = +params.id!
+  const userId = +params.user_id!
 
+
+  console.log(userId)
   const navigate = useNavigate();
 
-  /** fetches user data on mount*/
+  /** fetches user data on mount if PostForm is rendered for a new post*/
   useEffect(() => {
     async function fetchUser() {
       const res = await userGet(userId);
       setUserData(res);
     };
-    setPostData(p => {
-      p.userId = userId
-      return p
-    })
-    fetchUser();
+    //if PostForm is rendered in response to a new post, that users id will update state
+    if(userId) {
+      setPostData(p => {
+        p.userId = userId
+        return p
+      })
+      fetchUser(); 
+    }
   }, [])
 
   /** handles changes in form */
@@ -53,7 +58,7 @@ function PostForm({ }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try{
-      let res = await postAdd(postData);
+      await postAdd(postData);
       setPostData(defaultPost);
       navigate(`/users/${userId}`);
     } catch(error:any){
@@ -79,7 +84,7 @@ function PostForm({ }) {
           name="content" />
 
         <Button variant="info">Cancel</Button>
-        <Button type='submit'  variant="success">Submit</Button>
+        <Button type='submit' variant="success">Submit</Button>
       </form>
     </>
   )

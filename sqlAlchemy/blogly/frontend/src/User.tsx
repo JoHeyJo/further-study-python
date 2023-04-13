@@ -31,7 +31,7 @@ function User() {
       const res = await userGet(id);
       setUser(res)
     }
-    fetchUser(+params.id!)
+    fetchUser(+params.user_id!)
   }, [])
 
   /** navigates to user edit page */
@@ -60,7 +60,7 @@ function User() {
       </div>
       <Button variant="primary" onClick={handleClick}>Edit</Button>
       <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
-      <div className="User-posts"><Posts userId={+params.id!}/></div>
+      <div className="User-posts"><Posts userId={+params.user_id!}/></div>
     </div>
   )
 }

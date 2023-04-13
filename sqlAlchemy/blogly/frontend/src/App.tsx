@@ -20,10 +20,11 @@ function App() {
           <Route path='/' element={<Users />}/>
           <Route path='/form' element={<UserForm />}/>
           <Route path='/users' element={<Users />}/>
-          <Route path='/users/:id' element={<User />}/>
-          <Route path='/users/:id/edit' element={<UserForm />}/>
-          <Route path="/users/:id/posts/new" element={<PostForm />}/>
-          <Route path="posts/:id" element={<Post />}/>
+          <Route path='/users/:user_id' element={<User />}/>
+          <Route path='/users/:user_id/edit' element={<UserForm />}/>
+          <Route path="/users/:user_id/posts/new" element={<PostForm />}/>
+          <Route path="/posts/:post_id" element={<Post />}/>
+          <Route path="/posts/:post_id/edit" element={<PostForm />} />
         </Routes>
       </BrowserRouter>
     </div>

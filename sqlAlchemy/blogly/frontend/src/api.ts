@@ -104,5 +104,14 @@ async function postAdd(postData: IPost) {
   }
 }
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd };
+async function postEdit(postId: number){
+  try{
+    const res = await axios.get(`${BASE_URL}/posts/${postId}/edit`)
+    return res.data;
+  } catch(error: any){
+    console.error(`API postEdit error => ${error}`)
+  }
+}
+
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit };
 
