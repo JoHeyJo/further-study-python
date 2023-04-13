@@ -120,13 +120,13 @@ def posts_add(user_id):
         print('user id>>>>>>',user_id)
         title = request.json['title']
         content = request.json['content']
-        user = User.query.get_or_404(user_id)
-        post = Post(title=title, content=content, user_id=user.id)
+        # user = User.query.get_or_404(user_id)
+        post = Post(title=title, content=content, user_id=user_id)
 
         db.session.add(post)
         db.session.commit()
         print('<<<<<<<<<<',Post.serialize(post))
-        return redirect(f"/users/{post.id}/posts")
+        return redirect(f"/users/{user_id}/posts")
 
     except Exception as e:
         print("keyerror>>>>>>", e)
