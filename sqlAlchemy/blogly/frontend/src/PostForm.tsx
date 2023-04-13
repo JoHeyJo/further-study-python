@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 //modules
-import { userGet, postAdd } from './api';
+import { userGet, postAdd, postEdit } from './api';
 import { IUser, IPost } from "./interface";
 
 const defaultPost: IPost = { title: '', content: '', userId: 0 }
@@ -22,18 +22,16 @@ function PostForm({ }) {
 
   const params = useParams();
   const userId = +params.user_id!
+  const postId = +params.post_id!
 
 
-  console.log(userId)
+  console.log('userId',userId)
+  console.log('postId', postId)
   const navigate = useNavigate();
 
-  /** fetches user data on mount if PostForm is rendered for a new post*/
+  /** fetches data on mount*/
   useEffect(() => {
-    async function fetchUser() {
-      const res = await userGet(userId);
-      setUserData(res);
-    };
-    //if PostForm is rendered in response to a new post, that users id will update state
+    //in response to new post, fetch user data and update state w/ user data
     if(userId) {
       setPostData(p => {
         p.userId = userId
@@ -41,8 +39,26 @@ function PostForm({ }) {
       })
       fetchUser(); 
     }
+    //in response to post edit, fetch post data and update state w/ post data
+    if(postId){
+      fetchPost();
+    }
   }, [])
 
+  // if in response to creating a new post
+  
+  /** Fetches user data*/
+  async function fetchUser() {
+    const res = await userGet(userId);
+    setUserData(res);
+  };
+
+  /** Fetches post data*/
+  async function fetchPost(){
+    const res = await postEdit(postId);
+    setPostData(res);
+  }
+  
   /** handles changes in form */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -74,12 +90,14 @@ function PostForm({ }) {
         <label htmlFor="form-title">Title:</label>
         <input className="PostForm-title"
           onChange={handleChange}
+          value={postData.content}
           id="form-title"
           name="title" />
 
         <label htmlFor="form-content">Content:</label>
         <input className="PostForm-content"
           onChange={handleChange}
+          value={postData.content}
           id="form-content"
           name="content" />
 
