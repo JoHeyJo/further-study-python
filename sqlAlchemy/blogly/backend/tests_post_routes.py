@@ -37,8 +37,7 @@ class PostRouteTests(TestCase):
         p1 = Post(title='hello', content='hello world', user_id=1111)
         p1id = 111
         p1.id = p1id
-        created_at = 'now'
-        p1.created_at = created_at
+        p1.created_at = 'now'
 
         db.session.add_all([u1,p1])
         db.session.commit()
@@ -72,7 +71,7 @@ class PostRouteTests(TestCase):
                           }, 
                             follow_redirects=True
                           )
-            print('*******',resp.json)
+            print('test_add_post_follow*******',resp.json)
             self.assertEqual(resp.status_code, 200)
             # self.assertEqual(resp.json, {'id': 1, 'title': 'hello again', 'content': 'hello world again',
             #                  'created_at': 'now', 'user_id': 1111})
