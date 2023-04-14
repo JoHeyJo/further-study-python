@@ -124,7 +124,6 @@ def posts_add(user_id):
         db.session.add(post)
         db.session.commit()
         return redirect(f"/users/{user_id}/posts")
-
     except Exception as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
@@ -168,4 +167,20 @@ def posts_edit(post_id):
         return jsonify(post_data)
     except Exception as e:
         print("post_edit error =>",e)
+        return jsonify({"error": f"Missing {str(e)}"})
+
+@app.patch("/posts/<int:post_id>/edit")
+def posts_update(post_id):
+    """Updates post with new data"""
+    try:
+        post = Post.query.get_or_404(post_id)
+        post.title = request.json['title']
+        post.content = request.json['content']
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(f"users/{post.user_id}/posts")
+    except Exception as e:
+        print("post_update error =>", e)
         return jsonify({"error": f"Missing {str(e)}"})

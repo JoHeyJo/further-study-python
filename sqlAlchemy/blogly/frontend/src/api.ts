@@ -13,9 +13,9 @@ const BASE_URL = "http://localhost:5000";
 /**Returns first and last of all users */
 async function usersGet() {
   try {
-      const res = await axios.get(`${BASE_URL}/users`);
+    const res = await axios.get(`${BASE_URL}/users`);
     console.log('user data', res.data)
-      return res.data;
+    return res.data;
   } catch (error: any) {
     console.error("API get all users Error:" + error.response);
   }
@@ -24,8 +24,8 @@ async function usersGet() {
 /**Routes new user data to /user */
 async function userAdd(data: IUser) {
   try {
-      const res = await axios.post(`${BASE_URL}/users/new`, data)
-      return res.data
+    const res = await axios.post(`${BASE_URL}/users/new`, data)
+    return res.data
   } catch (error: any) {
     console.error("API add user Error:" + error.response);
   }
@@ -36,7 +36,7 @@ async function userGet(id: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${id}`)
     return res.data
-  } catch (error: any){
+  } catch (error: any) {
     console.error("API get user Error:" + error.message)
   }
 }
@@ -53,65 +53,75 @@ async function userEdit(id: number | undefined) {
 
 /**Updates user information with matching id */
 async function userUpdate(id: number, data: IUser) {
-  try{
+  try {
     const res = await axios.patch(`${BASE_URL}/users/${id}/edit`, data)
     return res.data;
-  } catch(error: any){
-    console.error("API update Error:"+ error.message)
+  } catch (error: any) {
+    console.error("API update Error:" + error.message)
   }
 }
 
 /** deletes user with matching id */
-async function userDelete(id:number) {
-  try{
+async function userDelete(id: number) {
+  try {
     const res = await axios.delete(`${BASE_URL}/users/${id}/delete`)
     return res.data
-  } catch(error: any){
+  } catch (error: any) {
     console.error(`API Delete error: ${error}`)
   }
 }
 
 /**Gets all user posts */
-async function postsGet(userId: number){
-  try{
+async function postsGet(userId: number) {
+  try {
     // console.log(id)
     const res = await axios.get(`${BASE_URL}/users/${userId}/posts`)
-    console.log('post data',res.data)
+    console.log('post data', res.data)
     return res.data;
-  } catch(error: any){
+  } catch (error: any) {
     console.error(`API get posts error: ${error}`)
   }
 }
 
 /**Get user post */
-async function postGet(id:number){
-  try{
+async function postGet(id: number) {
+  try {
     const res = await axios.get(`${BASE_URL}/posts/${id}`)
     return res.data;
-  } catch(error: any){
+  } catch (error: any) {
     console.error(`API error postGet: ${error}`)
   }
 }
 
 /** Adds post new post data*/
 async function postAdd(postData: IPost) {
-  try{
+  try {
     const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData)
     console.log(res)
     return res.data;
-  } catch(error: any){
+  } catch (error: any) {
     console.error(`API post form error: ${error}`)
   }
 }
 
-async function postEdit(postId: number){
-  try{
+/** Gets data for post edit form */
+async function postEdit(postId: number) {
+  try {
     const res = await axios.get(`${BASE_URL}/posts/${postId}/edit`)
     return res.data;
-  } catch(error: any){
+  } catch (error: any) {
     console.error(`API postEdit error => ${error}`)
   }
 }
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit };
+/** Updates post with matching id */
+async function postUpdate(postId: number, postData: IPost) {
+  try {
+    const res = await axios.patch(`${BASE_URL}/posts/${postId}/edit`, postData)
+    return res.data;
+  } catch (error: any) {
+    console.error(`API postUpdate error => ${error}`)
+  }
+}
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit, postUpdate };
 

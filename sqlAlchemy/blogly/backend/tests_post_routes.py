@@ -140,14 +140,18 @@ class PostRouteTests(TestCase):
 # GET / users/[user-id]/posts/new
 # Show form to add a post for that user.
 
-
 # Show buttons to edit and delete the post.
 
 # GET / posts/[post-id]/edit
 # Show form to edit a post, and to cancel(back to user page).
 
+
+
 # POST / posts/[post-id]/edit
 # Handle editing of a post. Redirect back to the post view.
+
+
+
 
 # POST / posts/[post-id]/delete
 # Delete the post.

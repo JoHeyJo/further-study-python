@@ -141,7 +141,7 @@ class UsersRouteTests(TestCase):
                 'lastName': 'test_last_one'
                 }
             )
-            
+
     def test_update_user(self):
         """Test: user can be updated and redirects"""
         with self.client as c:
@@ -174,6 +174,5 @@ class UsersRouteTests(TestCase):
     def test_delete_user(self):
         with self.client as c:
             resp = c.delete(f"/users/{self.u1.id}/delete")
-            print('*************',resp.json)
             self.assertEqual(resp.status_code, 302)
             self.assertEqual(None, resp.json)
