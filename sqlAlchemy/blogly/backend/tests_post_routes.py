@@ -74,7 +74,7 @@ class PostRouteTests(TestCase):
                       },
                       follow_redirects=True
                       )
-        created_at = datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
+        created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
         expected_resp = [{'content': 'hello world', 'created_at': created_at, 'id': 111, 'title': 'hello', 'user_id': 1111}, {
                          'content': 'hello world again', 'created_at': created_at, 'id': 1, 'title': 'hello again', 'user_id': 1111}]
         self.assertEqual(resp.status_code, 200)
