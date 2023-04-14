@@ -52,6 +52,19 @@ class PostRouteTests(TestCase):
         """Do after every test."""
         db.session.rollback()
 
+    def test_get_all_posts(self):
+        """Test: add new post"""
+        with self.client as c:
+            resp = c.get(f"/users/{self.u1.id}/posts")
+            self.assertEqual(resp.status_code, 200)
+            print('resp json>>>>>', resp.json)
+            created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+            expected_resp = [
+                {'content': 'hello world',
+                 'created_at': created_at,
+                 'id': 111, 'title': 'hello', 'user_id': 1111}]
+            self.assertEqual(resp.json, expected_resp)
+
     def test_add_post_redirect(self):
         """Test: post is added to db and redirects"""
         with self.client as c:
@@ -85,8 +98,37 @@ class PostRouteTests(TestCase):
         with self.client as c:
             resp = c.get(f"/posts/{self.p1.id}")
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("title", resp.json)
+            print('resp json >>>>>', resp.json)
+            created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+            expected_resp = {
+                'content': 'hello world',
+                'createdAt': created_at,
+                'firstName': 'test_first_one',
+                'id': 111,
+                'imageUrl': None,
+                'lastName': 'test_last_one',
+                'title': 'hello',
+                 'userId': 1111
+                 }
+            self.assertEqual(resp.json, expected_resp)
 
+    def test_edit_post(self):
+        """Test: correct post is retrieved to edit"""
+        with self.client as c:
+            resp = c.get(f"/posts/{self.p1.id}/edit")
+            self.assertEqual(resp.status_code, 200)
+            print('test edit post >>>>', resp.json)
+            created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+            expected_resp = {
+                'content': 'hello world', 
+                'createdAt': created_at,
+                'id': 111,
+                'title': 'hello',
+                'userId': 1111
+                 }
+            self.assertEqual(resp.status_code, 200)
+            self.assertEqual(resp.json, expected_resp)
+            
 # POST / users/[user-id]/posts/new
 # Handle add form
 

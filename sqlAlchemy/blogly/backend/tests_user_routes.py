@@ -141,6 +141,7 @@ class UsersRouteTests(TestCase):
                 'lastName': 'test_last_one'
                 }
             )
+            
     def test_update_user(self):
         """Test: user can be updated and redirects"""
         with self.client as c:
