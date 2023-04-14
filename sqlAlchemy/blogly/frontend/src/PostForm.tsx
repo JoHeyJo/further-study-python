@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 //modules
-import { userGet, postAdd, postEdit } from './api';
+import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
 
 const defaultPost: IPost = { title: '', content: '', userId: 0 }
@@ -25,30 +25,30 @@ function PostForm({ }) {
   const postId = +params.post_id!
 
 
-  console.log('userId',userId)
+  console.log('userId', userId)
   console.log('postId', postId)
   const navigate = useNavigate();
 
   /** fetches data on mount*/
   useEffect(() => {
     //in response to new post, fetch user data and update state w/ user data
-    async function fetchData(){
-      if(userId) {
+    async function fetchData() {
+      if (userId) {
         setPostData(p => {
           p.userId = userId
           return p
         })
-        fetchUser(userId); 
+        fetchUser(userId);
       }
       //in response to post edit, fetch post data and update state w/ post data
-      if(postId){
+      if (postId) {
         const post: IPost = await fetchPost();
         fetchUser(post.userId);
       }
     };
     fetchData();
   }, [])
-  
+
   /** Fetches user data*/
   async function fetchUser(userId: number) {
     const res = await userGet(userId);
@@ -56,12 +56,12 @@ function PostForm({ }) {
   };
 
   /** Fetches post data*/
-  async function fetchPost(): Promise<IPost>{
+  async function fetchPost(): Promise<IPost> {
     const res = await postEdit(postId);
     setPostData(res);
     return res
   }
-  
+
   /** handles changes in form */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -76,12 +76,23 @@ function PostForm({ }) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    try{
-      await postAdd(postData);
-      setPostData(defaultPost);
-      navigate(`/users/${userId}`);
-    } catch(error:any){
-      console.error(error)
+    if(userId){
+      try {
+        await postAdd(postData);
+        setPostData(defaultPost);
+        navigate(`/users/${userId}`);
+      } catch (error: any) {
+        console.error(`Error adding post => ${error}`)
+      }
+    }
+    if(postId){
+      try{
+        await postUpdate(postId, postData);
+        setPostData(defaultPost);
+        navigate(`/users/${postData.userId}`);
+      } catch(error: any){
+        console.error(`Error updating post => ${error}`)
+      }
     }
   }
 
