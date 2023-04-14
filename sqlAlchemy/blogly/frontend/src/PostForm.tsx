@@ -1,6 +1,6 @@
 //dependencies
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
 //modules
 import { userGet, postAdd, postEdit } from './api';
@@ -104,7 +104,7 @@ function PostForm({ }) {
           id="form-content"
           name="content" />
 
-        <Button variant="info">Cancel</Button>
+        <Link to={`/users/${userId}`}><Button variant="outline-primary">Cancel</Button></Link>
         <Button type='submit' variant="success">Submit</Button>
       </form>
     </>
