@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import DateTime
 from datetime import datetime
+from freezegun import freeze_time
 
 db = SQLAlchemy()
 
@@ -33,6 +34,8 @@ class User(db.Model):
         """Serialize to dict"""
         return {"id":self.id, "first_name":self.first_name, "last_name":self.last_name, "image_url":self.image_url}
 
+
+# @freeze_time("2022-01-01 00:00:00")
 class Post(db.Model):
     """Post model"""
 

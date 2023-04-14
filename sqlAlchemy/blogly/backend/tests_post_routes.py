@@ -8,9 +8,13 @@ from freezegun import freeze_time
 from sqlalchemy import DateTime
 from datetime import datetime
 
+from datetime import datetime
+from freezegun import freeze_time
+
 os.environ['DATABASE_URL'] = "postgresql:///blogly_testing"
 
 from app import app
+
 
 app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
@@ -37,7 +41,6 @@ class PostRouteTests(TestCase):
         p1 = Post(title='hello', content='hello world', user_id=1111)
         p1id = 111
         p1.id = p1id
-        p1.created_at = 'now'
 
         db.session.add_all([u1,p1])
         db.session.commit()
@@ -58,23 +61,24 @@ class PostRouteTests(TestCase):
                                 'content': 'hello world again'
                           },)
             self.assertEqual(resp.status_code, 302)
-            # hard coding 1 bc it's the expected pk of the newly created post
             self.assertEqual(resp.location, f"/users/{self.u1.id}/posts")
 
+    # @freeze_time("2022-01-01 00:00:00")
     def test_add_post_follow(self):
         """Test: post is added to db and follows redirect"""
         with self.client as c:
             resp = c.post(f"/users/1111/posts/new",
-                          json={
-                              'title': 'hello again',
-                              'content': 'hello world again'
-                          }, 
-                            follow_redirects=True
-                          )
-            print('test_add_post_follow*******',resp.json)
-            self.assertEqual(resp.status_code, 200)
-            # self.assertEqual(resp.json, {'id': 1, 'title': 'hello again', 'content': 'hello world again',
-            #                  'created_at': 'now', 'user_id': 1111})
+                      json={
+                          'title': 'hello again',
+                          'content': 'hello world again'
+                      },
+                      follow_redirects=True
+                      )
+        created_at = datetime.utcnow().strftime('%a, %d %b %Y %H:%M:%S GMT')
+        expected_resp = [{'content': 'hello world', 'created_at': created_at, 'id': 111, 'title': 'hello', 'user_id': 1111}, {
+                         'content': 'hello world again', 'created_at': created_at, 'id': 1, 'title': 'hello again', 'user_id': 1111}]
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.json, expected_resp)
 
     def test_get_post(self):
         """Test: retrieve post of specific user"""

@@ -107,7 +107,6 @@ def posts_all(user_id):
     try:
         posts = Post.query.filter(Post.user_id==user_id)
         serialized = [Post.serialize(post) for post in posts]
-        print('#######',user_id, serialized)
         return jsonify(serialized)
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error)
@@ -117,7 +116,6 @@ def posts_all(user_id):
 def posts_add(user_id):
     """Adds new posts_"""
     try:
-        print('user id>>>>>>',user_id)
         title = request.json['title']
         content = request.json['content']
         # user = User.query.get_or_404(user_id)
@@ -125,7 +123,6 @@ def posts_add(user_id):
 
         db.session.add(post)
         db.session.commit()
-        print('<<<<<<<<<<',Post.serialize(post))
         return redirect(f"/users/{user_id}/posts")
 
     except Exception as e:
