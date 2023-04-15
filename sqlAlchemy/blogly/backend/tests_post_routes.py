@@ -128,6 +128,38 @@ class PostRouteTests(TestCase):
                  }
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.json, expected_resp)
+    
+    def test_edit_post(self):
+        """Test: edit post with matching id"""
+        with self.client as c:
+            resp = c.patch(f"/posts/{self.p1.id}/edit", 
+                json = {
+                        'title':'update title',
+                        'content': 'update content'
+            })
+        self.assertEqual(resp.status_code, 302)
+
+    def test_edit_post(self):
+        """Test: edit post with matching id"""
+        with self.client as c:
+            resp = c.patch(f"/posts/{self.p1.id}/edit",
+                           json={
+                               'title': 'update title',
+                               'content': 'update content'
+                           },
+                           follow_redirects=True
+                           )
+        self.assertEqual(resp.status_code, 200)
+        created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
+        expected_resp = [{
+                        'content': 'update content', 
+                        'created_at': created_at,
+                        'id': 111,
+                        'title': 'update title',
+                        'user_id': 1111
+                        }]
+        self.assertEqual(resp.json, expected_resp)
+
             
 # POST / users/[user-id]/posts/new
 # Handle add form
@@ -144,8 +176,6 @@ class PostRouteTests(TestCase):
 
 # GET / posts/[post-id]/edit
 # Show form to edit a post, and to cancel(back to user page).
-
-
 
 # POST / posts/[post-id]/edit
 # Handle editing of a post. Redirect back to the post view.
