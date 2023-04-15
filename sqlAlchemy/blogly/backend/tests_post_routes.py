@@ -57,7 +57,6 @@ class PostRouteTests(TestCase):
         with self.client as c:
             resp = c.get(f"/users/{self.u1.id}/posts")
             self.assertEqual(resp.status_code, 200)
-            print('resp json>>>>>', resp.json)
             created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
             expected_resp = [
                 {'content': 'hello world',
@@ -98,7 +97,6 @@ class PostRouteTests(TestCase):
         with self.client as c:
             resp = c.get(f"/posts/{self.p1.id}")
             self.assertEqual(resp.status_code, 200)
-            print('resp json >>>>>', resp.json)
             created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
             expected_resp = {
                 'content': 'hello world',
@@ -117,7 +115,6 @@ class PostRouteTests(TestCase):
         with self.client as c:
             resp = c.get(f"/posts/{self.p1.id}/edit")
             self.assertEqual(resp.status_code, 200)
-            print('test edit post >>>>', resp.json)
             created_at = datetime.now().strftime('%a, %d %b %Y %H:%M:%S GMT')
             expected_resp = {
                 'content': 'hello world', 
@@ -159,6 +156,20 @@ class PostRouteTests(TestCase):
                         'user_id': 1111
                         }]
         self.assertEqual(resp.json, expected_resp)
+
+    def test_delete_post_redirect(self):
+        """Test: deletes post with matching id and redirects"""
+        with self.client as c:
+            resp = c.delete(f"/posts/{self.p1.id}/delete")
+            self.assertEqual(resp.status_code, 302)
+            # considering not hard coding the users route. Pull data from response?
+            self.assertEqual(resp.location, "/users/1111/posts")
+    
+    def test_delete_post_follow(self):
+        """Test: deletes post redirects to user pages corresponding to post"""
+        with self.client as c:
+            resp = c.delete(f"/posts/{self.p1.id}/delete", follow_redirects=True)
+            self.assertEqual(resp.json, [])
 
             
 # POST / users/[user-id]/posts/new

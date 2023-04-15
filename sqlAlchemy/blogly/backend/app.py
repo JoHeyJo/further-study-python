@@ -155,7 +155,7 @@ def posts_get(post_id):
 
 @app.get("/posts/<int:post_id>/edit")
 def posts_edit(post_id):
-    """Retrieves post data for to update"""
+    """Retrieves post data for update"""
     try:
         post = Post.query.get(post_id)
         serialized = Post.serialize(post)
@@ -184,3 +184,15 @@ def posts_update(post_id):
     except Exception as e:
         print("post_update error =>", e)
         return jsonify({"error": f"Missing {str(e)}"})
+
+@app.delete("/posts/<int:post_id>/delete")
+def posts_delete(post_id):
+    """"Deletes post with corresponding id"""
+    try:
+        post = Post.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(f"/users/{post.user_id}/posts")
+    except Exception as error:
+         print(f"posts_delete error => {error}")
+         return jsonify({"error": f"Missing {str(error)}"})
