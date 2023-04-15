@@ -123,5 +123,16 @@ async function postUpdate(postId: number, postData: IPost) {
     console.error(`API postUpdate error => ${error}`)
   }
 }
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit, postUpdate };
+
+/** Deletes post with matching id*/
+async function postDelete(postId: number){
+  try{
+    const res = await axios.delete(`${BASE_URL}/posts/${postId}/delete`)
+    return res.data;
+  } catch(error: any){
+    console.error(`Error in postDelete => ${error}`)
+  }
+}
+
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete };
 
