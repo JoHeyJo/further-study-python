@@ -190,6 +190,7 @@ def posts_delete(post_id):
     """"Deletes post with corresponding id"""
     try:
         post = Post.query.get_or_404(post_id)
+        print('delete post>>>>>>>>>', post)
         db.session.delete(post)
         db.session.commit()
         return redirect(f"/users/{post.user_id}/posts")

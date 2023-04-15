@@ -128,6 +128,7 @@ async function postUpdate(postId: number, postData: IPost) {
 async function postDelete(postId: number){
   try{
     const res = await axios.delete(`${BASE_URL}/posts/${postId}/delete`)
+    console.log('post delete', res.data)
     return res.data;
   } catch(error: any){
     console.error(`Error in postDelete => ${error}`)

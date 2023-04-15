@@ -1,10 +1,10 @@
 //dependencies
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 //components / modules
 import { IPostData } from './interface';
-import { postGet } from './api';
+import { postGet, postDelete } from './api';
 
 
 /** Renders individual post
@@ -30,6 +30,8 @@ function Post() {
 
   const postId = +params.post_id!
 
+  const navigate = useNavigate();
+
   /**On mount fetches post */
   useEffect(() => {
     async function fetchPost() {
@@ -39,6 +41,16 @@ function Post() {
     fetchPost()
   }, [])
 
+  /** Deletes user post */
+  async function deletePost(){
+    try{
+      const res = await postDelete(postId)
+      navigate(`/users/${post.userId}`)
+    } catch(error: any){
+      console.error(`Error in deletePost => ${error}`)
+    }
+  }
+
   return (
     <div>
       <h1 className="Post-title">{post.title}</h1>
@@ -47,7 +59,7 @@ function Post() {
       <div className="Post-controls">
         <Link to={`/users/${post.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
         <Link to={`/posts/${postId}/edit`}><Button variant="primary">Edit</Button></Link>
-        <Link to={`/users/${post.userId}`}><Button variant="danger">Delete</Button></Link>
+        <Button onClick={deletePost} variant="danger">Delete</Button>
         
       </div>
     </div>
