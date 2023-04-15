@@ -192,7 +192,5 @@ class PostRouteTests(TestCase):
 # Handle editing of a post. Redirect back to the post view.
 
 
-
-
 # POST / posts/[post-id]/delete
 # Delete the post.
