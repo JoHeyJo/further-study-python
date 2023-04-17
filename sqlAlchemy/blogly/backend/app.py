@@ -101,11 +101,22 @@ def user_delete(user_id):
     return redirect("/")
 
 ######### Post routes ###########
+@app.get("/posts")
+def posts_all():
+    """Get all posts"""
+    try:
+        posts = Post.query.order_by(Post.created_at)
+        serialized = [Post.serialize(post) for post in posts]
+        return serialized
+    except Exception as error:
+        print("Lookup error", error)
+        return jsonify({"error in posts_all =>":error})
+
 @app.get("/users/<int:user_id>/posts")
-def posts_all(user_id):
+def posts_all_user(user_id):
     """Get all user posts"""
     try:
-        posts = Post.query.filter(Post.user_id==user_id)
+        posts = Post.query.filter(Post.user_id==user_id).order_by(Post.created_at)
         serialized = [Post.serialize(post) for post in posts]
         return jsonify(serialized)
     except LookupError as error:
