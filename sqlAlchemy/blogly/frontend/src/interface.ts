@@ -28,3 +28,7 @@ export interface UserContextType {
   firstName: string;
   lastName: string;
 }
+
+export interface IPosts {
+  posts: IPost[];
+}

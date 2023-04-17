@@ -70,8 +70,19 @@ async function userDelete(id: number) {
     console.error(`API Delete error: ${error}`)
   }
 }
-
+// ************POSTS*******************
 /**Gets all user posts */
+async function postsGetAll() {
+  try {
+    // console.log(id)
+    const res = await axios.get(`${BASE_URL}/posts`)
+    console.log('post data', res.data)
+    return res.data;
+  } catch (error: any) {
+    console.error(`API get all posts error: ${error}`)
+  }
+}
+
 async function postsGet(userId: number) {
   try {
     // console.log(id)
@@ -135,5 +146,5 @@ async function postDelete(postId: number){
   }
 }
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete };
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete };
 
