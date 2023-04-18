@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { postsGetAll } from './api'
-import { IPosts } from "./interface";
+import { IPosts, IPost } from "./interface";
+
+const defaultPosts: IPost = { title: '', content: '', userId: 0 }
 
 /** Homepage for Bugly. Shows 5 most recent posts 
  * 
@@ -8,19 +10,19 @@ import { IPosts } from "./interface";
  * - Posts => [{},{},...]
  * 
 */
-
 function HomePage() {
-  const [posts, setPosts] = useState<IPosts>()
+  const [posts, setPosts] = useState<IPost[]>([])
 
-  useEffect(()=>{
-    async function fetchPosts(){
+  useEffect(() => {
+    async function fetchPosts() {
       const res = await postsGetAll();
       setPosts(res)
     }
-  })
+    fetchPosts()
+  },[])
   return (
     <>
-    {posts.map(post => <li>{post.title}</li>)}
+      {posts.map(post => <li>{post.title}</li>)}
     </>
   )
 }

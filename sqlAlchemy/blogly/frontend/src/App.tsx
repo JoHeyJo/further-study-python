@@ -9,6 +9,7 @@ import User from './User';
 import EditUser from './EditUser';
 import PostForm from './PostForm';
 import Post from './Post';
+import HomePage from './HomePages';
 // style
 import './style/App.css';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/users/:user_id/posts/new" element={<PostForm />}/>
           <Route path="/posts/:post_id" element={<Post />}/>
           <Route path="/posts/:post_id/edit" element={<PostForm />} />
+          <Route path="homepage" element={<HomePage />}/>
         </Routes>
       </BrowserRouter>
     </div>
