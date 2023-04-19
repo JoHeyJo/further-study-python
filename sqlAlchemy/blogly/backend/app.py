@@ -106,15 +106,31 @@ def posts_all():
     """Get all posts"""
     try:
         posts = Post.query.order_by(Post.created_at)
-        serialized = [Post.serialize(post) for post in posts]
-        return serialized
+        # adding user data to each post
+        posts_user = [dict(User.serialize(User.query.get(
+            post.user_id)), **Post.serialize(post)) for post in posts]
+        # `**` unpacks the two dicts and merges them into a single dictionary
+        posts_user_data = [
+            {
+                'content': post['content'],
+                'createdAt': post['created_at'],
+                'firstName': post['first_name'],
+                'lastName': post['last_name'],
+                'id': post['id'],
+                'imageUrl': post['image_url'],
+                'title': post['title'],
+                'userId': post['user_id']
+            }
+            for post in posts_user
+        ]
+        return posts_user_data
     except Exception as error:
         print("Lookup error", error)
         return jsonify({"error in posts_all =>":error})
 
 @app.get("/users/<int:user_id>/posts")
 def posts_all_user(user_id):
-    """Get all user posts"""
+    """Get all user's posts"""
     try:
         posts = Post.query.filter(Post.user_id==user_id).order_by(Post.created_at)
         serialized = [Post.serialize(post) for post in posts]
