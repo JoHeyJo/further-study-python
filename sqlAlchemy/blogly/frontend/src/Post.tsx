@@ -23,7 +23,7 @@ function Post() {
       firstName: '',
       lastName: '',
       userId: 0,
-      created_at: '',
+      createdAt: '',
       imageUrl: null
     })
   const params = useParams();

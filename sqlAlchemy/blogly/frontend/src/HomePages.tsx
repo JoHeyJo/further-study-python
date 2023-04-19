@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { postsGetAll } from './api'
 import { IPosts, IPost } from "./interface";
 
-const defaultPosts: IPost = { title: '', content: '', userId: 0 }
 
 /** Homepage for Bugly. Shows 5 most recent posts 
  * 
  * State: 
- * - Posts => [{},{},...]
+ * - Posts => [{title: '', content: '', userId: 0, id},{},...]
  * 
 */
 function HomePage() {
@@ -22,7 +21,14 @@ function HomePage() {
   },[])
   return (
     <>
-      {posts.map(post => <li>{post.title}</li>)}
+    <h1>Blogly Recent Posts</h1>
+      {posts.map((post,i) => 
+      <section key={i}>
+        <h2>{post.title}</h2>,
+        <h4>{post.content}</h4>
+        <h6>By {post.firstName} {post.lastName} {post.createdAt}</h6>
+      </section>
+      )}
     </>
   )
 }

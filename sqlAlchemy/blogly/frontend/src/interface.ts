@@ -9,13 +9,14 @@ export interface IPost {
   title: string;
   content: string;
   userId: number;
+  firstName: string;
+  lastName: string;
+  id: number;
+  createdAt: string;
 }
 
 export interface IPostData extends IPost {
-  id: number;
-  firstName: string;
-  lastName: string;
-  created_at: string;
+
   imageUrl: string | null;
 }
 

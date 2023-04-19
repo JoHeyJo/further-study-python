@@ -76,7 +76,6 @@ async function postsGetAll() {
   try {
     // console.log(id)
     const res = await axios.get(`${BASE_URL}/posts`)
-    console.log('post data', res.data)
     return res.data;
   } catch (error: any) {
     console.error(`API get all posts error: ${error}`)

@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
 
-const defaultPost: IPost = { title: '', content: '', userId: 0 }
+const defaultPost: IPost = { title: '', content: '', userId: 0, firstName:'', lastName:'', id:0, createdAt:'' }
 
 /** Handles/ submits post data & renders form for new post 
  * 
