@@ -119,7 +119,9 @@ def posts_all():
                 'id': post['id'],
                 'imageUrl': post['image_url'],
                 'title': post['title'],
-                'userId': post['user_id']
+                'userId': post['user_id'],
+                'problem': post['problem'],
+                'solution': post['solution']
             }
             for post in posts_user
         ]
@@ -175,7 +177,9 @@ def posts_get(post_id):
             'imageUrl': user_serialized['image_url'],
             'lastName': user_serialized['last_name'],
             'title': user_serialized['title'],
-            'userId': user_serialized['user_id']
+            'userId': user_serialized['user_id'],
+            'problem': post['problem'],
+            'solution': post['solution']
         } 
         return jsonify(user_data)
     except LookupError as e:
@@ -192,7 +196,9 @@ def posts_edit(post_id):
                     'createdAt':serialized['created_at'], 
                     'id':serialized['id'], 
                     'title':serialized['title'], 
-                    'userId': serialized['user_id']}
+                    'userId': serialized['user_id'],
+                     'problem': post['problem'],
+                     'solution': post['solution']}
         return jsonify(post_data)
     except Exception as e:
         print("post_edit error =>",e)
@@ -205,6 +211,8 @@ def posts_update(post_id):
         post = Post.query.get_or_404(post_id)
         post.title = request.json['title']
         post.content = request.json['content']
+        post.problem = post['problem']
+        post.solution = post['solution']
 
         db.session.add(post)
         db.session.commit()
