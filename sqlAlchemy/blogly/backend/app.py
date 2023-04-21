@@ -145,8 +145,10 @@ def posts_add(user_id):
     try:
         title = request.json['title']
         content = request.json['content']
+        problem = request.json['problem']
+        solution = request.json['solution']
         # user = User.query.get_or_404(user_id)
-        post = Post(title=title, content=content, user_id=user_id)
+        post = Post(title=title, content=content, user_id=user_id, problem=problem, solution=solution)
 
         db.session.add(post)
         db.session.commit()

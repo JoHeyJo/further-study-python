@@ -46,6 +46,8 @@ class Post(db.Model):
                     autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    problem = db.Column(db.Text, nullable=False)
+    solution = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     # user = db.relationship('User')
