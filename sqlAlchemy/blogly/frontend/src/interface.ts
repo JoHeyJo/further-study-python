@@ -16,7 +16,6 @@ export interface IPost {
 }
 
 export interface IPostData extends IPost {
-
   imageUrl: string | null;
 }
 

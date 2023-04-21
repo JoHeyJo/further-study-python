@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 //components
 import { IUser } from './interface'
 import { usersGet } from "./api";
+import HomePage from "./HomePages";
 // style
 import './style/Users.css';
 
@@ -37,6 +38,7 @@ function Users() {
       <Link to="/form">
         <Button variant="primary">Add user</Button>
       </Link>
+      <HomePage />
     </div>
   )
 }

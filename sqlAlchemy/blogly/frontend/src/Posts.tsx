@@ -29,13 +29,11 @@ import { Button } from "react-bootstrap";
  */
 function Posts({userId}: IUserId) {
   const [posts, setPosts] = useState<IPostData[]>([])
-  console.log('userId', userId)
+  
   /** On mount fetches users' posts */
   useEffect(() => {
-    console.log('userId',userId)
     async function fetchPosts() {
       const res = await postsGet(userId)
-      console.log(res)
       setPosts(res)
     }
     fetchPosts();

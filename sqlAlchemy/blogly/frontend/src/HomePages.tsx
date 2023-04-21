@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { postsGetAll } from './api'
 import { IPosts, IPost } from "./interface";
+import { Link } from 'react-router-dom';
 
 
 /** Homepage for Bugly. Shows 5 most recent posts 
@@ -24,11 +25,13 @@ function HomePage() {
     <h1>Blogly Recent Posts</h1>
       {posts.map((post,i) => 
       <section key={i}>
-        <h2>{post.title}</h2>,
+        <Link to={`/posts/${post.id}`}>
+        <h2>{post.title}</h2></Link>
         <h4>{post.content}</h4>
         <h6>By {post.firstName} {post.lastName} {post.createdAt}</h6>
-      </section>
+       </section>
       )}
+      
     </>
   )
 }
