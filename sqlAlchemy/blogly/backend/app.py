@@ -22,7 +22,9 @@ app.app_context().push()
 toolbar = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
-#### do this when you want to have your root route be a certain page/component
+# do this when you want to have your root route be a certain page/component
+
+
 @app.get('/')
 def root():
     """Homepage redirects to list of users."""
@@ -30,6 +32,8 @@ def root():
     return redirect("/users")
 
 ######### User routes ###########
+
+
 @app.get("/users")
 def users_all():
     """Retrieves all users in database"""
@@ -38,20 +42,24 @@ def users_all():
         users = User.query.order_by(User.last_name, User.first_name)
         serialized = [User.serialize(user) for user in users]
         user_data = [{'id': user['id'], 'firstName':user['first_name'],
-                         'lastName':user['last_name']} for user in serialized]
-        return jsonify(user_data)   
+                      'lastName':user['last_name']} for user in serialized]
+        return jsonify(user_data)
     except LookupError as error:
-        print('Lookup error >>>>>>>>>', error )
+        print('Lookup error >>>>>>>>>', error)
         return jsonify({"error": error})
+
 
 @app.get("/users/<int:id>")
 def users_get(id):
     """Retrieves user with matching ID"""
     user = User.query.get_or_404(id)
     serialized = User.serialize(user)
-    user_data = {'id': serialized['id'],'firstName': serialized['first_name'],
-        'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
+    user_data = {'id': serialized['id'], 'firstName': serialized['first_name'],
+                 'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
+    print('>>>>>>>>>>>>>>user_data', user_data)
+
     return jsonify(user_data)
+
 
 @app.post("/users/new")
 def users_add():
@@ -67,6 +75,7 @@ def users_add():
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
 
+
 @app.get('/users/<int:user_id>/edit')
 def users_edit(user_id):
     """Retrieves user with matching ID to populate edit form"""
@@ -74,13 +83,14 @@ def users_edit(user_id):
     serialized = User.serialize(user)
     return jsonify(serialized)
 
+
 @app.patch("/users/<int:user_id>/edit")
 def users_update(user_id):
     """Update user's information"""
     try:
-        user = User.query.get_or_404(user_id) 
+        user = User.query.get_or_404(user_id)
         user.first_name = request.json['firstName']
-        user.last_name= request.json['lastName']
+        user.last_name = request.json['lastName']
 
         db.session.add(user)
         db.session.commit()
@@ -89,7 +99,8 @@ def users_update(user_id):
 
     except LookupError as error:
         print("Lookup error", error)
-        return jsonify({"error":error})
+        return jsonify({"error": error})
+
 
 @app.delete("/users/<int:user_id>/delete")
 def user_delete(user_id):
@@ -101,6 +112,8 @@ def user_delete(user_id):
     return redirect("/")
 
 ######### Post routes ###########
+
+
 @app.get("/posts")
 def posts_all():
     """Get all posts"""
@@ -128,18 +141,21 @@ def posts_all():
         return posts_user_data
     except Exception as error:
         print("Lookup error", error)
-        return jsonify({"error in posts_all =>":error})
+        return jsonify({"error in posts_all =>": error})
+
 
 @app.get("/users/<int:user_id>/posts")
 def posts_all_user(user_id):
     """Get all user's posts"""
     try:
-        posts = Post.query.filter(Post.user_id==user_id).order_by(Post.created_at)
+        posts = Post.query.filter(
+            Post.user_id == user_id).order_by(Post.created_at)
         serialized = [Post.serialize(post) for post in posts]
         return jsonify(serialized)
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error)
         return jsonify({"error": error})
+
 
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):
@@ -150,7 +166,8 @@ def posts_add(user_id):
         problem = request.json['problem']
         solution = request.json['solution']
         # user = User.query.get_or_404(user_id)
-        post = Post(title=title, content=content, user_id=user_id, problem=problem, solution=solution)
+        post = Post(title=title, content=content, user_id=user_id,
+                    problem=problem, solution=solution)
 
         db.session.add(post)
         db.session.commit()
@@ -158,6 +175,7 @@ def posts_add(user_id):
     except Exception as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
+
 
 @app.get("/posts/<int:post_id>")
 def posts_get(post_id):
@@ -178,13 +196,14 @@ def posts_get(post_id):
             'lastName': user_serialized['last_name'],
             'title': user_serialized['title'],
             'userId': user_serialized['user_id'],
-            'problem': post['problem'],
-            'solution': post['solution']
-        } 
+            'problem': user_serialized['problem'],
+            'solution': user_serialized['solution']
+        }
         return jsonify(user_data)
     except LookupError as e:
         print("Lookup error", e)
-        return jsonify({"error":e})
+        return jsonify({"error": e})
+
 
 @app.get("/posts/<int:post_id>/edit")
 def posts_edit(post_id):
@@ -192,17 +211,18 @@ def posts_edit(post_id):
     try:
         post = Post.query.get(post_id)
         serialized = Post.serialize(post)
-        post_data = {'content':serialized['content'], 
-                    'createdAt':serialized['created_at'], 
-                    'id':serialized['id'], 
-                    'title':serialized['title'], 
-                    'userId': serialized['user_id'],
-                     'problem': post['problem'],
-                     'solution': post['solution']}
+        post_data = {'content': serialized['content'],
+                     'createdAt': serialized['created_at'],
+                     'id': serialized['id'],
+                     'title': serialized['title'],
+                     'userId': serialized['user_id'],
+                     'problem': serialized['problem'],
+                     'solution': serialized['solution']}
         return jsonify(post_data)
     except Exception as e:
-        print("post_edit error =>",e)
+        print("post_edit error =>", e)
         return jsonify({"error": f"Missing {str(e)}"})
+
 
 @app.patch("/posts/<int:post_id>/edit")
 def posts_update(post_id):
@@ -211,8 +231,8 @@ def posts_update(post_id):
         post = Post.query.get_or_404(post_id)
         post.title = request.json['title']
         post.content = request.json['content']
-        post.problem = post['problem']
-        post.solution = post['solution']
+        post.problem = request.json['problem']
+        post.solution = request.json['solution']
 
         db.session.add(post)
         db.session.commit()
@@ -221,6 +241,7 @@ def posts_update(post_id):
     except Exception as e:
         print("post_update error =>", e)
         return jsonify({"error": f"Missing {str(e)}"})
+
 
 @app.delete("/posts/<int:post_id>/delete")
 def posts_delete(post_id):
@@ -232,5 +253,5 @@ def posts_delete(post_id):
         db.session.commit()
         return redirect(f"/users/{post.user_id}/posts")
     except Exception as error:
-         print(f"posts_delete error => {error}")
-         return jsonify({"error": f"Missing {str(error)}"})
+        print(f"posts_delete error => {error}")
+        return jsonify({"error": f"Missing {str(error)}"})
