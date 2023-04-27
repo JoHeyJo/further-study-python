@@ -1,13 +1,13 @@
 //dependencies
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 //modules
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
 
-const defaultPost: IPost = { title: '', content: '', userId: 0, firstName:'', lastName:'', id:0, createdAt:'', problem:'', solution:'' }
+const defaultPost: IPost = { title: '', content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
 
 /** Handles/ submits post data & renders form for new post 
  * 
@@ -77,7 +77,7 @@ function PostForm({ }) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if(userId){
+    if (userId) {
       try {
         await postAdd(postData);
         setPostData(defaultPost);
@@ -86,82 +86,71 @@ function PostForm({ }) {
         console.error(`Error adding post => ${error}`)
       }
     }
-    if(postId){
-      try{
+    if (postId) {
+      try {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
         navigate(`/users/${postData.userId}`);
-      } catch(error: any){
+      } catch (error: any) {
         console.error(`Error updating post => ${error}`)
       }
     }
   }
   return (
-    <>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" style={{ width: '50%' }} />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
+      <Container fluid>
+        <Row className="justify-content-center">
+          <Col xs={12} sm={6} md={4} lg={3}>
+      <Form onSubmit={handleSubmit} className="PostForm-form">
+        <Form.Group controlId="form-title">
+          <Form.Label>Title:</Form.Label>
+          <Form.Control
+            type="text"
+            className="PostForm-title"
+            onChange={handleChange}
+            value={postData.title}
+            name="title"
+          />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" style={{ width: '50%' }} />
+        <Form.Group controlId="form-content">
+          <Form.Label>Content:</Form.Label>
+          <Form.Control
+            as="textarea"
+            className="PostForm-content"
+            onChange={handleChange}
+            value={postData.content}
+            name="content"
+          />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
+        <Form.Group controlId="form-problem">
+          <Form.Label>Problem:</Form.Label>
+          <Form.Control
+            as="textarea"
+            className="PostForm-problem"
+            onChange={handleChange}
+            value={postData.problem}
+            name="problem"
+          />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+
+        <Form.Group controlId="form-solution">
+          <Form.Label>Solution:</Form.Label>
+          <Form.Control
+            as="textarea"
+            className="PostForm-solution"
+            onChange={handleChange}
+            value={postData.solution}
+            name="solution"
+          />
+        </Form.Group>
+
+        <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button>
+        <Button type="submit" variant="success">Submit</Button>
       </Form>
-
-
-      <Form>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" size="lg" />
-        </Form.Group>
-      </Form>
-
-      <form onSubmit={handleSubmit} className="PostForm-form">
-
-        <label htmlFor="form-title">Title:</label>
-        <input className="PostForm-title"
-          onChange={handleChange}
-          value={postData.title}
-          id="form-title"
-          name="title" />
-
-        <label htmlFor="form-content">Content:</label>
-        <textarea className="PostForm-content"
-          onChange={handleChange}
-          value={postData.content}
-          id="form-content"
-          name="content" />
-        
-        <label htmlFor="form-problem">Problem:</label>
-        <textarea className="PostForm-problem"
-          onChange={handleChange}
-          value={postData.problem}
-          id="form-problem"
-          name="problem" />
-        
-        <label htmlFor="form-solution">Solution:</label>
-        <textarea className="PostForm-solution"
-          onChange={handleChange}
-          value={postData.solution}
-          id="form-solution"
-          name="solution" />
-
-        <Link to={`/users/${userId ? userId : postData.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
-        <Button type='submit' variant="success">Submit</Button>
-      </form>
-    </>
+          </Col>
+        </Row>
+      </Container>
   )
 }
 
