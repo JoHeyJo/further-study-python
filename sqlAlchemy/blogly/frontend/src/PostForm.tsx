@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
 //modules
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
@@ -97,7 +98,36 @@ function PostForm({ }) {
   }
   return (
     <>
-      <h1>{userId ? 'Add' : 'Edit'} Post for {userData.firstName} {userData.lastName}</h1>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" style={{ width: '50%' }} />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" style={{ width: '50%' }} />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check type="checkbox" label="Check me out" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+
+
+      <Form>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" size="lg" />
+        </Form.Group>
+      </Form>
+
       <form onSubmit={handleSubmit} className="PostForm-form">
 
         <label htmlFor="form-title">Title:</label>
