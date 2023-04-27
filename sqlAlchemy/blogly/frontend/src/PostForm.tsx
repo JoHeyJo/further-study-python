@@ -95,7 +95,6 @@ function PostForm({ }) {
       }
     }
   }
-
   return (
     <>
       <h1>{userId ? 'Add' : 'Edit'} Post for {userData.firstName} {userData.lastName}</h1>
@@ -129,7 +128,7 @@ function PostForm({ }) {
           id="form-solution"
           name="solution" />
 
-        <Link to={`/users/${userId}`}><Button variant="outline-primary">Cancel</Button></Link>
+        <Link to={`/users/${userId ? userId : postData.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
         <Button type='submit' variant="success">Submit</Button>
       </form>
     </>
