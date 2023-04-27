@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
 
-const defaultPost: IPost = { title: '', content: '', userId: 0, firstName:'', lastName:'', id:0, createdAt:'' }
+const defaultPost: IPost = { title: '', content: '', userId: 0, firstName:'', lastName:'', id:0, createdAt:'', problem:'', solution:'' }
 
 /** Handles/ submits post data & renders form for new post 
  * 
@@ -63,7 +63,7 @@ function PostForm({ }) {
   }
 
   /** handles changes in form */
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
     e.preventDefault();
     const title = e.target.name;
     const content = e.target.value;
@@ -109,11 +109,25 @@ function PostForm({ }) {
           name="title" />
 
         <label htmlFor="form-content">Content:</label>
-        <input className="PostForm-content"
+        <textarea className="PostForm-content"
           onChange={handleChange}
           value={postData.content}
           id="form-content"
           name="content" />
+        
+        <label htmlFor="form-problem">Problem:</label>
+        <textarea className="PostForm-problem"
+          onChange={handleChange}
+          value={postData.problem}
+          id="form-problem"
+          name="problem" />
+        
+        <label htmlFor="form-solution">Solution:</label>
+        <textarea className="PostForm-solution"
+          onChange={handleChange}
+          value={postData.solution}
+          id="form-solution"
+          name="solution" />
 
         <Link to={`/users/${userId}`}><Button variant="outline-primary">Cancel</Button></Link>
         <Button type='submit' variant="success">Submit</Button>

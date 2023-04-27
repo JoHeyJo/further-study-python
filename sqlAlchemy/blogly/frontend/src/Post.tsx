@@ -24,7 +24,9 @@ function Post() {
       lastName: '',
       userId: 0,
       createdAt: '',
-      imageUrl: null
+      imageUrl: null,
+      problem: '',
+      solution: ''
     })
   const params = useParams();
 
@@ -54,6 +56,8 @@ function Post() {
   return (
     <div>
       <h1 className="Post-title">{post.title}</h1>
+      <h3 className="Post-content">{post.content}</h3>
+      <h3 className="Post-content">{post.problem}</h3>
       <h3 className="Post-content">{post.content}</h3>
       <h4 className="Post-author">By: {post.firstName} {post.lastName}</h4>
       <div className="Post-controls">

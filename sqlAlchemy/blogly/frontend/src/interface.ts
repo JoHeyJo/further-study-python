@@ -13,6 +13,8 @@ export interface IPost {
   lastName: string;
   id: number;
   createdAt: string;
+  problem: string;
+  solution: string;
 }
 
 export interface IPostData extends IPost {
