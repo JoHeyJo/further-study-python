@@ -31,7 +31,7 @@ def root():
 
     return redirect("/users")
 
-######### User routes ###########
+######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
 def users_all():
     """Retrieves all users in database"""
@@ -109,7 +109,7 @@ def user_delete(user_id):
     db.session.commit()
     return redirect("/")
 
-######### Post routes ###########
+######### Post routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/posts")
 def posts_all():
     """Get all posts"""
