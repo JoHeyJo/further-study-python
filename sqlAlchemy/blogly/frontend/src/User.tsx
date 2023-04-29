@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 //components / modules
 import { IUser } from './interface'
 import { userGet, userDelete } from './api'
@@ -52,7 +53,7 @@ function User() {
   }
 
   return (
-    <div className="User-container">
+    <Container className="User-container">
       <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
       <div className="User-user">
         <div className="User-fn">{user.firstName}</div>
@@ -61,7 +62,7 @@ function User() {
       <Button variant="primary" onClick={handleClick}>Edit</Button>
       <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
       <div className="User-posts"><Posts userId={+params.user_id!}/></div>
-    </div>
+    </Container>
   )
 }
 

@@ -1,10 +1,14 @@
 //dependencies
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom'
+import ListGroup from 'react-bootstrap/ListGroup';
+import { Button } from "react-bootstrap";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 // components/ modules
 import { IPostData, IUserId } from './interface';
 import { postsGet } from './api'
-import { Button } from "react-bootstrap";
 
 /** Renders list of posts by title
  * 
@@ -27,9 +31,9 @@ import { Button } from "react-bootstrap";
  * 
  * User - Posts
  */
-function Posts({userId}: IUserId) {
+function Posts({ userId }: IUserId) {
   const [posts, setPosts] = useState<IPostData[]>([])
-  
+
   /** On mount fetches users' posts */
   useEffect(() => {
     async function fetchPosts() {
@@ -42,9 +46,24 @@ function Posts({userId}: IUserId) {
   return (
     <>
       <h3>Posts</h3>
-      <div>{
-        posts.map(post => <li key={post.id}className="Posts-post"><Link to={`/posts/${post.id}`}>{post.title}</Link></li>)
-      }
+      <div>
+        <Container>
+          <Row>
+            <Col></Col>
+            <Col>
+        <ListGroup className="w-50">
+          {
+            posts.map(post =>
+              <ListGroup.Item key={post.id} className="Posts-post">
+                <Link to={`/posts/${post.id}`}>{post.title}</Link>
+              </ListGroup.Item>
+            )
+          }
+        </ListGroup>
+            </Col>
+          <Col></Col>
+          </Row>
+        </Container>
       </div>
       <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
     </>
