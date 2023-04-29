@@ -9,6 +9,8 @@ import Col from 'react-bootstrap/Col';
 // components/ modules
 import { IPostData, IUserId } from './interface';
 import { postsGet } from './api'
+//styles
+import './style/Posts.css';
 
 /** Renders list of posts by title
  * 
@@ -48,10 +50,9 @@ function Posts({ userId }: IUserId) {
       <h3>Posts</h3>
       <div>
         <Container>
-          <Row>
-            <Col></Col>
-            <Col>
-        <ListGroup className="w-50">
+          <Row className="justify-content-center">
+            <Col className="col-4">
+              <ListGroup className="align-items-start">
           {
             posts.map(post =>
               <ListGroup.Item key={post.id} className="Posts-post">
@@ -61,7 +62,6 @@ function Posts({ userId }: IUserId) {
           }
         </ListGroup>
             </Col>
-          <Col></Col>
           </Row>
         </Container>
       </div>

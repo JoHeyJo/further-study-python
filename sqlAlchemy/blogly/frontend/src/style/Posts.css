@@ -1,0 +1,5 @@
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid grey;
+  border-bottom-width: 2px;
+}
