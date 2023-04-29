@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 //components / modules
 import { IUser } from './interface'
 import { userGet, userDelete } from './api'
@@ -54,6 +56,8 @@ function User() {
 
   return (
     <Container className="User-container">
+      <Row>
+      <Col className="col-3">
       <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
       <div className="User-user">
         <div className="User-fn">{user.firstName}</div>
@@ -61,7 +65,11 @@ function User() {
       </div>
       <Button variant="primary" onClick={handleClick}>Edit</Button>
       <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
+      </Col>
+      <Col>
       <div className="User-posts"><Posts userId={+params.user_id!}/></div>
+      </Col>
+      </Row>
     </Container>
   )
 }

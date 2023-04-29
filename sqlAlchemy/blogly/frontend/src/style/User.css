@@ -4,6 +4,7 @@ img {
   height: 8rem;
 }
 
-button {
-  /* height: 20px; */
+
+.User-container {
+  border-bottom: 1px solid grey;
 }
