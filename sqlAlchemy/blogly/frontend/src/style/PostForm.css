@@ -12,5 +12,9 @@ h6 {
   border-bottom: 2px solid grey;
 } */
 .PostForm-control {
-  max-width: 600px;
+  /* max-width: 600px; */
+}
+
+#PostForm-control-problem, #PostForm-control-solution {
+  height: 150px;
 }

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 //modules
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
@@ -99,60 +100,66 @@ function PostForm({ }) {
     }
   }
   return (
-      <Container fluid>
-        <Row className="justify-content-center">
-          <Col >
-      <Form onSubmit={handleSubmit} className="PostForm-form">
-        <Form.Group controlId="form-title">
-          <Form.Label>Title:</Form.Label>
-          <Form.Control
-            type="text"
-            className="PostForm-title"
-            onChange={handleChange}
-            value={postData.title}
-            name="title"
-          />
-        </Form.Group>
+    <Container className="w-30">
+      <Row >
+        <Col className="justify-content-center">
+          <Form onSubmit={handleSubmit} className="PostForm-form">
+            <Form.Group controlId="form-title">
+              <InputGroup.Text>Title:</InputGroup.Text>
+              {/* <Form.Label>Title:</Form.Label> */}
+              <Form.Control
+                type="text"
+                className="PostForm-title"
+                onChange={handleChange}
+                value={postData.title}
+                name="title"
+              />
+            </Form.Group>
 
-        <Form.Group controlId="form-content">
-          <Form.Label>Content:</Form.Label>
-          <Form.Control
-            as="textarea"
-            className="PostForm-control"
-            onChange={handleChange}
-            value={postData.content}
-            name="content"
-          />
-        </Form.Group>
+            <Form.Group controlId="form-content">
+              <InputGroup.Text>Content:</InputGroup.Text>
+              {/* <Form.Label>Content:</Form.Label> */}
+              <Form.Control
+                as="textarea"
+                className="PostForm-control"
+                onChange={handleChange}
+                value={postData.content}
+                name="content"
+              />
+            </Form.Group>
 
-        <Form.Group controlId="form-problem">
-          <Form.Label>Problem:</Form.Label>
-          <Form.Control
-            as="textarea"
-            className="PostForm-control"
-            onChange={handleChange}
-            value={postData.problem}
-            name="problem"
-          />
-        </Form.Group>
+            <Form.Group controlId="form-problem">
+              <InputGroup.Text>Problem:</InputGroup.Text>
+              {/* <Form.Label>Problem:</Form.Label> */}
+              <Form.Control
+                as="textarea"
+                id="PostForm-control-problem"
+                className="PostForm-control"
+                onChange={handleChange}
+                value={postData.problem}
+                name="problem"
+              />
+            </Form.Group>
 
-        <Form.Group controlId="form-solution">
-          <Form.Label>Solution:</Form.Label>
-          <Form.Control
-            as="textarea"
-            className="PostForm-control"
-            onChange={handleChange}
-            value={postData.solution}
-            name="solution"
-          />
-        </Form.Group>
+            <Form.Group controlId="form-solution">
+              <InputGroup.Text>Solution:</InputGroup.Text>
+              {/* <Form.Label>Solution:</Form.Label> */}
+              <Form.Control
+                as="textarea"
+                id="PostForm-control-solution"
+                className="PostForm-control"
+                onChange={handleChange}
+                value={postData.solution}
+                name="solution"
+              />
+            </Form.Group>
 
-        <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button>
-        <Button type="submit" variant="success">Submit</Button>
-      </Form>
-          </Col>
-        </Row>
-      </Container>
+            <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button>
+            <Button type="submit" variant="success">Submit</Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
