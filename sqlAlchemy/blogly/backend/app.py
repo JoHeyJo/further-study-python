@@ -171,7 +171,7 @@ def posts_add(user_id):
     except Exception as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"})
-
+    # refactor error handling so that any failed constraints trigger error
 
 @app.get("/posts/<int:post_id>")
 def posts_get(post_id):
