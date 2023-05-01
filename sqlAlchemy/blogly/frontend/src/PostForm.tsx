@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form';
 //modules
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
+//styles
+import './style/PostForm.css';
 
 const defaultPost: IPost = { title: '', content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
 
@@ -99,7 +101,7 @@ function PostForm({ }) {
   return (
       <Container fluid>
         <Row className="justify-content-center">
-          <Col xs={12} sm={6} md={4} lg={3}>
+          <Col >
       <Form onSubmit={handleSubmit} className="PostForm-form">
         <Form.Group controlId="form-title">
           <Form.Label>Title:</Form.Label>
@@ -116,7 +118,7 @@ function PostForm({ }) {
           <Form.Label>Content:</Form.Label>
           <Form.Control
             as="textarea"
-            className="PostForm-content"
+            className="PostForm-control"
             onChange={handleChange}
             value={postData.content}
             name="content"
@@ -127,7 +129,7 @@ function PostForm({ }) {
           <Form.Label>Problem:</Form.Label>
           <Form.Control
             as="textarea"
-            className="PostForm-problem"
+            className="PostForm-control"
             onChange={handleChange}
             value={postData.problem}
             name="problem"
@@ -138,7 +140,7 @@ function PostForm({ }) {
           <Form.Label>Solution:</Form.Label>
           <Form.Control
             as="textarea"
-            className="PostForm-solution"
+            className="PostForm-control"
             onChange={handleChange}
             value={postData.solution}
             name="solution"
