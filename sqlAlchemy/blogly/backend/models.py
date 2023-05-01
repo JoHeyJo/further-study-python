@@ -52,17 +52,11 @@ class Post(db.Model):
         nullable=False,
         default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-    @property
-    def now(self):
-        """Return nicely-formatted date."""
-
-        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
     # user = db.relationship('User')
 
     def serialize(self):
         """Serialize to dict"""
-        return {"id": self.id, "title": self.title, "content": self.content, "problem": self.problem, "solution": self.solution,  "created_at": self.created_at, "user_id": self.user_id}
+        return {"id": self.id, "title": self.title, "content": self.content, "problem": self.problem, "solution": self.solution,  "created_at": self.created_at.strftime("%d, %Y, %I:%M %p"), "user_id": self.user_id}
 
 
 def connect_db(app):
