@@ -6,11 +6,11 @@ export interface IUser {
 }
 
 export interface IPost {
-  title: string;
-  content: string;
+  title: string | undefined;
+  content: string | undefined;
   userId: number;
-  firstName: string;
-  lastName: string;
+  firstName: string | null;
+  lastName: string | null;
   id: number;
   createdAt: string;
   problem: string;

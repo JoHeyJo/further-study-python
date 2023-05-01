@@ -10,7 +10,7 @@ import { IUser, IPost } from "./interface";
 //styles
 import './style/PostForm.css';
 
-const defaultPost: IPost = { title: '', content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
+const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
 
 /** Handles/ submits post data & renders form for new post 
  * 
