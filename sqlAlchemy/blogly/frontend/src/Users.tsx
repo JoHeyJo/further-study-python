@@ -1,7 +1,7 @@
 //dependencies
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 //components
 import { IUser } from './interface'
 import { usersGet } from "./api";
@@ -25,21 +25,23 @@ function Users() {
       setUsers(res)
     }
     fetchUsers();
-  },[])
+  }, [])
 
   return (
-    <div className="Users-container">
-      <h1>
-        Users
-      </h1>
-      <div className="Users-box">
-        {users.map(u => <li key={u.id} className="Users-user"><Link to={`/users/${u.id}`} > {u.firstName} {u.lastName}</Link></li>)}
+    <Container>
+      <div className="Users-container">
+        <h1>
+          Users
+        </h1>
+        <div className="Users-box">
+          {users.map(u => <li key={u.id} className="Users-user"><Link to={`/users/${u.id}`} > {u.firstName} {u.lastName}</Link></li>)}
+        </div>
+        <Link to="/form">
+          <Button variant="primary">Add user</Button>
+        </Link>
+        <HomePage />
       </div>
-      <Link to="/form">
-        <Button variant="primary">Add user</Button>
-      </Link>
-      <HomePage />
-    </div>
+    </Container>
   )
 }
 
