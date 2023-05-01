@@ -33,8 +33,7 @@ class User(db.Model):
     def serialize(self):
         """Serialize to dict"""
         return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "image_url": self.image_url}
-
-
+    
 # @freeze_time("2022-01-01 00:00:00")
 class Post(db.Model):
     """Post model"""
@@ -48,8 +47,17 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     problem = db.Column(db.Text)
     solution = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    @property
+    def now(self):
+        """Return nicely-formatted date."""
+
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
     # user = db.relationship('User')
 
     def serialize(self):
