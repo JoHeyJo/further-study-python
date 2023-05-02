@@ -3,7 +3,9 @@ from flask import Flask, request, redirect, jsonify, url_for
 from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
-import time
+# from werkzeug.exceptions import BadRequest
+from sqlalchemy.exc import IntegrityError
+
 ######## Double check exception key works ##########
 app = Flask(__name__)
 CORS(app)
@@ -170,7 +172,7 @@ def posts_add(user_id):
         return redirect(f"/users/{user_id}/posts")
     except Exception as e:
         print("keyerror>>>>>>", e)
-        return jsonify({"error": f"Missing {str(e)}"})
+        return jsonify({"error": f"Missing {str(e)}"}), 401
     # refactor error handling so that any failed constraints trigger error
 
 @app.get("/posts/<int:post_id>")
