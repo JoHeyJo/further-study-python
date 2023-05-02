@@ -7,6 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 //modules
 import { userGet, postAdd, postEdit, postUpdate } from './api';
 import { IUser, IPost } from "./interface";
+import { Alert } from "react-bootstrap";
 //styles
 import './style/PostForm.css';
 
@@ -86,6 +87,7 @@ function PostForm({ }) {
         setPostData(defaultPost);
         navigate(`/users/${userId}`);
       } catch (error: any) {
+        console.log(error)
         console.error(`Error adding post => ${error}`)
       }
     }
@@ -158,6 +160,7 @@ function PostForm({ }) {
             <Button type="submit" variant="success">Submit</Button>
           </Form>
         </Col>
+        {}
       </Row>
     </Container>
   )

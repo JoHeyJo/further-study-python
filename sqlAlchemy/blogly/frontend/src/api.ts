@@ -107,10 +107,11 @@ async function postGet(id: number) {
 async function postAdd(postData: IPost) {
   try {
     const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData)
-    console.log(res)
     return res.data;
   } catch (error: any) {
     console.error(`API post form error: ${error}`)
+    console.log(error.response)
+    throw error.response.data
   }
 }
 
