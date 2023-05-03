@@ -4,15 +4,15 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-//modules
+//modules/components
 import { userGet, postAdd, postEdit, postUpdate } from './api';
-import { IUser, IPost } from "./interface";
-import { Alert } from "react-bootstrap";
+import { IUser, IPost, IAlert } from "./interface";
+import AlertPopUp from './AlertPopUp';
 //styles
 import './style/PostForm.css';
 
 const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
-
+const defaultMessage: IAlert = { error: null };
 /** Handles/ submits post data & renders form for new post 
  * 
  * State:
@@ -23,7 +23,8 @@ const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName
 */
 function PostForm({ }) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
-  const [postData, setPostData] = useState<IPost>(defaultPost)
+  const [postData, setPostData] = useState<IPost>(defaultPost);
+  const [alert, setAlert] = useState<IAlert>(defaultMessage);
 
   const params = useParams();
   const userId = +params.user_id!
@@ -88,6 +89,7 @@ function PostForm({ }) {
         navigate(`/users/${userId}`);
       } catch (error: any) {
         console.log(error)
+        setAlert(error)
         console.error(`Error adding post => ${error}`)
       }
     }
@@ -101,6 +103,7 @@ function PostForm({ }) {
       }
     }
   }
+  console.log(alert.error)
   return (
     <Container className="w-30">
       <Row >
@@ -135,8 +138,8 @@ function PostForm({ }) {
               {/* <Form.Label>Problem:</Form.Label> */}
               <Form.Control
                 as="textarea"
-                id="PostForm-control-problem"
-                className="PostForm-control"
+                // id="PostForm-control-problem"
+                className="PostForm-control input"
                 onChange={handleChange}
                 value={postData.problem}
                 name="problem"
@@ -148,8 +151,8 @@ function PostForm({ }) {
               {/* <Form.Label>Solution:</Form.Label> */}
               <Form.Control
                 as="textarea"
-                id="PostForm-control-solution"
-                className="PostForm-control"
+                // id="PostForm-control-solution"
+                className="PostForm-control input"
                 onChange={handleChange}
                 value={postData.solution}
                 name="solution"
@@ -160,8 +163,12 @@ function PostForm({ }) {
             <Button type="submit" variant="success">Submit</Button>
           </Form>
         </Col>
-        {}
       </Row>
+
+      {
+        alert.error &&
+        <AlertPopUp variant={'danger'} message={alert.error} />
+      }
     </Container>
   )
 }

@@ -33,3 +33,7 @@ export interface UserContextType {
 export interface IPosts {
   posts: IPost[];
 }
+
+export interface IAlert {
+  error: string | null;
+}

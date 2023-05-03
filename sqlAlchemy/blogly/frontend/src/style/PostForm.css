@@ -1,20 +1,7 @@
-/* .Form.Control {
-  max-width: 60vw;
-  border: 2px solid grey;
-  padding: 1rem;
-}
-
-h3 {
-  border-bottom: 2px solid grey;
-}
-
-h6 {
-  border-bottom: 2px solid grey;
+/* .form-control{
+  height: 150px;
 } */
-.PostForm-control {
-  /* max-width: 600px; */
-}
 
-#PostForm-control-problem, #PostForm-control-solution {
+.input {
   height: 150px;
 }
