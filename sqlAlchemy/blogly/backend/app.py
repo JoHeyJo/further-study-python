@@ -71,9 +71,9 @@ def users_add():
         db.session.add(user)
         db.session.commit()
         return redirect("/")
-    except KeyError as e:
+    except Exception as e:
         print("keyerror>>>>>>", e)
-        return jsonify({"error": f"Missing {str(e)}"})
+        return jsonify({"error": f"Missing {str(e)}"}), 401
 
 
 @app.get('/users/<int:user_id>/edit')
