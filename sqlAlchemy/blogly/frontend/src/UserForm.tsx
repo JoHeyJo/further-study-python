@@ -1,15 +1,17 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 // import { redirect } from 'react-router-dom';
 import { useNavigate, useLocation } from "react-router-dom";
 //components
-import { IUser } from './interface';
+import { IUser, IAlert } from './interface';
 import { userAdd, userUpdate, userEdit } from './api';
 // style
 import './style/Form.css';
+import AlertPopUp from './AlertPopUp';
 
-const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
+const defaultUser = { id: 0, firstName: undefined, lastName: undefined, image: '' };
+const defaultAlert: IAlert = { error: null };
 
 /** Handles user information and renders form for new/edit user
  * 
@@ -22,7 +24,7 @@ const defaultUser = { id: 0, firstName: '', lastName: '', image: '' };
  */
 function UserForm() {
   const [user, setUser] = useState<IUser>(defaultUser);
-  // const [userData, setUserData] = useState<{}>({})
+  const [alert, setAlert] = useState<IAlert>(defaultAlert)
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -63,6 +65,7 @@ function UserForm() {
         navigate('/');
       }
     } catch (error: any) {
+      setAlert(error)
       console.error(error)
     }
   }
@@ -108,7 +111,11 @@ function UserForm() {
         {user.id !== 0
           ? <Button type='submit' onClick={() => navigate(`/users/${user.id}/`)}>Cancel</Button>
           : <Button type='submit' onClick={() => navigate('/')}>Cancel</Button>
+        }
 
+        {
+          alert.error && 
+          <AlertPopUp variant={'danger'} message={alert.error}/>
         }
 
       </form>

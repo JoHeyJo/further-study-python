@@ -1,7 +1,7 @@
 export interface IUser {
   id:number;
-  firstName: string;
-  lastName: string;
+  firstName: string | undefined;
+  lastName: string | undefined;
   image: string;
 }
 
@@ -9,8 +9,8 @@ export interface IPost {
   title: string | undefined;
   content: string | undefined;
   userId: number;
-  firstName: string | null;
-  lastName: string | null;
+  firstName: string | undefined;
+  lastName: string | undefined;
   id: number;
   createdAt: string;
   problem: string;

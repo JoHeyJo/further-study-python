@@ -12,7 +12,7 @@ import AlertPopUp from './AlertPopUp';
 import './style/PostForm.css';
 
 const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
-const defaultMessage: IAlert = { error: null };
+const defaultAlert: IAlert = { error: null };
 /** Handles/ submits post data & renders form for new post 
  * 
  * State:
@@ -24,7 +24,7 @@ const defaultMessage: IAlert = { error: null };
 function PostForm({ }) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
-  const [alert, setAlert] = useState<IAlert>(defaultMessage);
+  const [alert, setAlert] = useState<IAlert>(defaultAlert);
 
   const params = useParams();
   const userId = +params.user_id!
@@ -164,7 +164,6 @@ function PostForm({ }) {
           </Form>
         </Col>
       </Row>
-
       {
         alert.error &&
         <AlertPopUp variant={'danger'} message={alert.error} />

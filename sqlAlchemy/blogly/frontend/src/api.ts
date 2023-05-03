@@ -27,7 +27,8 @@ async function userAdd(data: IUser) {
     const res = await axios.post(`${BASE_URL}/users/new`, data)
     return res.data
   } catch (error: any) {
-    console.error("API add user Error:" + error.response);
+    console.error("API add user Error:" + error.response.data);
+    throw error.response.data
   }
 }
 

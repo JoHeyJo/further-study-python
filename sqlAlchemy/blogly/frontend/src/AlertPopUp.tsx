@@ -19,15 +19,15 @@ type AlertProp = {
 function AlertPopUp({ variant, message }: AlertProp) {
   const [isShowing, setIsShowing] = useState<boolean>(true);
 
-  const show = () => {
-    setIsShowing(true)
+  // const show = () => {
+  //   setIsShowing(true)
 
-    setTimeout(() => {
-      setIsShowing(false)
-    }, 2000)
-  }
+  //   setTimeout(() => {
+  //     setIsShowing(false)
+  //   }, 2000)
+  // }
 
-  useEffect(() => show(),[])
+  // useEffect(() => show(),[])
   return (
     <>
       {
