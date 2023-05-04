@@ -10,6 +10,7 @@ import EditUser from './EditUser';
 import PostForm from './PostForm';
 import Post from './Post';
 import HomePage from './HomePages';
+import NotFound from './NotFound';
 // style
 import './style/App.css';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/posts/:post_id" element={<Post />}/>
           <Route path="/posts/:post_id/edit" element={<PostForm />} />
           <Route path="homepage" element={<HomePage />}/>
+          <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>
     </div>

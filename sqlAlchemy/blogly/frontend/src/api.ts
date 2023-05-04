@@ -69,6 +69,7 @@ async function userDelete(id: number) {
     return res.data
   } catch (error: any) {
     console.error(`API Delete error: ${error}`)
+    throw error.response.data
   }
 }
 // ************POSTS*******************
