@@ -4,7 +4,7 @@ from models import db, connect_db, User, Post
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 # from werkzeug.exceptions import BadRequest
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 ######## Double check exception key works ##########
 app = Flask(__name__)
@@ -32,6 +32,11 @@ def root():
     """Homepage redirects to list of users."""
 
     return redirect("/users")
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return jsonify({'error': 'Not found'}), 404
 
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
@@ -81,7 +86,9 @@ def users_edit(user_id):
     """Retrieves user with matching ID to populate edit form"""
     user = User.query.get_or_404(user_id)
     serialized = User.serialize(user)
-    return jsonify(serialized)
+    user_data = {'id': serialized['id'], 'firstName': serialized['first_name'],
+                 'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
+    return jsonify(user_data)
 
 
 @app.patch("/users/<int:user_id>/edit")
@@ -107,6 +114,11 @@ def user_delete(user_id):
     """Delete user"""
     # User.query.filter_by(id=user_id).delete()
     user = User.query.get_or_404(user_id)
+    posts = posts = Post.query.filter(Post.user_id == user_id).all()
+    print('>>>>>>>>posts',posts)
+    print('in here')
+    for post in posts:
+        db.session.delete(post)
     db.session.delete(user)
     db.session.commit()
     return redirect("/")
