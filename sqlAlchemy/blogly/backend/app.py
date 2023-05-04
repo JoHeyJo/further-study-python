@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, redirect, jsonify, url_for
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Project
 from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 # from werkzeug.exceptions import BadRequest
@@ -265,3 +265,20 @@ def posts_delete(post_id):
     except Exception as error:
         print(f"posts_delete error => {error}")
         return jsonify({"error": f"Missing {str(error)}"})
+
+######### Project routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
+@app.post("/projects/<int:user_id>")
+def projects_add(user_id):
+    """Adds project corresponding to user"""
+    try:
+        project = Project(
+            name=request.json['name'],
+            description=request.json['description'],
+            user_id=user_id)
+        db.session.add(project)
+        db.session.commit()
+        serialized = Project.serialize(project)
+        return jsonify(serialized)
+    except Exception as e:
+        print('projects_add error =>', e)
+        return jsonify({"error": f"Missing {str(e)}"})

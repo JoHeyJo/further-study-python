@@ -68,6 +68,10 @@ class Project(db.Model):
     users = db.relationship("User", backref="project")
     posts = db.relationship("Post", backref="project")
 
+    def serialize(self):
+        """Serialize to dict"""
+        return {"id": self.id, "name": self.name, "description": self.description, "user_id": self.user_id}
+
 
 
 def connect_db(app):
