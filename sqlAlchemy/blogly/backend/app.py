@@ -78,7 +78,7 @@ def users_add():
         return redirect("/")
     except Exception as e:
         print("keyerror>>>>>>", e)
-        return jsonify({"error": f"Missing {str(e)}"}), 401
+        return jsonify({"error": {str(e)}}), 401
 
 
 @app.get('/users/<int:user_id>/edit')

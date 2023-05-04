@@ -21,7 +21,6 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
     posts = db.relationship("Post", backref="user")
-    # posts = db.relationship('Post')
 
     # gives "special" functionality to certain methods to make them act as getters, setters, or deleters when we define properties in a class
     @property
@@ -34,7 +33,6 @@ class User(db.Model):
         """Serialize to dict"""
         return {"id": self.id, "first_name": self.first_name, "last_name": self.last_name, "image_url": self.image_url}
     
-# @freeze_time("2022-01-01 00:00:00")
 class Post(db.Model):
     """Post model"""
 
@@ -51,8 +49,8 @@ class Post(db.Model):
         db.DateTime,
         nullable=False,
         default=datetime.now)
+    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # user = db.relationship('User')
 
     def serialize(self):
         """Serialize to dict"""
@@ -67,7 +65,6 @@ class Project(db.Model):
     name = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     users = db.relationship("User", backref="project")
     posts = db.relationship("Post", backref="project")
 
