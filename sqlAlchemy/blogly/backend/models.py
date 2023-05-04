@@ -58,6 +58,20 @@ class Post(db.Model):
         """Serialize to dict"""
         return {"id": self.id, "title": self.title, "content": self.content, "problem": self.problem, "solution": self.solution,  "created_at": self.created_at.strftime("%d, %Y, %I:%M %p"), "user_id": self.user_id}
 
+class Project(db.Model):
+    """Project model"""
+    
+    __tablename__ = "projects"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    users = db.relationship("User", backref="project")
+    posts = db.relationship("Post", backref="project")
+
+
 
 def connect_db(app):
     """Connect to database."""
