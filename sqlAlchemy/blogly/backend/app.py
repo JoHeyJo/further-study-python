@@ -143,11 +143,13 @@ def posts_all():
                 'imageUrl': post['image_url'],
                 'title': post['title'],
                 'userId': post['user_id'],
+                'projectId': post['project_id'],
                 'problem': post['problem'],
                 'solution': post['solution']
             }
             for post in posts_user
         ]
+        print(posts_user_data)
         return posts_user_data
     except Exception as error:
         print("Lookup error", error)
@@ -167,8 +169,8 @@ def posts_all_user(user_id):
         return jsonify({"error": error})
 
 
-@app.post("/users/<int:user_id>/posts/new")
-def posts_add(user_id):
+@app.post("/users/<int:user_id>/project/<int:project_id>/posts/new")
+def posts_add(user_id,project_id):
     """Adds new posts_"""
     try:
         title = request.json['title']
@@ -177,7 +179,7 @@ def posts_add(user_id):
         solution = request.json['solution']
         # user = User.query.get_or_404(user_id)
         post = Post(title=title, content=content, user_id=user_id,
-                    problem=problem, solution=solution)
+                    problem=problem, solution=solution, project_id=project_id)
 
         db.session.add(post)
         db.session.commit()
@@ -267,7 +269,20 @@ def posts_delete(post_id):
         return jsonify({"error": f"Missing {str(error)}"})
 
 ######### Project routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
-@app.post("/projects/<int:user_id>")
+
+
+@app.get("/projects")
+def projects_get_all():
+    """Return all projects"""
+    try:
+        projects = Project.query.all()
+        serialized = [Project.serialize(project) for project in projects]
+        return jsonify(serialized)
+    except Exception as e:
+        print('errrro')
+
+
+@app.post("/users/<int:user_id>/projects/new")
 def projects_add(user_id):
     """Adds project corresponding to user"""
     try:

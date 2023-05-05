@@ -45,17 +45,14 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     problem = db.Column(db.Text)
     solution = db.Column(db.Text)
-    created_at = db.Column(
-        db.DateTime,
-        nullable=False,
-        default=datetime.now)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def serialize(self):
         """Serialize to dict"""
-        return {"id": self.id, "title": self.title, "content": self.content, "problem": self.problem, "solution": self.solution,  "created_at": self.created_at.strftime("%d, %Y, %I:%M %p"), "user_id": self.user_id}
-
+        return {"id": self.id, "title": self.title, "content": self.content, "problem": self.problem, "solution": self.solution,  "created_at": self.created_at.strftime("%d, %Y, %I:%M %p"), "user_id": self.user_id, "project_id":self.project_id}
+    
 class Project(db.Model):
     """Project model"""
     
