@@ -1,65 +1,68 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
 import { Alert, Button } from "react-bootstrap";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 //components
-import { projectAdd } from './api';
-import { IAlert } from './interface';
+import { projectAdd, projectUpdate, projectEdit } from './api';
+import { IAlert, IProject } from './interface';
 // style
 import AlertPopUp from './AlertPopUp';
 
-const defaultProject = { id: 0, name: undefined, description: undefined, userId: 0 };
+const defaultProject: IProject = { id: undefined, name: undefined, description: undefined, userId: undefined };
 const defaultAlert: IAlert = { error: null };
 
-/** Handles user information and renders form for new/edit user
+/** Handles user information and renders form for new/edit project
  * 
  * Props:
  * 
  * State:
- * - user {firstName:string, lastName:string, imgUrl:string}
+ * - user {id:number, name:string, description:string, userId:number}
  * 
  * App -> Form
  */
-function UserForm() {
-  const [user, setUser] = useState<IUser>(defaultUser);
+function ProjectForm() {
+  const [project, setProject] = useState<IProject>(defaultProject);
   const [alert, setAlert] = useState<IAlert>(defaultAlert)
   const navigate = useNavigate();
 
-  const location = useLocation();
-  const userId = location.state?.userId;
+  // const location = useLocation();
+  // const userId = location.state?.userId;
+  const params = useParams();
+  const userId = +params.user_id!;
+  const projectId = undefined;
 
   /** Handles changes to form state */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setUser(data => ({
+    setProject(data => ({
       ...data,
       [name]: value,
     }))
   }
 
   /** Fetches existing user to edit though API*/
-  async function fetchUser(id: number | undefined) {
+  async function fetchProject(id: number | undefined) {
     try {
-      let res = await userEdit(id)
-      setUser(res);
+      let res = await projectEdit(id)
+      setProject(project);
     } catch (error: any) {
-      console.error(`Error: fetchUser => ${error}`)
+      console.error(`Error: fetchProject => ${error}`)
     }
   }
 
   /** send user data to api */
-  async function submitUser(e: any) {
+  async function submitProject(e: any) {
     e.preventDefault();
     try {
-      if (userId) {
-        // update user
-        let res = await userUpdate(user.id, user)
-        setUser(defaultUser)
+      if (projectId) {
+        // update project
+        let res = await projectUpdate(userId, project)
+        setProject(defaultProject)
         navigate('/')
       } else {
-        // add user
-        let res = await userAdd(user)
-        setUser(defaultUser);
+        // add project
+        let res = await projectAdd(userId, project)
+        setProject(defaultProject);
         navigate('/');
       }
     } catch (error: any) {
@@ -68,11 +71,11 @@ function UserForm() {
     }
   }
 
-  /** calls fetchUser on mount, if a user id is passed on render */
+  /** calls fetchProject on mount, if a user id is passed on render */
   useEffect(() => {
     try {
       if (userId) {
-        fetchUser(userId);
+        fetchProject(userId);
       }
     } catch (error: any) {
       console.error(error)
@@ -81,33 +84,27 @@ function UserForm() {
 
   return (
     <>
-      <form className='Form-input' onSubmit={submitUser}>
-        <label htmlFor='first-name-input'>First Name</label>
+      <form className='Form-input' onSubmit={submitProject}>
+        <label htmlFor='name-input'>Project Name</label>
         <input onChange={handleChange}
-          name="firstName"
-          id="first-name-input"
-          className='Form-first-name'
-          placeholder='First Name:'
-          value={user.firstName}>
+          name="name"
+          id="name-input"
+          className='Form-name'
+          placeholder='Project Name:'
+          value={project.name}>
         </input>
-        <label htmlFor='last-name-input'>Last Name</label>
+        <label htmlFor='description-input'>Description</label>
         <input onChange={handleChange}
-          name="lastName"
-          id="last-name-input"
-          className='Form-last-name'
-          placeholder='Last Name:'
-          value={user.lastName}>
-        </input>
-        <label htmlFor='image-input'>Image URL</label>
-        <input onChange={handleChange}
-          name="image"
-          className='Form-imgUrl'
-          placeholder='Image URL:'>
+          name="description"
+          id="description-input"
+          className='Form-description'
+          placeholder='Description:'
+          value={project.description}>
         </input>
 
-        <Button type='submit'>{!user.id ? 'Add User' : 'Update User'}</Button>
-        {user.id !== 0
-          ? <Button type='submit' onClick={() => navigate(`/users/${user.id}/`)}>Cancel</Button>
+        <Button type='submit'>{!project.id ? 'Add Project' : 'Update Project'}</Button>
+        {project.id !== 0
+          ? <Button type='submit' onClick={() => navigate(`/users/${project.id}/`)}>Cancel</Button>
           : <Button type='submit' onClick={() => navigate('/')}>Cancel</Button>
         }
 
@@ -121,4 +118,4 @@ function UserForm() {
   )
 }
 
-export default UserForm;
+export default ProjectForm;

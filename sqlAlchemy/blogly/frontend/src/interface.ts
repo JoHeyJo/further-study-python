@@ -37,3 +37,10 @@ export interface IPosts {
 export interface IAlert {
   error: string | null;
 }
+
+export interface IProject {
+  id: number | undefined;
+  name:string | undefined;
+  description: string | undefined;
+  userId: number | undefined;
+}

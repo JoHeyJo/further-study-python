@@ -10,6 +10,7 @@ import EditUser from './EditUser';
 import PostForm from './PostForm';
 import Post from './Post';
 import HomePage from './HomePages';
+import ProjectForm from './ProjectForm';
 import NotFound from './NotFound';
 // style
 import './style/App.css';
@@ -27,7 +28,8 @@ function App() {
           <Route path="/users/:user_id/posts/new" element={<PostForm />}/>
           <Route path="/posts/:post_id" element={<Post />}/>
           <Route path="/posts/:post_id/edit" element={<PostForm />} />
-          <Route path="homepage" element={<HomePage />}/>
+          <Route path="/homepage" element={<HomePage />}/>
+          <Route path="/users/:user_id/projects" element={<ProjectForm />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>

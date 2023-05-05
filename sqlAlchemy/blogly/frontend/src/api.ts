@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IUser, IPost } from './interface'
+import { IUser, IPost, IProject } from './interface'
 
 const BASE_URL = "http://localhost:5000";
 // try {
@@ -148,16 +148,50 @@ async function postDelete(postId: number){
   }
 }
 
-// ************POSTS*******************
+// ************PROJECTS*******************
 /** Routes new project data to project route */
-async function projectAdd(userId: number){
+async function projectAdd(userId: number, projectData: IProject){
   try{
-    const res = await axios.post(`${BASE_URL}/projects${userId}`);
+    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/new`, projectData);
     return res.data;
   } catch (error:any){
     console.error(`Error in projectAdd => ${error}`)
+    console.log(error)
   }
 }
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd };
+/** Gets project data with corresponding id */
+  async function projectEdit(projectId: number | undefined){
+  try{
+    const res = await axios.get(`${BASE_URL}/projects${projectId}`);
+    return res.data;
+  } catch (error:any){
+    console.error(`Error in projectEdit => ${error}`)
+  }
+}  
+
+/** Updates project with matching id */
+async function projectUpdate(projectId: number | undefined, projectData: IProject){
+  try{
+    const res = await axios.patch(`${BASE_URL}/projects${projectId}`);
+    return res.data;
+  } catch (error:any){
+    console.error(`Error in projectUpdate => ${error}`)
+  }
+}  
+
+
+
+// async function projectUpdate(userId: number | undefined){
+//   try{
+//     const res = await axios.patch(`${BASE_URL}/projects${userId}`);
+//     return res.data;
+//   } catch (error:any){
+//     console.error(`Error in projectAdd => ${error}`)
+//   }
+// }
+
+
+
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit };
 
