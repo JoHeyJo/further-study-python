@@ -148,5 +148,16 @@ async function postDelete(postId: number){
   }
 }
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete };
+// ************POSTS*******************
+/** Routes new project data to project route */
+async function projectAdd(userId: number){
+  try{
+    const res = await axios.post(`${BASE_URL}/projects${userId}`);
+    return res.data;
+  } catch (error:any){
+    console.error(`Error in projectAdd => ${error}`)
+  }
+}
+
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd };
 
