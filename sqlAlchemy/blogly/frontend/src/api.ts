@@ -149,6 +149,19 @@ async function postDelete(postId: number){
 }
 
 // ************PROJECTS*******************
+
+/**Get projects corresponding to user id */
+async function projectsGet(){
+  try{
+    const res = await axios.get(`${BASE_URL}/projects`);
+    return res.data;
+  } catch (error: any){
+    console.error(error);
+    console.log(error)
+    throw error.response.data
+  }
+}
+
 /** Routes new project data to project route */
 async function projectAdd(userId: number, projectData: IProject){
   try{
@@ -193,5 +206,5 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
 
 
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit };
+export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 
