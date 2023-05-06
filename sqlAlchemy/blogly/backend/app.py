@@ -61,7 +61,6 @@ def users_get(id):
     serialized = User.serialize(user)
     user_data = {'id': serialized['id'], 'firstName': serialized['first_name'],
                  'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
-    print('>>>>>>>>>>>>>>user_data', user_data)
 
     return jsonify(user_data)
 
@@ -115,8 +114,6 @@ def user_delete(user_id):
     # User.query.filter_by(id=user_id).delete()
     user = User.query.get_or_404(user_id)
     posts = posts = Post.query.filter(Post.user_id == user_id).all()
-    print('>>>>>>>>posts',posts)
-    print('in here')
     for post in posts:
         db.session.delete(post)
     db.session.delete(user)
@@ -149,7 +146,6 @@ def posts_all():
             }
             for post in posts_user
         ]
-        print(posts_user_data)
         return posts_user_data
     except Exception as error:
         print("Lookup error", error)
@@ -280,6 +276,18 @@ def projects_get_all():
         return jsonify(serialized)
     except Exception as e:
         print('errrro')
+
+@app.get("/users/<int:user_id>/projects")
+def projects_get(user_id):
+    """Retrieves all projects corresponding to user id"""
+    try:
+        projects = Project.query.filter(Project.user_id == user_id)
+        serialized = [Project.serialize(project) for project in projects]
+        print('>>>>>',serialized)
+        return jsonify(serialized)
+    except Exception as e:
+        print('projects_get error =>', e)
+        return jsonify({"error": f"{str(e)}"})
 
 
 @app.post("/users/<int:user_id>/projects/new")
