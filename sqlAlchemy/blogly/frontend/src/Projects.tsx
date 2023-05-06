@@ -31,7 +31,7 @@ type ProjectId = {
  * 
  * User - Projects
  */
-function Projects() {
+function Projects(projectId: ProjectId) {
   const [projects, setProjects] = useState<IProject[]>([])
 
   /** On mount fetches users' posts */

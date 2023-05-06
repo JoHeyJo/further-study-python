@@ -151,9 +151,21 @@ async function postDelete(postId: number){
 // ************PROJECTS*******************
 
 /**Get projects corresponding to user id */
-async function projectsGet(){
+async function projectsGetAll(){
   try{
     const res = await axios.get(`${BASE_URL}/projects`);
+    return res.data;
+  } catch (error: any){
+    console.error(error);
+    console.log(error)
+    throw error.response.data
+  }
+}
+
+/**Get projects corresponding to user id */
+async function projectsGet(userId: number){
+  try{
+    const res = await axios.get(`${BASE_URL}/users/${userId}/projects`);
     return res.data;
   } catch (error: any){
     console.error(error);
@@ -206,5 +218,5 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
 
 
 
-export { userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
+export { projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 
