@@ -51,7 +51,7 @@ function Posts({ userId }: IUserId) {
       <div>
         <Container>
           <Row className="justify-content-center">
-            <Col className="col-6">
+            <Col className=""> 
               <ListGroup className="align-items-start">
           {
             posts.map(post =>

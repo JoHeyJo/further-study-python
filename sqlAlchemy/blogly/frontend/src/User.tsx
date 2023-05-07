@@ -10,6 +10,7 @@ import { IUser } from './interface'
 import { userGet, userDelete } from './api'
 import UserForm from './UserForm'
 import Posts from './Posts';
+import Projects from "./Projects";
 // style
 import './style/User.css'
 import img from './default.png'
@@ -45,11 +46,11 @@ function User() {
   };
 
   /** passes user ID to API delete function */
-  async function removeUser(userId: number){
-    try{
+  async function removeUser(userId: number) {
+    try {
       const res = await userDelete(userId);
       navigate('/')
-    } catch (error: any){
+    } catch (error: any) {
       console.error("User: Issue removing user" + error)
     }
   }
@@ -57,18 +58,21 @@ function User() {
   return (
     <Container className="User-container">
       <Row>
-      <Col className="col-3">
-      <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
-      <div className="User-user">
-        <div className="User-fn">{user.firstName}</div>
-        <div className="User-ln">{user.lastName}</div>
-      </div>
-      <Button variant="primary" onClick={handleClick}>Edit</Button>
-      <Button variant="danger" onClick={()=>removeUser(user.id)}>Delete</Button>
-      </Col>
-      <Col>
-      <div className="User-posts"><Posts userId={+params.user_id!}/></div>
-      </Col>
+        <Col className="col-3">
+          <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
+          <div className="User-user">
+            <div className="User-fn">{user.firstName}</div>
+            <div className="User-ln">{user.lastName}</div>
+          </div>
+          <Button variant="primary" onClick={handleClick}>Edit</Button>
+          <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
+        </Col>
+        <Col>
+          <div className="User-posts"><Posts userId={+params.user_id!} /></div>
+        </Col>
+        <Col>
+          <div className="User-posts"><Projects userId={+params.user_id!} /></div>
+        </Col>
       </Row>
     </Container>
   )

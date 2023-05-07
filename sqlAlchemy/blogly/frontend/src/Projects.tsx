@@ -7,15 +7,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // components/ modules
-import { IProject } from './interface';
+import { IProject, IUserId } from './interface';
 import { postsGet, projectsGet } from './api'
 //styles
 // import './style/Projects.css';
 
-type ProjectId = {
-  projectId: number;
-}
-/** Renders list of posts by title
+/** Renders list of projects by name
  * 
  * Props:
  * - projectId: number
@@ -31,13 +28,13 @@ type ProjectId = {
  * 
  * User - Projects
  */
-function Projects(projectId: ProjectId) {
+function Projects({userId}: IUserId) {
   const [projects, setProjects] = useState<IProject[]>([])
 
-  /** On mount fetches users' posts */
+  /** On mount fetches users' projects */
   useEffect(() => {
     async function fetchProjects() {
-      const res = await projectsGet()
+      const res = await projectsGet(userId)
       setProjects(res)
     }
     fetchProjects();

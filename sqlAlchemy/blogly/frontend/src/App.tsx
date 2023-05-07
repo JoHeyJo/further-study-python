@@ -32,7 +32,7 @@ function App() {
           <Route path='/posts/:post_id/edit' element={<PostForm />} />
           <Route path='/homepage' element={<HomePage />}/>
           <Route path='/users/:user_id/projects' element={<ProjectForm />}/>
-          <Route path='/projects/:project_id' element={<Projects />} />
+          {/* <Route path='/projects/:project_id' element={<Projects />} /> */}
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>

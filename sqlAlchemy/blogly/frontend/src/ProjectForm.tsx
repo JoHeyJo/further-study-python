@@ -31,6 +31,7 @@ function ProjectForm() {
   const userId = +params.user_id!;
   const projectId = undefined;
 
+
   /** Handles changes to form state */
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
