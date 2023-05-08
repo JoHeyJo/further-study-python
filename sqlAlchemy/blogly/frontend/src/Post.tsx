@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
 //components / modules
 import { IPostData } from './interface';
 import { postGet, postDelete } from './api';
 //styles
 import './style/Post.css'
-import { Container } from "react-bootstrap";
 
 /** Renders individual post
  * 
@@ -32,9 +32,7 @@ function Post() {
       solution: ''
     })
   const params = useParams();
-
   const postId = +params.post_id!
-
   const navigate = useNavigate();
 
   /**On mount fetches post */

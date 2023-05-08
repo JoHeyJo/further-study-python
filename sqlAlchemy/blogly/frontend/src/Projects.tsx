@@ -51,7 +51,7 @@ function Projects({userId}: IUserId) {
                 {
                   projects.map(project =>
                     <ListGroup.Item key={project.id} className="Projects-post">
-                      <Link to={`/project/${project.id}`}>{project.name}</Link>
+                      <Link to={`/projects/${project.id}`}>{project.name}</Link>
                     </ListGroup.Item>
                   )
                 }
@@ -60,7 +60,7 @@ function Projects({userId}: IUserId) {
           </Row>
         </Container>
       </div>
-      {/* <Link to={`/users/${'1'}/posts/new`}><Button variant="primary">Add Post</Button></Link> */}
+      <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link>
     </>
   )
 }
