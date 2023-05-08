@@ -5,8 +5,10 @@ import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
 //components / modules
-import { projectGet } from './api';
-import { IProject } from "./interface";
+import { projectGet, projectPostsGet } from './api';
+import { IProject, IPost } from "./interface";
+import Posts from "./Posts";
+
 
 
 const defaultProject: IProject = {
@@ -19,6 +21,7 @@ const defaultProject: IProject = {
 */
 function Project() {
   const [project, setProject] = useState<IProject>(defaultProject)
+  const [posts, setPosts] = useState<IPost[]>([])
 
   const params = useParams();
   const projectId = +params.project_id!;
@@ -29,8 +32,13 @@ function Project() {
     async function fetchProject() {
       const res = await projectGet(projectId);
       setProject(res);
+    };
+    async function fetchPosts(){
+      const res = await projectPostsGet(userId, projectId)
+      setPosts(res)
     }
     fetchProject();
+    fetchPosts();
   }, [])
 
   return (
@@ -40,6 +48,7 @@ function Project() {
           <h1>{project.name}</h1>
           <h3>{project.description}</h3>
         </Stack>
+        {posts.map(p => p.title )}
         <Link to={`/users/${userId}/projects/${projectId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
       </Container></>
   )
