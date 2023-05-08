@@ -32,7 +32,8 @@ function App() {
           <Route path='/posts/:post_id/edit' element={<PostForm />} />
           <Route path='/homepage' element={<HomePage />}/>
           <Route path='/users/:user_id/projects/new' element={<ProjectForm />}/>
-          <Route path='/projects/:project_id' element={<Project />} />
+          <Route path='/users/:user_id/projects/:project_id' element={<Project />} />
+          <Route path='/users/:user_id/projects/:project_id/posts/new' element={<PostForm />}/>
           <Route path="*" element={<NotFound />}/>
         </Routes>
       </BrowserRouter>

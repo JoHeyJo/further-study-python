@@ -15,6 +15,7 @@ export interface IPost {
   createdAt: string;
   problem: string;
   solution: string;
+  projectId: number;
 }
 
 export interface IPostData extends IPost {

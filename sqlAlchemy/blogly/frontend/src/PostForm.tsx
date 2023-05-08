@@ -5,13 +5,13 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 //modules/components
-import { userGet, postAdd, postEdit, postUpdate } from './api';
+import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
 //styles
 import './style/PostForm.css';
 
-const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '' }
+const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
 const defaultAlert: IAlert = { error: null };
 /** Handles/ submits post data & renders form for new post 
  * 
@@ -27,8 +27,9 @@ function PostForm({ }) {
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
 
   const params = useParams();
-  const userId = +params.user_id!
-  const postId = +params.post_id!
+  const userId = +params.user_id!;
+  const postId = +params.post_id!;
+  const projectId = +params.project_id!;
 
 
   console.log('userId', userId)
@@ -82,7 +83,7 @@ function PostForm({ }) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (userId) {
+    if (userId && !projectId) {
       try {
         await postAdd(postData);
         setPostData(defaultPost);
@@ -100,6 +101,15 @@ function PostForm({ }) {
         navigate(`/users/${postData.userId}`);
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
+      }
+    }
+    if (projectId) {
+      try {
+        await projectPostAdd(userId, projectId, postData);
+        setPostData(defaultPost);
+        navigate(`/users/${postData.userId}`);
+      } catch (error: any) {
+        console.error(`Error adding project post => ${error}`)
       }
     }
   }

@@ -29,7 +29,8 @@ function Post() {
       createdAt: '',
       imageUrl: null,
       problem: '',
-      solution: ''
+      solution: '',
+      projectId: 0,
     })
   const params = useParams();
   const postId = +params.post_id!

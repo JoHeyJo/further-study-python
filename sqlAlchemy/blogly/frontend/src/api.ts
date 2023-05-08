@@ -105,7 +105,7 @@ async function postGet(id: number) {
   }
 }
 
-/** Adds post new post data*/
+/** Routes new post data */
 async function postAdd(postData: IPost) {
   try {
     const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData)
@@ -215,9 +215,20 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
   } catch (error:any){
     console.error(`Error in projectUpdate => ${error}`)
   }
-}  
+} 
 
-
+/** Updates project with matching id */
+async function projectPostAdd(userId: number, projectId: number | undefined, postData: IPost) {
+  console.log('/&&&&&&&&&',userId, projectId)
+  try {
+    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/${projectId}/posts/new`, postData);
+    return res.data;
+  } catch (error: any) {
+    console.error(`Error in projectPostAdd => ${error}`)
+    console.log(`Error in projectPostAdd => ${error}`)
+    throw error.response.data
+  }
+} 
 
 // async function projectUpdate(userId: number | undefined){
 //   try{
@@ -230,5 +241,5 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
 
 
 
-export { projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
+export { projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 
