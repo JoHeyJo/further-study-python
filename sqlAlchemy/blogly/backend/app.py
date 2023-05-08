@@ -163,7 +163,7 @@ def posts_all_user(user_id):
     except LookupError as error:
         print('Lookup error >>>>>>>>>', error)
         return jsonify({"error": error})
-
+    
 
 @app.post("/users/<int:user_id>/posts/new")
 def posts_add(user_id):
@@ -343,15 +343,23 @@ def projects_posts_add(user_id, project_id):
         content = request.json['content']
         problem = request.json['problem']
         solution = request.json['solution']
-        # user = User.query.get_or_404(user_id)
         print('##########in here')
         post = Post(title=title, content=content, user_id=user_id,
                     problem=problem, solution=solution, project_id=project_id)
-        # print('***********',Post.serialize(post))
-
         db.session.add(post)
         db.session.commit()
         return redirect(f"/users/{user_id}/posts")
     except Exception as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"}), 401
+
+
+@app.get("users/<int:user_id>/projects/<int:project_id>")
+def projects_posts_get(user_id, project_id):
+    try:
+        posts = Post.query.filter(Post.project_id == project_id)
+        serialized = [Post.serialize(post) for post in posts]
+        return jsonify(serialized)
+    except Exception as e:
+        print('projects_posts_get error =>', e)
+        return jsonify({"error": f"{str(e)}"})
