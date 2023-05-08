@@ -165,9 +165,9 @@ def posts_all_user(user_id):
         return jsonify({"error": error})
 
 
-@app.post("/users/<int:user_id>/project/<int:project_id>/posts/new")
-def posts_add(user_id,project_id):
-    """Adds new posts_"""
+@app.post("/users/<int:user_id>/posts/new")
+def posts_add(user_id):
+    """Adds new posts"""
     try:
         title = request.json['title']
         content = request.json['content']
@@ -175,7 +175,7 @@ def posts_add(user_id,project_id):
         solution = request.json['solution']
         # user = User.query.get_or_404(user_id)
         post = Post(title=title, content=content, user_id=user_id,
-                    problem=problem, solution=solution, project_id=project_id)
+                    problem=problem, solution=solution)
 
         db.session.add(post)
         db.session.commit()
@@ -265,7 +265,34 @@ def posts_delete(post_id):
         return jsonify({"error": f"Missing {str(error)}"})
 
 ######### Project routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
+@app.get("/projects/<int:project_id>/posts")
+def project_get_posts(project_id):
+    """Retrieves all post corresponding to project"""
+    try:
+        posts = Post.query.filter(Post.project_id==project_id)
+        serialized = [Post.serialized(post) for post in posts]
+        return jsonify(serialized)
+    except Exception as e:
+        print(f"Error in project_get_posts => {e}")
+        return jsonify({"error": f"{str(e)}"})
 
+
+@app.get("/projects/<int:project_id>")
+def project_get(project_id):
+    """Returns project corresponding to user"""
+    try:
+        project = Project.query.get_or_404(project_id)
+        serialized = Project.serialize(project)
+        project_data = {
+            'id': serialized['id'],
+            'name': serialized['name'],
+            'description': serialized['description'],
+            'userId': serialized['user_id'],
+        }
+        return jsonify(project_data)
+    except Exception as e:
+        print(f"Error in project_get => {e}")
+        return jsonify({"error": f"{str(e)}"})
 
 @app.get("/projects")
 def projects_get_all():
@@ -305,3 +332,26 @@ def projects_add(user_id):
     except Exception as e:
         print('projects_add error =>', e)
         return jsonify({"error": f"Missing {str(e)}"})
+    
+
+@app.post("/users/<int:user_id>/projects/<int:project_id>/posts/new")
+def projects_posts_add(user_id, project_id):
+    """Adds new posts"""
+    print('******json',request.json)
+    try:
+        title = request.json['title']
+        content = request.json['content']
+        problem = request.json['problem']
+        solution = request.json['solution']
+        # user = User.query.get_or_404(user_id)
+        print('##########in here')
+        post = Post(title=title, content=content, user_id=user_id,
+                    problem=problem, solution=solution, project_id=project_id)
+        # print('***********',Post.serialize(post))
+
+        db.session.add(post)
+        db.session.commit()
+        return redirect(f"/users/{user_id}/posts")
+    except Exception as e:
+        print("keyerror>>>>>>", e)
+        return jsonify({"error": f"Missing {str(e)}"}), 401
