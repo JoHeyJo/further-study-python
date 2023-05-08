@@ -354,7 +354,7 @@ def projects_posts_add(user_id, project_id):
         return jsonify({"error": f"Missing {str(e)}"}), 401
 
 
-@app.get("users/<int:user_id>/projects/<int:project_id>")
+@app.get("/users/<int:user_id>/projects/<int:project_id>")
 def projects_posts_get(user_id, project_id):
     try:
         posts = Post.query.filter(Post.project_id == project_id)
