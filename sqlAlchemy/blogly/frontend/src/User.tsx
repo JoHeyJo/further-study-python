@@ -70,38 +70,25 @@ function User() {
           <Button variant="primary" onClick={handleClick}>Edit</Button>
           <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
         </Col>
-        <Col>
-          <div className="User-posts"><Posts userId={+params.user_id!} /></div>
-        </Col>
-        <Col>
-          <div className="User-posts"><Projects userId={+params.user_id!} /></div>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-      <Button
-        onClick={() => setOpen(!open)}
-        aria-controls="example-collapse-text"
-        aria-expanded={open}
-      >
-        click
-      </Button>
-      <div style={{ minHeight: '150px' }}>
-        <Collapse in={open} dimension="width">
-          <div id="example-collapse-text">
-            <Card body style={{ width: '400px' }}>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
-            </Card>
-          </div>
-        </Collapse>
-      </div>
-        </Col>
-      </Row>
-      <Row>
 
+        <Col>
+          <div className="User-posts"><Projects onClick={() => setOpen(!open)} userId={+params.user_id!} /></div>
+        </Col>
+      </Row>
+      <Row className="User-post-details">
+        <Col>
+          {/* <div style={{ minHeight: '100%' }}> */}
+            <Collapse in={open} dimension="width">
+              <div id="example-collapse-text">
+                <Card body style={{ width: '400px' }}>
+                  <Col>
+                    <div className="User-posts"><Posts userId={+params.user_id!} /></div>
+                  </Col>
+                </Card>
+              </div>
+            </Collapse>
+          {/* </div> */}
+        </Col>
       </Row>
     </Container>
   )

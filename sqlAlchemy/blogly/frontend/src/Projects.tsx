@@ -11,7 +11,10 @@ import { IProject, IUserId } from './interface';
 import { postsGet, projectsGet } from './api'
 //styles
 // import './style/Projects.css';
-
+type ProjectProps = {
+  userId: number;
+  onClick: ()=>void;
+}
 /** Renders list of projects by name
  * 
  * Props:
@@ -28,7 +31,7 @@ import { postsGet, projectsGet } from './api'
  * 
  * User - Projects
  */
-function Projects({userId}: IUserId) {
+function Projects({userId, onClick}: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
 
   /** On mount fetches users' projects */
@@ -50,8 +53,9 @@ function Projects({userId}: IUserId) {
               <ListGroup className="align-items-start">
                 {
                   projects.map(project =>
-                    <ListGroup.Item key={project.id} className="Projects-post">
-                      <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link>
+                    <ListGroup.Item key={project.id} className="Projects-post" onClick={onClick}>
+                      {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
+                      {project.name}
                     </ListGroup.Item>
                   )
                 }
