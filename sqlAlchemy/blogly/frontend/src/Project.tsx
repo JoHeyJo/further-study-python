@@ -57,7 +57,7 @@ function Project() {
               {
                 posts.map(post =>
                   <ListGroup.Item key={post.id} className="Projects-post">
-                    <Link to={`/users/${userId}/projects/${post.id}`}>{post.title}</Link>
+                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
                   </ListGroup.Item>
                 )
               }

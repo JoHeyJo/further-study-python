@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Collapse from 'react-bootstrap/Collapse';
 //components / modules
 import { IUser } from './interface'
 import { userGet, userDelete } from './api'
@@ -28,6 +30,7 @@ function User() {
   const [user, setUser] = useState<IUser>(defaultUser)
   const navigate = useNavigate();
   const params = useParams();
+  const [open, setOpen] = useState(false);
 
   /** fetches user with matching ID from database */
   useEffect(() => {
@@ -73,6 +76,32 @@ function User() {
         <Col>
           <div className="User-posts"><Projects userId={+params.user_id!} /></div>
         </Col>
+      </Row>
+      <Row>
+        <Col>
+      <Button
+        onClick={() => setOpen(!open)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open}
+      >
+        click
+      </Button>
+      <div style={{ minHeight: '150px' }}>
+        <Collapse in={open} dimension="width">
+          <div id="example-collapse-text">
+            <Card body style={{ width: '400px' }}>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life
+              accusamus terry richardson ad squid. Nihil anim keffiyeh
+              helvetica, craft beer labore wes anderson cred nesciunt sapiente
+              ea proident.
+            </Card>
+          </div>
+        </Collapse>
+      </div>
+        </Col>
+      </Row>
+      <Row>
+
       </Row>
     </Container>
   )
