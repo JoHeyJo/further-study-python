@@ -1,4 +1,4 @@
-p {
+.Post-solution {
   max-width: 60vw;
   border: 2px solid grey;
   padding: 1rem;
@@ -8,6 +8,12 @@ h3 {
   border-bottom: 2px solid grey;
 }
 
-h6 {
+h6, .Post-problem {
   border-bottom: 2px solid grey;
+}
+
+
+
+#problem-stack {
+  align-items: baseline;
 }

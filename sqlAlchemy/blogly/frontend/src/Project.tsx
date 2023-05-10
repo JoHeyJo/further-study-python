@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from 'react-router-dom'
 import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 //components / modules
 import { projectGet, projectPostsGet } from './api';
@@ -48,7 +51,19 @@ function Project() {
           <h1>{project.name}</h1>
           <h3>{project.description}</h3>
         </Stack>
-        {posts.map(p => p.title )}
+        <Row className="justify-content-center">
+          <Col className="col-6">
+            <ListGroup className="align-items-start">
+              {
+                posts.map(post =>
+                  <ListGroup.Item key={post.id} className="Projects-post">
+                    <Link to={`/users/${userId}/projects/${post.id}`}>{post.title}</Link>
+                  </ListGroup.Item>
+                )
+              }
+            </ListGroup>
+          </Col>
+        </Row>
         <Link to={`/users/${userId}/projects/${projectId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
       </Container></>
   )

@@ -64,13 +64,13 @@ function Post() {
             <h6 className="Post-subtitle">Context:</h6>
             <h3 className="Post-content ms-2">{post.content}</h3>
           </Stack>
-          <Stack direction="horizontal" className="justify-content-center">
+          <Stack direction="horizontal" className="justify-content-center" id="problem-stack">
             <h6 className="Post-subtitle">Problem:</h6>
             <p className="Post-problem ms-2">{post.problem}</p>
           </Stack>
           <Stack direction="horizontal" className="justify-content-center">
             <h6 className="Post-subtitle">Solution:</h6>
-            <p className="Post-solution ms-2">{post.solution}</p>
+            <p className="Post-solution container ms-2">{post.solution}</p>
           </Stack>
           <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>
         </Stack>
