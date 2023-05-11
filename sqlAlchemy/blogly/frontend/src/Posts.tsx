@@ -12,6 +12,10 @@ import { postsGet } from './api'
 //styles
 import './style/Posts.css';
 
+type PostsProps = {
+  userId: number;
+  setId: (userId: number) => undefined;
+}
 /** Renders list of posts by title
  * 
  * Props:
@@ -33,7 +37,7 @@ import './style/Posts.css';
  * 
  * User - Posts
  */
-function Posts({ userId }: IUserId) {
+function Posts({ userId, setId }: PostsProps) {
   const [posts, setPosts] = useState<IPostData[]>([])
 
   /** On mount fetches users' posts */
@@ -45,22 +49,28 @@ function Posts({ userId }: IUserId) {
     fetchPosts();
   }, [])
 
+  function setUserId(userId:number):undefined{
+    setId(userId)
+    return undefined
+  }
+
   return (
     <>
       <h3>Posts</h3>
       <div>
         <Container>
           <Row className="justify-content-center">
-            <Col className=""> 
+            <Col className="">
               <ListGroup className="align-items-start">
-          {
-            posts.map(post =>
-              <ListGroup.Item key={post.id} className="Posts-post">
-                <Link to={`/posts/${post.id}`}>{post.title}</Link>
-              </ListGroup.Item>
-            )
-          }
-        </ListGroup>
+                {
+                  posts.map(post =>
+                    <ListGroup.Item key={post.id} className="Posts-post" onClick={setUserId(post.id)}>
+                      {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
+                      {post.title}
+                    </ListGroup.Item>
+                  )
+                }
+              </ListGroup>
             </Col>
           </Row>
         </Container>

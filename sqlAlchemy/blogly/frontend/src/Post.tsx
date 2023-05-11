@@ -10,6 +10,10 @@ import { postGet, postDelete } from './api';
 //styles
 import './style/Post.css'
 
+
+type PostProp = {
+  postId: number;
+}
 /** Renders individual post
  * 
  * State:
@@ -17,7 +21,7 @@ import './style/Post.css'
  * 
  * User -> Posts -> Post
  */
-function Post() {
+function Post({postId}: PostProp) {
   const [post, setPost] = useState<IPostData>(
     {
       id: 0,
@@ -32,8 +36,8 @@ function Post() {
       solution: '',
       projectId: 0,
     })
-  const params = useParams();
-  const postId = +params.post_id!
+  // const params = useParams();
+  // const postId = +params.post_id!
   const navigate = useNavigate();
 
   /**On mount fetches post */

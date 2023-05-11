@@ -13,6 +13,7 @@ import { userGet, userDelete } from './api'
 import UserForm from './UserForm'
 import Posts from './Posts';
 import Projects from "./Projects";
+import Post from './Post';
 // style
 import './style/User.css'
 import img from './default.png'
@@ -31,6 +32,7 @@ function User() {
   const navigate = useNavigate();
   const params = useParams();
   const [open, setOpen] = useState(false);
+  const [postId, setPostId] = useState<number>();
 
   /** fetches user with matching ID from database */
   useEffect(() => {
@@ -58,6 +60,11 @@ function User() {
     }
   }
 
+function updatePostId(postId:number):undefined{
+  setPostId(postId)
+  return undefined
+}
+
   return (
     <Container className="User-container">
       <Row>
@@ -77,17 +84,20 @@ function User() {
       </Row>
       <Row className="User-post-details">
         <Col>
-          {/* <div style={{ minHeight: '100%' }}> */}
-            <Collapse in={open} dimension="width">
-              <div id="example-collapse-text">
-                <Card body style={{ width: '400px' }}>
-                  <Col>
-                    <div className="User-posts"><Posts userId={+params.user_id!} /></div>
-                  </Col>
-                </Card>
-              </div>
-            </Collapse>
-          {/* </div> */}
+          <Collapse in={open} dimension="width">
+            <div id="example-collapse-text">
+              <Card body style={{ width: '400px' }}>
+                <Col>
+                  <div className="User-posts">
+                    <Posts userId={+params.user_id!} setId={updatePostId}/>
+                  </div>
+                </Col>
+              </Card>
+            </div>
+          </Collapse>
+        </Col>
+        <Col>
+          <Post postId={15}/>
         </Col>
       </Row>
     </Container>
