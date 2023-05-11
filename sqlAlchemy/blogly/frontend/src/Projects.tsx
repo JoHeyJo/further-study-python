@@ -6,14 +6,17 @@ import { Button } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Collapse from 'react-bootstrap/Collapse';
 // components/ modules
-import { IProject, IUserId } from './interface';
-import { postsGet, projectsGet } from './api'
+import { IProject, IUserId, IPosts, IPost } from './interface';
+import { postsGet, projectsGet, projectPostsGet } from './api';
+import Post from "./Post";
+import Posts from "./Posts";
 //styles
 // import './style/Projects.css';
 type ProjectProps = {
   userId: number;
-  onClick: () => void;
   setProjectId: (projectId: number | undefined) => void;
 }
 /** Renders list of projects by name
@@ -32,8 +35,11 @@ type ProjectProps = {
  * 
  * User - Projects
  */
-function Projects({ userId, onClick, setProjectId }: ProjectProps) {
+function Projects({ userId }: ProjectProps) {
+  const [open, setOpen] = useState(true);
   const [projects, setProjects] = useState<IProject[]>([])
+  const [projectId, setProjectId] = useState<number>();
+  const [posts, setPosts] = useState<IPost[]>([]);
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -43,6 +49,12 @@ function Projects({ userId, onClick, setProjectId }: ProjectProps) {
     }
     fetchProjects();
   }, [])
+
+  async function fetchProjectPosts() {
+    const res = await projectPostsGet(userId, projectId)
+    console.log(res)
+    setPosts(res)
+  }
 
   return (
     <>
@@ -55,8 +67,9 @@ function Projects({ userId, onClick, setProjectId }: ProjectProps) {
                 {
                   projects.map(project =>
                     <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
-                      onClick();
                       setProjectId(project.id);
+                      setOpen(!open);
+                      fetchProjectPosts()
                     }
                     }>
                       {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
@@ -65,6 +78,22 @@ function Projects({ userId, onClick, setProjectId }: ProjectProps) {
                   )
                 }
               </ListGroup>
+            </Col>
+          </Row>
+          <Row className="User-post-details">
+            <Col>
+              <Collapse in={open} dimension="width">
+                <div id="example-collapse-text">
+                  <Card body style={{ width: '400px' }}>
+                    <Col>
+                      <div className="User-posts">
+                        <Posts posts={posts || []} />
+
+                      </div>
+                    </Col>
+                  </Card>
+                </div>
+              </Collapse>
             </Col>
           </Row>
         </Container>

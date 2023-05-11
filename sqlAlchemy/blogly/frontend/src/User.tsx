@@ -82,28 +82,10 @@ function updateProjectId(projectId:number | undefined){
           <Button variant="primary" onClick={handleClick}>Edit</Button>
           <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
         </Col>
-
         <Col>
-          <div className="User-posts"><Projects onClick={() => setOpen(!open)} userId={+params.user_id!} setProjectId={updateProjectId}/></div>
+          <div className="User-posts"><Projects userId={+params.user_id!} setProjectId={updateProjectId}/></div>
         </Col>
-      </Row>
-      <Row className="User-post-details">
-        <Col>
-          <Collapse in={open} dimension="width">
-            <div id="example-collapse-text">
-              <Card body style={{ width: '400px' }}>
-                <Col>
-                  <div className="User-posts">
-                    <Posts userId={+params.user_id!} setId={updatePostId} projectId={projectId}/>
-                  </div>
-                </Col>
-              </Card>
-            </div>
-          </Collapse>
-        </Col>
-        <Col>
-          {postId && <Post postId={postId}/>}
-        </Col>
+        
       </Row>
     </Container>
   )

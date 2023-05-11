@@ -7,14 +7,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // components/ modules
-import { IPostData, IUserId } from './interface';
+import { IPostData, IUserId, IPosts } from './interface';
 import { postsGet, projectPostsGet } from './api'
 //styles
 import './style/Posts.css';
 
 type PostsProps = {
   userId: number;
-  setId: (postId: number) => void;
   projectId: number | undefined;
 }
 /** Renders list of posts by title
@@ -38,8 +37,8 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ userId, setId, projectId }: PostsProps) {
-  const [posts, setPosts] = useState<IPostData[]>([])
+function Posts({ posts }: IPosts ) {
+  // const [posts, setPosts] = useState<IPostData[]>([])
 
   // /** On mount fetches users' posts */
   // useEffect(() => {
@@ -52,17 +51,9 @@ function Posts({ userId, setId, projectId }: PostsProps) {
 
   /** On mount fetches project's posts */
   // useEffect(()=>{
-    async function fetchProjectPosts(){
-      const res = await projectPostsGet(userId, projectId)
-      console.log(res)
-      setPosts(res)
-      }
+
     // fetchProjectPosts();
   // },[])
-
-  function setUserId(userId:number){
-    setId(userId)
-  }
 
   return (
     <>
@@ -75,8 +66,7 @@ function Posts({ userId, setId, projectId }: PostsProps) {
                 {
                   posts.map(post =>
                     <ListGroup.Item key={post.id} className="Posts-post" onClick={()=>{
-                      setUserId(post.id);
-                      fetchProjectPosts();    
+                      // setUserId(post.id);   
                     }
                   }>
                       {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
@@ -87,9 +77,12 @@ function Posts({ userId, setId, projectId }: PostsProps) {
               </ListGroup>
             </Col>
           </Row>
+          <Col>
+            {/* <Post postId={postId} />} */}
+          </Col>
         </Container>
       </div>
-      <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
+      {/* <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link> */}
     </>
   )
 }
