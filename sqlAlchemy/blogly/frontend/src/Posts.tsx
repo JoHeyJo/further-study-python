@@ -8,13 +8,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 // components/ modules
 import { IPostData, IUserId } from './interface';
-import { postsGet } from './api'
+import { postsGet, projectPostsGet } from './api'
 //styles
 import './style/Posts.css';
 
 type PostsProps = {
   userId: number;
-  setId: (userId: number) => undefined;
+  setId: (postId: number) => void;
+  projectId: number | undefined;
 }
 /** Renders list of posts by title
  * 
@@ -37,7 +38,7 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ userId, setId }: PostsProps) {
+function Posts({ userId, setId, projectId }: PostsProps) {
   const [posts, setPosts] = useState<IPostData[]>([])
 
   /** On mount fetches users' posts */
@@ -49,9 +50,17 @@ function Posts({ userId, setId }: PostsProps) {
     fetchPosts();
   }, [])
 
-  function setUserId(userId:number):undefined{
+  /** On mount fetches project's posts */
+  // useEffect(()=>{
+  //   async function fetchProjectPosts(){
+  //     const res = await projectPostsGet(userId, projectId)
+  //     setPosts(res)
+  //     }
+  //   fetchProjectPosts();
+  // },[])
+
+  function setUserId(userId:number){
     setId(userId)
-    return undefined
   }
 
   return (
@@ -64,7 +73,7 @@ function Posts({ userId, setId }: PostsProps) {
               <ListGroup className="align-items-start">
                 {
                   posts.map(post =>
-                    <ListGroup.Item key={post.id} className="Posts-post" onClick={setUserId(post.id)}>
+                    <ListGroup.Item key={post.id} className="Posts-post" onClick={()=>setUserId(post.id)}>
                       {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
                       {post.title}
                     </ListGroup.Item>

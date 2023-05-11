@@ -230,7 +230,7 @@ async function projectPostAdd(userId: number, projectId: number | undefined, pos
 }
 
 //** Retires posts corresponding to project */
-async function projectPostsGet(userId: number, projectId: number) {
+async function projectPostsGet(userId: number, projectId: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects/${projectId}`);
     return res.data;

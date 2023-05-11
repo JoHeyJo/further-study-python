@@ -29,10 +29,12 @@ const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
  */
 function User() {
   const [user, setUser] = useState<IUser>(defaultUser)
+  const [open, setOpen] = useState(false);
+  const [postId, setPostId] = useState<number | undefined>(undefined);
+  const [projectId, setProjectId] = useState<number | undefined>(undefined);
+  
   const navigate = useNavigate();
   const params = useParams();
-  const [open, setOpen] = useState(false);
-  const [postId, setPostId] = useState<number>();
 
   /** fetches user with matching ID from database */
   useEffect(() => {
@@ -41,7 +43,7 @@ function User() {
       setUser(res)
     }
     fetchUser(+params.user_id!)
-  }, [])
+  }, [postId])
 
   /** navigates to user edit page */
   const handleClick = () => {
@@ -60,9 +62,11 @@ function User() {
     }
   }
 
-function updatePostId(postId:number):undefined{
+function updatePostId(postId:number){
   setPostId(postId)
-  return undefined
+}
+function updateProjectId(projectId:number | undefined){
+  setProjectId(projectId)
 }
 
   return (
@@ -79,7 +83,7 @@ function updatePostId(postId:number):undefined{
         </Col>
 
         <Col>
-          <div className="User-posts"><Projects onClick={() => setOpen(!open)} userId={+params.user_id!} /></div>
+          <div className="User-posts"><Projects onClick={() => setOpen(!open)} userId={+params.user_id!} setProjectId={updateProjectId}/></div>
         </Col>
       </Row>
       <Row className="User-post-details">
@@ -89,7 +93,7 @@ function updatePostId(postId:number):undefined{
               <Card body style={{ width: '400px' }}>
                 <Col>
                   <div className="User-posts">
-                    <Posts userId={+params.user_id!} setId={updatePostId}/>
+                    <Posts userId={+params.user_id!} setId={updatePostId} projectId={projectId}/>
                   </div>
                 </Col>
               </Card>
@@ -97,7 +101,7 @@ function updatePostId(postId:number):undefined{
           </Collapse>
         </Col>
         <Col>
-          <Post postId={15}/>
+          {postId && <Post postId={postId}/>}
         </Col>
       </Row>
     </Container>

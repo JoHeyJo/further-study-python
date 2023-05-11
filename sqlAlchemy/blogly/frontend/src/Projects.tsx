@@ -13,7 +13,8 @@ import { postsGet, projectsGet } from './api'
 // import './style/Projects.css';
 type ProjectProps = {
   userId: number;
-  onClick: ()=>void;
+  onClick: () => void;
+  setProjectId: (projectId: number | undefined) => void;
 }
 /** Renders list of projects by name
  * 
@@ -31,7 +32,7 @@ type ProjectProps = {
  * 
  * User - Projects
  */
-function Projects({userId, onClick}: ProjectProps) {
+function Projects({ userId, onClick, setProjectId }: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
 
   /** On mount fetches users' projects */
@@ -53,7 +54,11 @@ function Projects({userId, onClick}: ProjectProps) {
               <ListGroup className="align-items-start">
                 {
                   projects.map(project =>
-                    <ListGroup.Item key={project.id} className="Projects-post" onClick={onClick}>
+                    <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
+                      onClick();
+                      setProjectId(project.id)
+                    }
+                    }>
                       {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
                       {project.name}
                     </ListGroup.Item>
