@@ -56,7 +56,7 @@ function Projects({ userId, onClick, setProjectId }: ProjectProps) {
                   projects.map(project =>
                     <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
                       onClick();
-                      setProjectId(project.id)
+                      setProjectId(project.id);
                     }
                     }>
                       {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}

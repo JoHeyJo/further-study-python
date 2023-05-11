@@ -41,22 +41,23 @@ type PostsProps = {
 function Posts({ userId, setId, projectId }: PostsProps) {
   const [posts, setPosts] = useState<IPostData[]>([])
 
-  /** On mount fetches users' posts */
-  useEffect(() => {
-    async function fetchPosts() {
-      const res = await postsGet(userId)
-      setPosts(res)
-    }
-    fetchPosts();
-  }, [])
+  // /** On mount fetches users' posts */
+  // useEffect(() => {
+  //   async function fetchPosts() {
+  //     const res = await postsGet(userId)
+  //     setPosts(res)
+  //   }
+  //   fetchPosts();
+  // }, [])
 
   /** On mount fetches project's posts */
   // useEffect(()=>{
-  //   async function fetchProjectPosts(){
-  //     const res = await projectPostsGet(userId, projectId)
-  //     setPosts(res)
-  //     }
-  //   fetchProjectPosts();
+    async function fetchProjectPosts(){
+      const res = await projectPostsGet(userId, projectId)
+      console.log(res)
+      setPosts(res)
+      }
+    // fetchProjectPosts();
   // },[])
 
   function setUserId(userId:number){
@@ -73,7 +74,11 @@ function Posts({ userId, setId, projectId }: PostsProps) {
               <ListGroup className="align-items-start">
                 {
                   posts.map(post =>
-                    <ListGroup.Item key={post.id} className="Posts-post" onClick={()=>setUserId(post.id)}>
+                    <ListGroup.Item key={post.id} className="Posts-post" onClick={()=>{
+                      setUserId(post.id);
+                      fetchProjectPosts();    
+                    }
+                  }>
                       {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
                       {post.title}
                     </ListGroup.Item>

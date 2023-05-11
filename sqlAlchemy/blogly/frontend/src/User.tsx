@@ -65,6 +65,7 @@ function User() {
 function updatePostId(postId:number){
   setPostId(postId)
 }
+
 function updateProjectId(projectId:number | undefined){
   setProjectId(projectId)
 }
