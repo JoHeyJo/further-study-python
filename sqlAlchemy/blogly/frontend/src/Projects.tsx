@@ -36,7 +36,7 @@ type ProjectProps = {
  * User - Projects
  */
 function Projects({ userId }: ProjectProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState<IProject[]>([])
   const [projectId, setProjectId] = useState<number>();
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -56,6 +56,17 @@ function Projects({ userId }: ProjectProps) {
     setPosts(res)
   }
 
+  function isOpen(){
+    if(open) {
+      setOpen(!open);
+      setTimeout(() =>{
+        setOpen(true);
+      }, 500)
+    } else {
+      setOpen(!open);
+    }
+  }
+
   return (
     <>
       <h3>Projects</h3>
@@ -68,7 +79,7 @@ function Projects({ userId }: ProjectProps) {
                   projects.map(project =>
                     <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
                       setProjectId(project.id);
-                      setOpen(!open);
+                      isOpen();
                       fetchProjectPosts()
                     }
                     }>
