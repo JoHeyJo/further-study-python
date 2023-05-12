@@ -67,6 +67,11 @@ function Projects({ userId }: ProjectProps) {
     }
   }
 
+  useEffect(()=>{
+    setTimeout(()=>fetchProjectPosts(),520)
+    
+  },[open])
+
   return (
     <>
       <h3>Projects</h3>
@@ -80,7 +85,6 @@ function Projects({ userId }: ProjectProps) {
                     <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
                       setProjectId(project.id);
                       isOpen();
-                      fetchProjectPosts()
                     }
                     }>
                       {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
