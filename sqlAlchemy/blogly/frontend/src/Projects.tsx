@@ -76,7 +76,7 @@ function Projects({ userId }: ProjectProps) {
     <>
       <h3>Projects</h3>
       <div>
-        <Container>
+
           <Row className="justify-content-center">
             <Col className="col-6">
               <ListGroup className="align-items-start">
@@ -111,7 +111,7 @@ function Projects({ userId }: ProjectProps) {
               </Collapse>
             </Col>
           </Row>
-        </Container>
+
       </div>
       <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link>
     </>

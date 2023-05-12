@@ -82,10 +82,12 @@ function updateProjectId(projectId:number | undefined){
           <Button variant="primary" onClick={handleClick}>Edit</Button>
           <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
         </Col>
+      </Row>
+      <Row>
         <Col>
           <div className="User-posts"><Projects userId={+params.user_id!} setProjectId={updateProjectId}/></div>
         </Col>
-        
+
       </Row>
     </Container>
   )
