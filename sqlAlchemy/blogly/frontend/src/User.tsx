@@ -32,7 +32,7 @@ function User() {
   const [open, setOpen] = useState(false);
   const [postId, setPostId] = useState<number | undefined>(undefined);
   const [projectId, setProjectId] = useState<number | undefined>(undefined);
-  
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -62,30 +62,32 @@ function User() {
     }
   }
 
-function updatePostId(postId:number){
-  setPostId(postId)
-}
+  function updatePostId(postId: number) {
+    setPostId(postId)
+  }
 
-function updateProjectId(projectId:number | undefined){
-  setProjectId(projectId)
-}
+  function updateProjectId(projectId: number | undefined) {
+    setProjectId(projectId)
+  }
 
   return (
     <Container className="User-container">
-      <Row>
+      <Row className="position-absolute w-100">
         <Col className="col-3">
           <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
           <div className="User-user">
             <div className="User-fn">{user.firstName}</div>
             <div className="User-ln">{user.lastName}</div>
           </div>
-          <Button variant="primary" onClick={handleClick}>Edit</Button>
-          <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
+          <div>
+            <Button variant="primary" onClick={handleClick}>Edit</Button>
+            <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
+          </div>
         </Col>
       </Row>
       <Row>
         <Col>
-          <div className="User-posts"><Projects userId={+params.user_id!} setProjectId={updateProjectId}/></div>
+          <div className="User-posts"><Projects userId={+params.user_id!} setProjectId={updateProjectId} /></div>
         </Col>
 
       </Row>
