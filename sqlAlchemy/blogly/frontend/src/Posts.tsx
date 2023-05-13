@@ -9,15 +9,15 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 // components/ modules
-import { IPostData, IUserId, IPosts } from './interface';
+import { IPostData, IUserId, IPost } from './interface';
 import { postsGet, postGet } from './api'
 import Post from "./Post";
 //styles
 import './style/Posts.css';
 
 type PostsProps = {
-  userId: number;
-  projectId: number | undefined;
+  posts: IPost[];
+  childState: any;
 }
 /** Renders list of posts by title
  * 
@@ -40,8 +40,9 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ posts }: IPosts) {
+function Posts({ posts, childState }: PostsProps ) {
   const [post, setPost] = useState<any>()
+  console.log('childstate>>>>>',childState)
 
   // /** On mount fetches users' posts */
   // useEffect(() => {
@@ -55,39 +56,40 @@ function Posts({ posts }: IPosts) {
   /** On mount fetches project's posts */
   // useEffect(()=>{
 
+// if(!childState) setPost(null);
+
   /** fetches Project post onClick */
-  async function fetchPost(postId: any){
+  async function fetchPost(postId: any) {
     const res = await postGet(postId);
     console.log(res);
     setPost(res);
   }
-  
+
 
   return (
     <>
-      <h3>Posts</h3>
       <div>
         <Container>
           <Row className="justify-content-center">
             <Col className="">
-              <Card body style={{ width: '400px' }}>
-              <ListGroup className="align-items-start">
-                {
-                  posts.map(post =>
-                    <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
-                     fetchPost(post.id);
-                    }
-                    }>
-                      {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
-                      {post.title}
-                    </ListGroup.Item>
-                  )
-                }
-              </ListGroup>
+              <Card body style={{ width: '380px' }}>
+                <ListGroup className="align-items-start">
+                  {
+                    posts.map(post =>
+                      <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
+                        fetchPost(post.id);
+                      }
+                      }>
+                        {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
+                        {post.title}
+                      </ListGroup.Item>
+                    )
+                  }
+                </ListGroup>
               </Card>
             </Col>
             <Col>
-             { post && <Post post={post}/> }
+             {post && <Post post={post} />}
             </Col>
           </Row>
         </Container>

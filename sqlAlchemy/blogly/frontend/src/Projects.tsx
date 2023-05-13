@@ -39,6 +39,8 @@ function Projects({ userId }: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
   const [projectId, setProjectId] = useState<number>();
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [childState, setChildState] = useState(true);
+
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -55,13 +57,13 @@ function Projects({ userId }: ProjectProps) {
     console.log(res)
     setPosts(res)
   }
-  
+
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined) {
     if (!open) {
       setOpen(true)
     } else if (projectId !== id) {
-      console.log(projectId !== id)
+      setChildState(false)
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
@@ -101,16 +103,14 @@ function Projects({ userId }: ProjectProps) {
         </Row>
         <Row className="User-post-details">
           <Col>
+            <h3 style={{ width: '400px' }}>Posts</h3>
             <Collapse in={open} dimension="width">
-              <div id="example-collapse-text">
-                  <Col>
-                    <div className="User-posts">
-                      <Posts posts={posts || []} />
+                <Col>
+                  <div className="User-posts">
+                  <Posts childState={childState} posts={posts || []} />
 
-                    </div>
-                  </Col>
-
-              </div>
+                  </div>
+                </Col>
             </Collapse>
           </Col>
         </Row>
