@@ -6,7 +6,6 @@ import { Button } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import Collapse from 'react-bootstrap/Collapse';
 // components/ modules
 import { IProject, IUserId, IPosts, IPost } from './interface';
@@ -104,14 +103,13 @@ function Projects({ userId }: ProjectProps) {
           <Col>
             <Collapse in={open} dimension="width">
               <div id="example-collapse-text">
-                <Card body style={{ width: '400px' }}>
                   <Col>
                     <div className="User-posts">
                       <Posts posts={posts || []} />
 
                     </div>
                   </Col>
-                </Card>
+
               </div>
             </Collapse>
           </Col>

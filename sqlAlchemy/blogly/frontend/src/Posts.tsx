@@ -6,9 +6,12 @@ import { Button } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+
 // components/ modules
 import { IPostData, IUserId, IPosts } from './interface';
-import { postsGet, projectPostsGet } from './api'
+import { postsGet, postGet } from './api'
+import Post from "./Post";
 //styles
 import './style/Posts.css';
 
@@ -37,8 +40,8 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ posts }: IPosts ) {
-  // const [posts, setPosts] = useState<IPostData[]>([])
+function Posts({ posts }: IPosts) {
+  const [post, setPost] = useState<any>()
 
   // /** On mount fetches users' posts */
   // useEffect(() => {
@@ -52,8 +55,13 @@ function Posts({ posts }: IPosts ) {
   /** On mount fetches project's posts */
   // useEffect(()=>{
 
-    // fetchProjectPosts();
-  // },[])
+  /** fetches Project post onClick */
+  async function fetchPost(postId: any){
+    const res = await postGet(postId);
+    console.log(res);
+    setPost(res);
+  }
+  
 
   return (
     <>
@@ -62,24 +70,26 @@ function Posts({ posts }: IPosts ) {
         <Container>
           <Row className="justify-content-center">
             <Col className="">
+              <Card body style={{ width: '400px' }}>
               <ListGroup className="align-items-start">
                 {
                   posts.map(post =>
-                    <ListGroup.Item key={post.id} className="Posts-post" onClick={()=>{
-                      // setUserId(post.id);   
+                    <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
+                     fetchPost(post.id);
                     }
-                  }>
+                    }>
                       {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
                       {post.title}
                     </ListGroup.Item>
                   )
                 }
               </ListGroup>
+              </Card>
+            </Col>
+            <Col>
+             { post && <Post post={post}/> }
             </Col>
           </Row>
-          <Col>
-            {/* <Post postId={postId} />} */}
-          </Col>
         </Container>
       </div>
       {/* <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link> */}
