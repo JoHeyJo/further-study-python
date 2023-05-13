@@ -80,8 +80,8 @@ function User() {
             <div className="User-ln">{user.lastName}</div>
           </div>
           <div>
-            <Button variant="primary" onClick={handleClick}>Edit</Button>
-            <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button>
+            {/* <Button variant="primary" onClick={handleClick}>Edit</Button>
+            <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button> */}
           </div>
         </Col>
       </Row>

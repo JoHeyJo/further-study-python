@@ -50,67 +50,72 @@ function Projects({ userId }: ProjectProps) {
     fetchProjects();
   }, [])
 
+  /** retrieves project's posts */
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectId)
     console.log(res)
     setPosts(res)
   }
-
-  function isOpen(){
-    if(open) {
+  
+  /** controls when slideover opens/closes */
+  function isOpen(id: number | undefined) {
+    if (!open) {
+      setOpen(true)
+    } else if (projectId !== id) {
+      console.log(projectId !== id)
       setOpen(!open);
-      setTimeout(() =>{
+      setTimeout(() => {
         setOpen(true);
       }, 500)
     } else {
-      setOpen(!open);
+      setOpen(false)
     }
   }
 
-  useEffect(()=>{
-    setTimeout(()=>fetchProjectPosts(),520)
-    
-  },[open])
+  useEffect(() => {
+    setTimeout(() => fetchProjectPosts(), 520)
+
+  }, [open])
 
   return (
     <>
       <h3>Projects</h3>
       <div>
 
-          <Row className="justify-content-center">
-            <Col className="col-6">
-              <ListGroup className="align-items-start">
-                {
-                  projects.map(project =>
-                    <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
-                      setProjectId(project.id);
-                      isOpen();
-                    }
-                    }>
-                      {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
-                      {project.name}
-                    </ListGroup.Item>
-                  )
-                }
-              </ListGroup>
-            </Col>
-          </Row>
-          <Row className="User-post-details">
-            <Col>
-              <Collapse in={open} dimension="width">
-                <div id="example-collapse-text">
-                  <Card body style={{ width: '400px' }}>
-                    <Col>
-                      <div className="User-posts">
-                        <Posts posts={posts || []} />
+        <Row className="justify-content-center">
+          <Col className="col-6">
+            <ListGroup className="align-items-start">
+              {
+                projects.map(project =>
+                  <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
+                    setProjectId(project.id);
+                    isOpen(project.id);
+                  }
+                  }>
+                    {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
+                    {project.name}
+                  </ListGroup.Item>
+                )
+              }
+            </ListGroup>
+          </Col>
+        </Row>
+        <Row className="User-post-details">
+          <Col>
+            <Collapse in={open} dimension="width">
+              <div id="example-collapse-text">
+                <Card body style={{ width: '400px' }}>
+                  <Col>
+                    <div className="User-posts">
+                      <Posts posts={posts || []} />
 
-                      </div>
-                    </Col>
-                  </Card>
-                </div>
-              </Collapse>
-            </Col>
-          </Row>
+                    </div>
+                  </Col>
+                </Card>
+              </div>
+            </Collapse>
+          </Col>
+        </Row>
 
       </div>
       <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link>
