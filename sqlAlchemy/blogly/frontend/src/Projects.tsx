@@ -39,7 +39,7 @@ function Projects({ userId }: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
   const [projectId, setProjectId] = useState<number>();
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [childState, setChildState] = useState(true);
+  const [parentState, setParentState] = useState<boolean | undefined | number>(undefined);
 
 
   /** On mount fetches users' projects */
@@ -61,9 +61,11 @@ function Projects({ userId }: ProjectProps) {
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined) {
     if (!open) {
+      setParentState(true)
       setOpen(true)
     } else if (projectId !== id) {
-      setChildState(false)
+      // setChildState(false)
+      // console.log('>>>>>',parentState)
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
@@ -73,9 +75,12 @@ function Projects({ userId }: ProjectProps) {
     }
   }
 
+  const handleParentStateChange = () => {
+    setParentState(false);
+  };
+
   useEffect(() => {
     setTimeout(() => fetchProjectPosts(), 520)
-
   }, [open])
 
   return (
@@ -91,6 +96,7 @@ function Projects({ userId }: ProjectProps) {
                   <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
                     setProjectId(project.id);
                     isOpen(project.id);
+                    handleParentStateChange();
                   }
                   }>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
@@ -107,7 +113,7 @@ function Projects({ userId }: ProjectProps) {
             <Collapse in={open} dimension="width">
                 <Col>
                   <div className="User-posts">
-                  <Posts childState={childState} posts={posts || []} />
+                  <Posts parentState={parentState} posts={posts || []}/>
 
                   </div>
                 </Col>

@@ -17,7 +17,7 @@ import './style/Posts.css';
 
 type PostsProps = {
   posts: IPost[];
-  childState: any;
+  parentState: any;
 }
 /** Renders list of posts by title
  * 
@@ -40,9 +40,8 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ posts, childState }: PostsProps ) {
-  const [post, setPost] = useState<any>()
-  console.log('childstate>>>>>',childState)
+function Posts({ posts, parentState }: PostsProps) {
+  const [post, setPost] = useState<IPost>()
 
   // /** On mount fetches users' posts */
   // useEffect(() => {
@@ -56,7 +55,7 @@ function Posts({ posts, childState }: PostsProps ) {
   /** On mount fetches project's posts */
   // useEffect(()=>{
 
-// if(!childState) setPost(null);
+  // if(!parentState) setPost(undefined);
 
   /** fetches Project post onClick */
   async function fetchPost(postId: any) {
@@ -65,6 +64,11 @@ function Posts({ posts, childState }: PostsProps ) {
     setPost(res);
   }
 
+
+  useEffect(() => {
+    // Update child state when parent state changes
+    setPost(parentState);
+  }, [parentState]);
 
   return (
     <>
@@ -87,14 +91,14 @@ function Posts({ posts, childState }: PostsProps ) {
                   }
                 </ListGroup>
               </Card>
+              <Button variant="primary">Add Post</Button>
             </Col>
             <Col>
-             {post && <Post post={post} />}
+              {post && <Post post={post} />}
             </Col>
           </Row>
         </Container>
       </div>
-      {/* <Link to={`/users/${userId}/posts/new`}><Button variant="primary">Add Post</Button></Link> */}
     </>
   )
 }
