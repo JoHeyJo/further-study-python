@@ -72,6 +72,7 @@ function Posts({ posts, parentState }: PostsProps) {
   useEffect(() => {
     // Update child state when parent state changes
     setIsPostRendering(false);
+    setPost(undefined)
   }, [parentState]);
 
   return (
