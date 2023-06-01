@@ -7,12 +7,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 // components/ modules
 import { IPostData, IUserId, IPost } from './interface';
 import { postsGet, postGet } from './api'
 import Post from "./Post";
+import PopOut from "./PopOut";
 //styles
 import './style/Posts.css';
 
@@ -70,10 +70,8 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
           <Row className="justify-content-center">
             <Col className="">
               <Card body style={{ width: '380px' }}>
-                  {/* <Button variant="primary">Add Post</Button> */}
-                  
                 <ListGroup className="align-items-start">
-                  <Button  className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+                <PopOut />
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
