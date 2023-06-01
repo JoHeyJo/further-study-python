@@ -17,7 +17,7 @@ import './style/Posts.css';
 
 type PostsProps = {
   posts: IPost[];
-  parentState: any;
+  isPostsShowing: any;
 }
 /** Renders list of posts by title
  * 
@@ -40,7 +40,7 @@ type PostsProps = {
  * 
  * User - Posts
  */
-function Posts({ posts, parentState }: PostsProps) {
+function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
 
@@ -56,7 +56,7 @@ function Posts({ posts, parentState }: PostsProps) {
   /** On mount fetches project's posts */
   // useEffect(()=>{
 
-  // if(!parentState) setPost(undefined);
+  // if(!isPostsShowing) setPost(undefined);
 
   /** fetches Project post onClick */
   async function fetchPost(postId: any) {
@@ -73,7 +73,7 @@ function Posts({ posts, parentState }: PostsProps) {
     // Update child state when parent state changes
     setIsPostRendering(false);
     setPost(undefined)
-  }, [parentState]);
+  }, [isPostsShowing]);
 
   return (
     <>

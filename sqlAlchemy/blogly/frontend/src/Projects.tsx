@@ -39,7 +39,7 @@ function Projects({ userId }: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
   const [projectId, setProjectId] = useState<number>();
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [parentState, setParentState] = useState<boolean | undefined | number>(undefined);
+  const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
 
 
   /** On mount fetches users' projects */
@@ -61,7 +61,7 @@ function Projects({ userId }: ProjectProps) {
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined) {
     if (!open) {
-      setParentState(true)
+      // setParentState(true)
       setOpen(true)
     } else if (projectId !== id) {
       setOpen(!open);
@@ -72,9 +72,9 @@ function Projects({ userId }: ProjectProps) {
       setOpen(false)
     }
   }
-
+//rename to isPostsShowing or something like that. The boolean determines whether the Posts slideover is showing
   const handleParentStateChange = () => {
-    setParentState(!parentState);
+    setIsPostsShowing(!isPostsShowing);
   };
 
   useEffect(() => {
@@ -111,7 +111,7 @@ function Projects({ userId }: ProjectProps) {
             <Collapse in={open} dimension="width">
                 <Col>
                   <div className="User-posts">
-                  <Posts parentState={parentState} posts={posts || []}/>
+                  <Posts isPostsShowing={isPostsShowing} posts={posts || []}/>
 
                   </div>
                 </Col>
