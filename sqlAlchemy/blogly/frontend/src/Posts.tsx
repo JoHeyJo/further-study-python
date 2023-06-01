@@ -41,6 +41,7 @@ type PostsProps = {
  * User - Posts
  */
 function Posts({ posts, parentState }: PostsProps) {
+  const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
 
   // /** On mount fetches users' posts */
@@ -60,14 +61,17 @@ function Posts({ posts, parentState }: PostsProps) {
   /** fetches Project post onClick */
   async function fetchPost(postId: any) {
     const res = await postGet(postId);
-    console.log(res);
     setPost(res);
   }
 
+  function handlePostRender() {
+    setIsPostRendering(true);
+
+  }
 
   useEffect(() => {
     // Update child state when parent state changes
-    setPost(parentState);
+    setIsPostRendering(false);
   }, [parentState]);
 
   return (
@@ -82,6 +86,7 @@ function Posts({ posts, parentState }: PostsProps) {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
                         fetchPost(post.id);
+                        handlePostRender();
                       }
                       }>
                         {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
@@ -91,10 +96,10 @@ function Posts({ posts, parentState }: PostsProps) {
                   }
                 </ListGroup>
               </Card>
-              <Button variant="primary">Add Post</Button>
+              {/* <Button variant="primary">Add Post</Button> */}
             </Col>
             <Col>
-              {post && <Post post={post} />}
+              {isPostRendering && post && <Post post={post} />}
             </Col>
           </Row>
         </Container>

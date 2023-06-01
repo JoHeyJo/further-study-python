@@ -64,8 +64,6 @@ function Projects({ userId }: ProjectProps) {
       setParentState(true)
       setOpen(true)
     } else if (projectId !== id) {
-      // setChildState(false)
-      // console.log('>>>>>',parentState)
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
@@ -76,7 +74,7 @@ function Projects({ userId }: ProjectProps) {
   }
 
   const handleParentStateChange = () => {
-    setParentState(false);
+    setParentState(!parentState);
   };
 
   useEffect(() => {
