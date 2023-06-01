@@ -71,8 +71,9 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="">
               <Card body style={{ width: '380px' }}>
                   {/* <Button variant="primary">Add Post</Button> */}
+                  
                 <ListGroup className="align-items-start">
-                  <FontAwesomeIcon icon={faPlus} style={{ marginLeft: 'auto' }} />
+                  <Button  className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
