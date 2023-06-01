@@ -7,7 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 // components/ modules
 import { IPostData, IUserId, IPost } from './interface';
 import { postsGet, postGet } from './api'
@@ -44,26 +45,13 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
 
-  // /** On mount fetches users' posts */
-  // useEffect(() => {
-  //   async function fetchPosts() {
-  //     const res = await postsGet(userId)
-  //     setPosts(res)
-  //   }
-  //   fetchPosts();
-  // }, [])
-
-  /** On mount fetches project's posts */
-  // useEffect(()=>{
-
-  // if(!isPostsShowing) setPost(undefined);
-
   /** fetches Project post onClick */
   async function fetchPost(postId: any) {
     const res = await postGet(postId);
     setPost(res);
   }
 
+  /** Sets boolean state if a post should be rendering */
   function handlePostRender() {
     setIsPostRendering(true);
 
@@ -82,7 +70,9 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
           <Row className="justify-content-center">
             <Col className="">
               <Card body style={{ width: '380px' }}>
+                  {/* <Button variant="primary">Add Post</Button> */}
                 <ListGroup className="align-items-start">
+                  <FontAwesomeIcon icon={faPlus} style={{ marginLeft: 'auto' }} />
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
@@ -97,7 +87,6 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                   }
                 </ListGroup>
               </Card>
-              {/* <Button variant="primary">Add Post</Button> */}
             </Col>
             <Col>
               {isPostRendering && post && <Post post={post} />}

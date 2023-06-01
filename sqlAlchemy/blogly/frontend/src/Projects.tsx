@@ -16,7 +16,6 @@ import Posts from "./Posts";
 // import './style/Projects.css';
 type ProjectProps = {
   userId: number;
-  setProjectId: (projectId: number | undefined) => void;
 }
 /** Renders list of projects by name
  * 
@@ -37,7 +36,7 @@ type ProjectProps = {
 function Projects({ userId }: ProjectProps) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState<IProject[]>([])
-  const [projectId, setProjectId] = useState<number>();
+  const [projectId, setProjectId] = useState<number | undefined>(0);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
 
@@ -53,6 +52,7 @@ function Projects({ userId }: ProjectProps) {
 
   /** retrieves project's posts */
   async function fetchProjectPosts() {
+    console.log('projectID',projectId)
     const res = await projectPostsGet(userId, projectId)
     console.log(res)
     setPosts(res)
@@ -79,7 +79,7 @@ function Projects({ userId }: ProjectProps) {
 
   useEffect(() => {
     setTimeout(() => fetchProjectPosts(), 520)
-  }, [open])
+  }, [projectId])
 
   return (
     <>

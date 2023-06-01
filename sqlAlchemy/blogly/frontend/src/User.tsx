@@ -87,7 +87,7 @@ function User() {
       </Row>
       <Row>
         <Col>
-          <div className="User-posts"><Projects userId={+params.user_id!} setProjectId={updateProjectId} /></div>
+          <div className="User-posts"><Projects userId={+params.user_id!}/></div>
         </Col>
 
       </Row>

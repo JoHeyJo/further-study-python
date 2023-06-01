@@ -229,14 +229,15 @@ async function projectPostAdd(userId: number, projectId: number | undefined, pos
   }
 }
 
-//** Retires posts corresponding to project */
+//** Retrieves posts corresponding to project */
 async function projectPostsGet(userId: number, projectId: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects/${projectId}`);
     return res.data;
   } catch (error: any) {
-    console.error(`Error inprojectPostsGet => ${error}`)
-    console.log(`Error inprojectPostsGet => ${error}`)
+    console.error(`Error in projectPostsGet => ${error}`)
+    console.log(`Error in projectPostsGet => ${error}`)
+    console.log("Error in projectPostsGet =>", userId, projectId)
     throw error.response.data
   }
 }
