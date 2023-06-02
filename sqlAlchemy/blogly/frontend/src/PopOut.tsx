@@ -19,7 +19,9 @@ function PopOut() {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body><PostForm /></Modal.Body>
+        <Modal.Body>
+          <PostForm />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

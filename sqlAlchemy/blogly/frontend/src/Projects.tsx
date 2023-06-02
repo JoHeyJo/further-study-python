@@ -12,8 +12,11 @@ import { IProject, IUserId, IPosts, IPost } from './interface';
 import { postsGet, projectsGet, projectPostsGet } from './api';
 import Post from "./Post";
 import Posts from "./Posts";
+import { ProjectIdContextType, ProjectIdContext } from "./userContext";
+
 //styles
 // import './style/Projects.css';
+
 type ProjectProps = {
   userId: number;
 }
@@ -40,6 +43,11 @@ function Projects({ userId }: ProjectProps) {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
 
+  const projectIdContext: ProjectIdContextType = {
+    projectId: projectId,
+  }
+
+  console.log('projectIdContext', projectIdContext)
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -52,7 +60,7 @@ function Projects({ userId }: ProjectProps) {
 
   /** retrieves project's posts */
   async function fetchProjectPosts() {
-    console.log('projectID',projectId)
+    console.log('projectID', projectId)
     const res = await projectPostsGet(userId, projectId)
     console.log(res)
     setPosts(res)
@@ -72,7 +80,7 @@ function Projects({ userId }: ProjectProps) {
       setOpen(false)
     }
   }
-//rename to isPostsShowing or something like that. The boolean determines whether the Posts slideover is showing
+  //rename to isPostsShowing or something like that. The boolean determines whether the Posts slideover is showing
   const handleParentStateChange = () => {
     setIsPostsShowing(!isPostsShowing);
   };
@@ -85,7 +93,6 @@ function Projects({ userId }: ProjectProps) {
     <>
       <h3>Projects</h3>
       <div>
-
         <Row className="justify-content-center">
           <Col className="col-6">
             <ListGroup className="align-items-start">
@@ -109,12 +116,15 @@ function Projects({ userId }: ProjectProps) {
           <Col>
             <h3 style={{ width: '400px' }}>Posts</h3>
             <Collapse in={open} dimension="width">
-                <Col>
-                  <div className="User-posts">
-                  <Posts isPostsShowing={isPostsShowing} posts={posts || []}/>
+              <Col>
+                <div className="User-posts">
+                  <ProjectIdContext.Provider value={projectIdContext}>
+                    <Posts isPostsShowing={isPostsShowing} posts={posts || []} />
 
-                  </div>
-                </Col>
+                  </ProjectIdContext.Provider>
+
+                </div>
+              </Col>
             </Collapse>
           </Col>
         </Row>

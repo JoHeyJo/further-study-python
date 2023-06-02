@@ -1,5 +1,5 @@
 //dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
@@ -8,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
+import { ProjectIdContext } from "./userContext";
 //styles
 import './style/PostForm.css';
 
@@ -29,11 +30,10 @@ function PostForm({ }) {
   const params = useParams();
   const userId = +params.user_id!;
   const postId = +params.post_id!;
-  const projectId = +params.project_id!;
+  // const projectId = +params.project_id!;
 
-
-  console.log('userId', userId)
-  console.log('postId', postId)
+  const { projectId } = useContext(ProjectIdContext);
+  console.log(' PostFomr projectId', projectId)
   const navigate = useNavigate();
 
   /** fetches data on mount*/
@@ -51,6 +51,13 @@ function PostForm({ }) {
       if (postId) {
         const post: IPost = await fetchPost();
         fetchUser(post.userId);
+      }
+
+      if (projectId){
+        setPostData(p => {
+          p.projectId = projectId
+          return p;
+        })
       }
     };
     fetchData();
@@ -91,7 +98,7 @@ function PostForm({ }) {
       } catch (error: any) {
         console.log(error)
         setAlert(error)
-        console.error(`Error adding post => ${error}`)
+        console.error(`Error adding new post => ${error}`)
       }
     }
     if (postId) {
