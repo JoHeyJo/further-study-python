@@ -12,6 +12,9 @@ import { ProjectIdContext } from "./userContext";
 //styles
 import './style/PostForm.css';
 
+type PostFormProp = {
+  handleClose: () => void | undefined;
+}
 const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
 const defaultAlert: IAlert = { error: null };
 /** Handles/ submits post data & renders form for new post 
@@ -22,7 +25,7 @@ const defaultAlert: IAlert = { error: null };
  * 
  * Post -> PostForm
 */
-function PostForm({ }) {
+function PostForm({ handleClose }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
@@ -176,8 +179,11 @@ function PostForm({ }) {
               />
             </Form.Group>
 
-            <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button>
-            <Button type="submit" variant="success">Submit</Button>
+            {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
+            <div className=""> 
+            <Button type="submit" variant="primary">Submit</Button>
+            <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+            </div>
           </Form>
         </Col>
       </Row>
