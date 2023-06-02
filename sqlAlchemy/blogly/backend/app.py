@@ -336,14 +336,13 @@ def projects_add(user_id):
 
 @app.post("/users/<int:user_id>/projects/<int:project_id>/posts/new")
 def projects_posts_add(user_id, project_id):
-    """Adds new posts"""
+    """Adds new posts corresponding to project"""
     print('******json',request.json)
     try:
         title = request.json['title']
         content = request.json['content']
         problem = request.json['problem']
         solution = request.json['solution']
-        print('##########in here')
         post = Post(title=title, content=content, user_id=user_id,
                     problem=problem, solution=solution, project_id=project_id)
         db.session.add(post)
