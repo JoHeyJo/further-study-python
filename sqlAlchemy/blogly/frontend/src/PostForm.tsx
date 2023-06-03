@@ -97,7 +97,8 @@ function PostForm({ handleClose }: PostFormProp) {
       try {
         await postAdd(postData);
         setPostData(defaultPost);
-        navigate(`/users/${userId}`);
+        // navigate(`/users/${userId}`);
+        // setPostData(defaultPost);
       } catch (error: any) {
         console.log(error)
         setAlert(error)
@@ -108,7 +109,8 @@ function PostForm({ handleClose }: PostFormProp) {
       try {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
-        navigate(`/users/${postData.userId}`);
+        // navigate(`/users/${postData.userId}`);
+        // setPostData(defaultPost);
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
       }
@@ -117,13 +119,14 @@ function PostForm({ handleClose }: PostFormProp) {
       try {
         await projectPostAdd(userId, projectId, postData);
         setPostData(defaultPost);
-        navigate(`/users/${postData.userId}`);
+        // navigate(`/users/${postData.userId}`);
+        // setPostData(defaultPost);
       } catch (error: any) {
         console.error(`Error adding project post => ${error}`)
       }
     }
   }
-  console.log(alert.error)
+
   return (
     <Container className="w-30">
       <Row >

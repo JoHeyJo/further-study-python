@@ -54,7 +54,6 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
   /** Sets boolean state if a post should be rendering */
   function handlePostRender() {
     setIsPostRendering(true);
-
   }
 
   useEffect(() => {
@@ -71,7 +70,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="">
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
-                <PopOut />
+                  <PopOut />
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
@@ -88,7 +87,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
               </Card>
             </Col>
             <Col>
-              {isPostRendering && post && <Post post={post} />}
+              {isPostRendering && post && <Post post={post} handlePostRender={setIsPostRendering} />}
             </Col>
           </Row>
         </Container>

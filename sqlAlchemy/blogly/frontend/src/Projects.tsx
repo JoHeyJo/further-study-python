@@ -52,9 +52,7 @@ function Projects({ userId }: ProjectProps) {
   const ProjectData: ProjectContextType = {
     projectId: projectData.id,
     projectName: projectData.name,
-  }
-
-  console.log('ProjectContext', ProjectContext)
+  } 
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -69,13 +67,13 @@ function Projects({ userId }: ProjectProps) {
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectData.id)
     console.log(res)
+    console.log('fetchProjectPosts is being called')
     setPosts(res)
   }
 
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined) {
     if (!open) {
-      // setParentState(true)
       setOpen(true)
     } else if (projectData.id !== id) {
       setOpen(!open);
@@ -93,7 +91,7 @@ function Projects({ userId }: ProjectProps) {
 
   useEffect(() => {
     setTimeout(() => fetchProjectPosts(), 530)
-  }, [projectData])
+  }, [projectData, posts])
 
   return (
     <>

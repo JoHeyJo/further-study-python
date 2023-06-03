@@ -9,11 +9,13 @@ import { ProjectContext } from './userContext';
 
 function PopOut() {
   const [show, setShow] = useState(false);
+  const { projectName  } = useContext(ProjectContext);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  }
   const handleShow = () => setShow(true);
 
-  const { projectName } = useContext(ProjectContext);
 
   return (
     <>
