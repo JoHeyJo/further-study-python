@@ -1,9 +1,11 @@
 import { createContext } from 'react';
 
-export type ProjectIdContextType = {
+export type ProjectContextType = {
   projectId: number | undefined;
+  projectName: string | undefined;
 }
 
-export const ProjectIdContext = createContext<ProjectIdContextType>({
+export const ProjectContext = createContext<ProjectContextType>({
   projectId: undefined,
+  projectName: undefined,
 });

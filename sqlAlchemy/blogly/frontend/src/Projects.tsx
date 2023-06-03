@@ -12,13 +12,18 @@ import { IProject, IUserId, IPosts, IPost } from './interface';
 import { postsGet, projectsGet, projectPostsGet } from './api';
 import Post from "./Post";
 import Posts from "./Posts";
-import { ProjectIdContextType, ProjectIdContext } from "./userContext";
+import { ProjectContextType, ProjectContext } from "./userContext";
 
 //styles
 // import './style/Projects.css';
 
 type ProjectProps = {
   userId: number;
+}
+
+type ProjectData = {
+  name?: string;
+  id?: number;
 }
 /** Renders list of projects by name
  * 
@@ -39,15 +44,17 @@ type ProjectProps = {
 function Projects({ userId }: ProjectProps) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState<IProject[]>([])
-  const [projectId, setProjectId] = useState<number | undefined>(0);
+  // const [projectId, setProjectId] = useState<number | undefined>(0);
+  const [projectData, setProjectData] = useState<ProjectData>({name:'', id: 0});
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
 
-  const projectIdContext: ProjectIdContextType = {
-    projectId: projectId,
+  const ProjectData: ProjectContextType = {
+    projectId: projectData.id,
+    projectName: projectData.name,
   }
 
-  console.log('projectIdContext', projectIdContext)
+  console.log('ProjectContext', ProjectContext)
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -60,8 +67,7 @@ function Projects({ userId }: ProjectProps) {
 
   /** retrieves project's posts */
   async function fetchProjectPosts() {
-    console.log('projectID', projectId)
-    const res = await projectPostsGet(userId, projectId)
+    const res = await projectPostsGet(userId, projectData.id)
     console.log(res)
     setPosts(res)
   }
@@ -71,7 +77,7 @@ function Projects({ userId }: ProjectProps) {
     if (!open) {
       // setParentState(true)
       setOpen(true)
-    } else if (projectId !== id) {
+    } else if (projectData.id !== id) {
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
@@ -80,14 +86,14 @@ function Projects({ userId }: ProjectProps) {
       setOpen(false)
     }
   }
-  //rename to isPostsShowing or something like that. The boolean determines whether the Posts slideover is showing
+  //The boolean determines whether the Posts slideover is showing
   const handleParentStateChange = () => {
     setIsPostsShowing(!isPostsShowing);
   };
 
   useEffect(() => {
-    setTimeout(() => fetchProjectPosts(), 520)
-  }, [projectId])
+    setTimeout(() => fetchProjectPosts(), 530)
+  }, [projectData])
 
   return (
     <>
@@ -99,7 +105,9 @@ function Projects({ userId }: ProjectProps) {
               {
                 projects.map(project =>
                   <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
-                    setProjectId(project.id);
+                    setProjectData(p => ({
+                     ...p, name: project.name, id: project.id 
+                    }))
                     isOpen(project.id);
                     handleParentStateChange();
                   }
@@ -118,10 +126,10 @@ function Projects({ userId }: ProjectProps) {
             <Collapse in={open} dimension="width">
               <Col>
                 <div className="User-posts">
-                  <ProjectIdContext.Provider value={projectIdContext}>
+                  <ProjectContext.Provider value={ProjectData}>
                     <Posts isPostsShowing={isPostsShowing} posts={posts || []} />
 
-                  </ProjectIdContext.Provider>
+                  </ProjectContext.Provider>
 
                 </div>
               </Col>

@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
-import { ProjectIdContext } from "./userContext";
+import { ProjectContext } from "./userContext";
 //styles
 import './style/PostForm.css';
 
@@ -35,7 +35,7 @@ function PostForm({ handleClose }: PostFormProp) {
   const postId = +params.post_id!;
   // const projectId = +params.project_id!;
 
-  const { projectId } = useContext(ProjectIdContext);
+  const { projectId } = useContext(ProjectContext);
   console.log(' PostFomr projectId', projectId)
   const navigate = useNavigate();
 
@@ -181,7 +181,7 @@ function PostForm({ handleClose }: PostFormProp) {
 
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className=""> 
-            <Button type="submit" variant="primary">Submit</Button>
+            <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
             <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
           </Form>
