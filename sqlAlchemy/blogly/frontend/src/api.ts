@@ -217,10 +217,11 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
   }
 }
 
-/** Updates project with matching id */
+/** Adds posts to corresonding project */
 async function projectPostAdd(userId: number, projectId: number | undefined, postData: IPost) {
   try {
     const res = await axios.post(`${BASE_URL}/users/${userId}/projects/${projectId}/posts/new`, postData);
+    console.log('projectPostAdd......',res.data)
     return res.data;
   } catch (error: any) {
     console.error(`Error in projectPostAdd => ${error}`)
@@ -233,6 +234,7 @@ async function projectPostAdd(userId: number, projectId: number | undefined, pos
 async function projectPostsGet(userId: number, projectId: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects/${projectId}`);
+    console.log('projectPostsGet......', res.data)
     return res.data;
   } catch (error: any) {
     console.error(`Error in projectPostsGet => ${error}`)

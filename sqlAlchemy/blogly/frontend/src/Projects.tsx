@@ -52,6 +52,10 @@ function Projects({ userId }: ProjectProps) {
   const ProjectData: ProjectContextType = {
     projectId: projectData.id,
     projectName: projectData.name,
+    // fetchProjectPosts: async () => {
+    //   await fetchProjectPosts();
+    fetchProjectPosts,
+    // }
   } 
 
   /** On mount fetches users' projects */
@@ -66,9 +70,9 @@ function Projects({ userId }: ProjectProps) {
   /** retrieves project's posts */
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectData.id)
-    console.log(res)
     console.log('fetchProjectPosts is being called')
     setPosts(res)
+    console.log('.........',res)
   }
 
   /** controls when slideover opens/closes */
@@ -92,6 +96,10 @@ function Projects({ userId }: ProjectProps) {
   useEffect(() => {
     setTimeout(() => fetchProjectPosts(), 530)
   }, [projectData])
+
+  // useEffect(() => {
+  //   fetchProjectPosts();
+  // },[])
 
   return (
     <>
