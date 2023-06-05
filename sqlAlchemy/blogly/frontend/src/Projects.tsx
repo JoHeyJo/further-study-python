@@ -97,9 +97,6 @@ function Projects({ userId }: ProjectProps) {
     setTimeout(() => fetchProjectPosts(), 530)
   }, [projectData])
 
-  // useEffect(() => {
-  //   fetchProjectPosts();
-  // },[])
 
   return (
     <>

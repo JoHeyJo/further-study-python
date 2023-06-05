@@ -9,21 +9,12 @@ import { ProjectContext } from './userContext';
 
 function PopOut() {
   const [show, setShow] = useState(false);
-  const { projectName, fetchProjectPosts  } = useContext(ProjectContext);
+  const { projectName } = useContext(ProjectContext);
 
-  const handleClose = () => {
-    setShow(false);
-    // fetchProjects();
-  }
+  const handleClose = () => setShow(false);
+  
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    if (!show) {
-      console.log('calling fetchprojectposts')
-      fetchProjectPosts();
-    }
-  }, [show]);
-  
   // useEffect(() => {
   //   if (!show) {
   //     const fetchData = async () => {

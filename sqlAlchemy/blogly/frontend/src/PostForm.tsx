@@ -29,6 +29,7 @@ function PostForm({ handleClose }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
+  const { fetchProjectPosts } = useContext(ProjectContext);
 
   const params = useParams();
   const userId = +params.user_id!;
@@ -56,7 +57,7 @@ function PostForm({ handleClose }: PostFormProp) {
         fetchUser(post.userId);
       }
 
-      if (projectId){
+      if (projectId) {
         setPostData(p => {
           p.projectId = projectId
           return p;
@@ -119,12 +120,13 @@ function PostForm({ handleClose }: PostFormProp) {
       try {
         await projectPostAdd(userId, projectId, postData);
         setPostData(defaultPost);
+        fetchProjectPosts();
         // navigate(`/users/${postData.userId}`);
-        // setPostData(defaultPost);
       } catch (error: any) {
-        console.error(`Error adding project post => ${error}`)
+        console.error(`Error adding project post => ${error}`);
       }
     }
+
   }
 
   return (
@@ -183,9 +185,9 @@ function PostForm({ handleClose }: PostFormProp) {
             </Form.Group>
 
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
-            <div className=""> 
-            <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
-            <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+            <div className="">
+              <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
+              <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
           </Form>
         </Col>
