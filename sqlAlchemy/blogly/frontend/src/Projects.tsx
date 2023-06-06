@@ -131,7 +131,6 @@ function Projects({ userId }: ProjectProps) {
                 <div className="User-posts">
                   <ProjectContext.Provider value={ProjectData}>
                     <Posts isPostsShowing={isPostsShowing} posts={posts || []} />
-
                   </ProjectContext.Provider>
 
                 </div>

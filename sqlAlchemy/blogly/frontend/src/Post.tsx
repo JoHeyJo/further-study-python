@@ -1,5 +1,5 @@
 //dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Button from 'react-bootstrap/Button';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
@@ -7,6 +7,7 @@ import Stack from 'react-bootstrap/Stack';
 //components / modules
 import { IPost, IPostData } from './interface';
 import { postGet, postDelete } from './api';
+import { ProjectContext } from "./userContext";
 //styles
 import './style/Post.css'
 
@@ -23,23 +24,8 @@ type PostProp = {
  * User -> Posts -> Post
  */
 function Post({ post, handlePostRender }: any) {
-  // const [post, setPost] = useState<IPostData>(
-  //   {
-  //     id: 0,
-  //     title: '',
-  //     content: '',
-  //     firstName: '',
-  //     lastName: '',
-  //     userId: 0,
-  //     createdAt: '',
-  //     imageUrl: null,
-  //     problem: '',
-  //     solution: '',
-  //     projectId: 0,
-  //   })
-  // const params = useParams();
-  // const postId = +params.post_id!
   const navigate = useNavigate();
+  const { fetchProjectPosts, projectId } = useContext(ProjectContext);
 
   /**On mount fetches post */
   // useEffect(() => {
@@ -54,7 +40,7 @@ function Post({ post, handlePostRender }: any) {
   async function deletePost() {
     try {
       const res = await postDelete(post.id)
-      navigate(`/users/${post.userId}`)
+      fetchProjectPosts();
     } catch (error: any) {
       console.error(`Error in deletePost => ${error}`)
     }

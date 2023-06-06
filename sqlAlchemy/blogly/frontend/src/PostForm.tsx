@@ -23,21 +23,19 @@ const defaultAlert: IAlert = { error: null };
  * - user: {id:0,firstName:'',lastName:'', image:''}
  * - post = {title:'', content:''}
  * 
- * Post -> PostForm
+ * Modal -> PostForm
 */
 function PostForm({ handleClose }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
-  const { fetchProjectPosts } = useContext(ProjectContext);
+  const { fetchProjectPosts, projectId } = useContext(ProjectContext);
 
   const params = useParams();
   const userId = +params.user_id!;
   const postId = +params.post_id!;
   // const projectId = +params.project_id!;
 
-  const { projectId } = useContext(ProjectContext);
-  console.log(' PostFomr projectId', projectId)
   const navigate = useNavigate();
 
   /** fetches data on mount*/
