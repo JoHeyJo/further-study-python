@@ -15,6 +15,7 @@ import './style/Post.css'
 type PostProp = {
   postId: number;
   handlePostRender: () => void;
+  fetchEditPost?: (postId: number) => void;
 }
 /** Renders individual post
  * 
@@ -23,7 +24,7 @@ type PostProp = {
  * 
  * User -> Posts -> Post
  */
-function Post({ post, handlePostRender }: any) {
+function Post({ post, handlePostRender, fetchEditPost }: any) {
   const navigate = useNavigate();
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
 
@@ -56,7 +57,7 @@ function Post({ post, handlePostRender }: any) {
         <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>
       </Stack>
       <div className="Post-controls">
-        <PopOut postId={post.id} />
+        <PopOut postId={post.id} fetchEditPost={fetchEditPost} />
         <Button onClick={() => {
           deletePost();
           handlePostRender(false)

@@ -11,3 +11,14 @@ export const ProjectContext = createContext<ProjectContextType>({
   projectName: undefined,
   fetchProjectPosts: () => {},
 });
+
+
+export type PostContextType = {
+  fetchEditPost: (userId: number) => void;
+  number?: number
+};
+
+export const PostContext = createContext<PostContextType>({
+  fetchEditPost: () => {},
+  number: undefined
+})

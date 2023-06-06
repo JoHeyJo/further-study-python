@@ -1,5 +1,5 @@
 // dependencies
-import { useContext, useState, useEffect, useCallback } from 'react';
+import { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,26 +8,17 @@ import PostForm from './PostForm';
 import { ProjectContext } from './userContext';
 
 type PopOutProp = {
-  postId: number | undefined
+  postId: number | undefined;
+  fetchEditPost?: (postId: number) => void;
 }
 
-function PopOut({ postId }: PopOutProp) {
+function PopOut({ postId, fetchEditPost }: PopOutProp) {
   const [show, setShow] = useState(false);
   const { projectName } = useContext(ProjectContext);
 
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
-
-  // useEffect(() => {
-  //   if (!show) {
-  //     const fetchData = async () => {
-  //       console.log('calling fetchprojectposts');
-  //       await fetchProjectPosts();
-  //     };
-  //     fetchData();
-  //   }
-  // }, [show]);
 
   return (
     <>
@@ -41,7 +32,7 @@ function PopOut({ postId }: PopOutProp) {
           <Modal.Title>Create post for {projectName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PostForm handleClose={handleClose} postId={postId}/>
+          {fetchEditPost && <PostForm handleClose={handleClose} postId={postId} fetchEditPost={fetchEditPost}/> }
         </Modal.Body>
         {/* <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

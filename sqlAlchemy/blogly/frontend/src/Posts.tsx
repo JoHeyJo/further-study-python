@@ -13,6 +13,7 @@ import { IPost } from './interface';
 import { postGet } from './api'
 import Post from "./Post";
 import PopOut from "./PopOut";
+import { PostContextType, PostContext } from "./userContext";
 
 //styles
 import './style/Posts.css';
@@ -46,8 +47,16 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
 
+  // const numberid = 1
+
+  // const PostData: PostContextType = {
+  //   fetchEditPost: fetchPost,
+  //   number: numberid,
+  // }
+
   /** fetches Project post onClick */
-  async function fetchPost(postId: any) {
+  async function fetchPost(postId: number) {
+    console.log('Posts - fetching edited post')
     const res = await postGet(postId);
     setPost(res);
   }
@@ -71,7 +80,9 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="">
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
-                  <PopOut postId={undefined} />
+                  {/* <PostContext.Provider value={PostData}> */}
+                    <PopOut postId={undefined}/>
+                  {/* </PostContext.Provider> */}
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
@@ -88,7 +99,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
               </Card>
             </Col>
             <Col>
-              {isPostRendering && post && <Post post={post} handlePostRender={setIsPostRendering} />}
+              {isPostRendering && post && <Post post={post} handlePostRender={setIsPostRendering} fetchEditPost={fetchPost}/>}
             </Col>
           </Row>
         </Container>

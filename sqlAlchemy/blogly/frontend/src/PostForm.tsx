@@ -8,15 +8,16 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
-import { ProjectContext } from "./userContext";
+import { ProjectContext, PostContext } from "./userContext";
 //styles
 import './style/PostForm.css';
 
 type PostFormProp = {
   handleClose: () => void | undefined;
   postId: number | undefined;
+  fetchEditPost: (postId: number) => void;
 }
-const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
+const defaultPost: IPost = { title: '', content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
 const defaultAlert: IAlert = { error: null };
 /** Handles/ submits post data & renders form for new post 
  * 
@@ -26,11 +27,12 @@ const defaultAlert: IAlert = { error: null };
  * 
  * Modal -> PostForm
 */
-function PostForm({ handleClose, postId }: PostFormProp) {
+function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
+  // const { fetchEditPost, number } = useContext(PostContext);
 
   const params = useParams();
   const userId = +params.user_id!;
@@ -109,6 +111,9 @@ function PostForm({ handleClose, postId }: PostFormProp) {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
         fetchProjectPosts();
+        // console.log('PostForm', number)
+        console.log('PostForm - submitted edited form')
+        fetchEditPost(postId);
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
       }
@@ -124,6 +129,8 @@ function PostForm({ handleClose, postId }: PostFormProp) {
       }
     }
   }
+
+  useEffect(()=>{},[postData])
 
   return (
     <Container className="w-30">
