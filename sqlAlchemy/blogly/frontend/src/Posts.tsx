@@ -9,10 +9,11 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 // components/ modules
-import { IPostData, IUserId, IPost } from './interface';
-import { postsGet, postGet } from './api'
+import { IPost } from './interface';
+import { postGet } from './api'
 import Post from "./Post";
 import PopOut from "./PopOut";
+
 //styles
 import './style/Posts.css';
 
@@ -70,7 +71,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="">
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
-                  <PopOut />
+                  <PopOut postId={undefined} />
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {

@@ -5,9 +5,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
 //components / modules
-import { IPost, IPostData } from './interface';
-import { postGet, postDelete } from './api';
+import { postDelete } from './api';
 import { ProjectContext } from "./userContext";
+import PopOut from "./PopOut";
 //styles
 import './style/Post.css'
 
@@ -26,15 +26,6 @@ type PostProp = {
 function Post({ post, handlePostRender }: any) {
   const navigate = useNavigate();
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
-
-  /**On mount fetches post */
-  // useEffect(() => {
-  //   async function fetchPost() {
-  //     const res = await postGet(postId)
-  //     setPost(res)
-  //   };
-  //   fetchPost()
-  // }, [])
 
   /** Deletes user post */
   async function deletePost() {
@@ -65,16 +56,12 @@ function Post({ post, handlePostRender }: any) {
         <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>
       </Stack>
       <div className="Post-controls">
-        {/* <Link to={`/users/${post.userId}`}><Button variant="outline-primary">Cancel</Button></Link>
-          <Link to={`/posts/${postId}/edit`}><Button variant="primary">Edit</Button></Link>
-          <Button onClick={deletePost} variant="danger">Delete</Button> */}
-        <Button variant="primary">Edit</Button>
+        <PopOut postId={post.id} />
         <Button onClick={() => {
           deletePost();
           handlePostRender(false)
         }
         } variant="danger">Delete</Button>
-
       </div>
 
     </Container>

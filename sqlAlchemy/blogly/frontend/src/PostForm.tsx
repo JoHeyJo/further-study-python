@@ -14,6 +14,7 @@ import './style/PostForm.css';
 
 type PostFormProp = {
   handleClose: () => void | undefined;
+  postId: number | undefined;
 }
 const defaultPost: IPost = { title: undefined, content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
 const defaultAlert: IAlert = { error: null };
@@ -25,7 +26,7 @@ const defaultAlert: IAlert = { error: null };
  * 
  * Modal -> PostForm
 */
-function PostForm({ handleClose }: PostFormProp) {
+function PostForm({ handleClose, postId }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
@@ -33,7 +34,7 @@ function PostForm({ handleClose }: PostFormProp) {
 
   const params = useParams();
   const userId = +params.user_id!;
-  const postId = +params.post_id!;
+  // const postId = +params.post_id!;
   // const projectId = +params.project_id!;
 
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function PostForm({ handleClose }: PostFormProp) {
       }
       //in response to post edit, fetch post data and update state w/ post data
       if (postId) {
-        const post: IPost = await fetchPost();
+        const post: IPost = await fetchPost(postId);
         fetchUser(post.userId);
       }
 
@@ -72,7 +73,7 @@ function PostForm({ handleClose }: PostFormProp) {
   };
 
   /** Fetches post data*/
-  async function fetchPost(): Promise<IPost> {
+  async function fetchPost(postId: number): Promise<IPost> {
     const res = await postEdit(postId);
     setPostData(res);
     return res
@@ -92,39 +93,35 @@ function PostForm({ handleClose }: PostFormProp) {
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    //adds post that doesn't correspond to project
     if (userId && !projectId) {
       try {
         await postAdd(postData);
         setPostData(defaultPost);
-        // navigate(`/users/${userId}`);
-        // setPostData(defaultPost);
       } catch (error: any) {
-        console.log(error)
         setAlert(error)
         console.error(`Error adding new post => ${error}`)
       }
     }
+    //edit individual post
     if (postId) {
       try {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
-        // navigate(`/users/${postData.userId}`);
-        // setPostData(defaultPost);
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
       }
     }
-    if (projectId) {
+    //adds post corresponding to project
+    if (projectId && !postId) {
       try {
         await projectPostAdd(userId, projectId, postData);
         setPostData(defaultPost);
         fetchProjectPosts();
-        // navigate(`/users/${postData.userId}`);
       } catch (error: any) {
         console.error(`Error adding project post => ${error}`);
       }
     }
-
   }
 
   return (

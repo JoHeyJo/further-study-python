@@ -7,12 +7,16 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import PostForm from './PostForm';
 import { ProjectContext } from './userContext';
 
-function PopOut() {
+type PopOutProp = {
+  postId: number | undefined
+}
+
+function PopOut({ postId }: PopOutProp) {
   const [show, setShow] = useState(false);
   const { projectName } = useContext(ProjectContext);
 
   const handleClose = () => setShow(false);
-  
+
   const handleShow = () => setShow(true);
 
   // useEffect(() => {
@@ -27,13 +31,17 @@ function PopOut() {
 
   return (
     <>
-      <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+      {postId
+        ? <Button onClick={handleShow}>Edit</Button>
+        :
+        <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+      }
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create post for {projectName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <PostForm handleClose={handleClose}/>
+          <PostForm handleClose={handleClose} postId={postId}/>
         </Modal.Body>
         {/* <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
