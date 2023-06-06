@@ -81,7 +81,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
                   {/* <PostContext.Provider value={PostData}> */}
-                    <PopOut postId={undefined}/>
+                  <PopOut postId={undefined} fetchEditPost={fetchPost} />
                   {/* </PostContext.Provider> */}
                   {
                     posts.map(post =>

@@ -64,7 +64,7 @@ function Project() {
             </ListGroup>
           </Col>
         </Row>
-        <Link to={`/users/${userId}/projects/${projectId}/posts/new`}><Button variant="primary">Add Post</Button></Link>
+        {/* <Link to={`/users/${userId}/projects/${projectId}/posts/new`}><Button variant="primary">Add Post</Button></Link> */}
       </Container></>
   )
 }
