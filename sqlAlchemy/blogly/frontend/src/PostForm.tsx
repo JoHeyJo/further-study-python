@@ -108,6 +108,7 @@ function PostForm({ handleClose, postId }: PostFormProp) {
       try {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
+        fetchProjectPosts();
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
       }
