@@ -256,7 +256,6 @@ def posts_delete(post_id):
     """"Deletes post with corresponding id"""
     try:
         post = Post.query.get_or_404(post_id)
-        print('delete post>>>>>>>>>', post)
         db.session.delete(post)
         db.session.commit()
         return redirect(f"/users/{post.user_id}/posts")
@@ -366,4 +365,21 @@ def projects_posts_get(user_id, project_id):
         return jsonify(serialized)
     except Exception as e:
         print('projects_posts_get error =>', e)
+        return jsonify({"error": f"{str(e)}"})
+
+
+@app.delete("/projects/<int:project_id>/delete")
+def projects_delete(project_id):
+    """Deletes project and all associate posts"""
+    try:
+        project = Project.query.get_or_404(project_id)
+        posts = Post.query.filter(Post.project_id==project_id).all()
+        for post in posts:
+            db.session.delete(post)
+            db.session.commit()
+        db.session.delete(project)
+        db.session.commit()
+        return jsonify({'message':'Project deleted'})
+    except Exception as e:
+        print('********projects_delete error =>', e)
         return jsonify({"error": f"{str(e)}"})
