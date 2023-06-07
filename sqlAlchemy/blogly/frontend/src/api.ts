@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { IUser, IPost, IProject } from './interface'
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://127.0.0.1:5000";
 // try {
 //   return (await axios({ url, method, data, params, headers })).data;
 // } catch (err) {
@@ -76,11 +76,11 @@ async function userDelete(id: number) {
 /**Gets all user posts */
 async function postsGetAll() {
   try {
-    // console.log(id)
     const res = await axios.get(`${BASE_URL}/posts`)
     return res.data;
   } catch (error: any) {
-    console.error(`API get all posts error: ${error}`)
+    console.error(`API postsGetAll error: ${error}`)
+    console.log('API ERROR', error)
   }
 }
 

@@ -19,12 +19,14 @@ function HomePage() {
   useEffect(() => {
     async function fetchPosts() {
       let res = await postsGetAll();
-      res.reverse()
+      console.log(res)
+      res.reverse();
       res = res.slice(0, 6)
       setPosts(res)
     }
     fetchPosts()
   }, [])
+
   return (
     <>
       <h1 className="bg-light border">Blogly Recent Posts</h1>

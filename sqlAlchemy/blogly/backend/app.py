@@ -347,7 +347,12 @@ def projects_posts_add(user_id, project_id):
                     problem=problem, solution=solution, project_id=project_id)
         db.session.add(post)
         db.session.commit()
-        return redirect(f"/users/{user_id}/posts")
+        posts = Post.query.filter(
+            Post.user_id == user_id).order_by(Post.created_at)
+        serialized = [Post.serialize(post) for post in posts]
+        print('serialized', serialized)
+        return jsonify(serialized)
+        # return redirect(f"/users/{user_id}/posts")
     except Exception as e:
         print("keyerror>>>>>>", e)
         return jsonify({"error": f"Missing {str(e)}"}), 401
