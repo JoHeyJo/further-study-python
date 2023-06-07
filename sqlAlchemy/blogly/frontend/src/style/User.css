@@ -7,5 +7,5 @@ img {
 .User-post-details {
   border: 2px solid grey;
   padding: 1rem;
-  height: 65vh;
+  min-height: 65vh;
 }

@@ -7,15 +7,17 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Collapse from 'react-bootstrap/Collapse';
+
 // components/ modules
 import { IProject, IUserId, IPosts, IPost } from './interface';
 import { postsGet, projectsGet, projectPostsGet } from './api';
 import Post from "./Post";
 import Posts from "./Posts";
 import { ProjectContextType, ProjectContext } from "./userContext";
+import AlertModal from "./AlertModal";
 
 //styles
-// import './style/Projects.css';
+import './style/Projects.css';
 
 type ProjectProps = {
   userId: number;
@@ -44,8 +46,7 @@ type ProjectData = {
 function Projects({ userId }: ProjectProps) {
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState<IProject[]>([])
-  // const [projectId, setProjectId] = useState<number | undefined>(0);
-  const [projectData, setProjectData] = useState<ProjectData>({name:'', id: 0});
+  const [projectData, setProjectData] = useState<ProjectData>({ name: '', id: 0 });
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
 
@@ -53,7 +54,7 @@ function Projects({ userId }: ProjectProps) {
     projectId: projectData.id,
     projectName: projectData.name,
     fetchProjectPosts,
-  } 
+  }
 
   /** On mount fetches users' projects */
   useEffect(() => {
@@ -97,14 +98,15 @@ function Projects({ userId }: ProjectProps) {
     <>
       <h3>Projects</h3>
       <div>
-        <Row className="justify-content-center">
+
+        <Row className="Projects-container justify-content-center">
           <Col className="col-6">
             <ListGroup className="align-items-start">
               {
                 projects.map(project =>
-                  <ListGroup.Item key={project.id} className="Projects-post" onClick={() => {
+                  <ListGroup.Item key={project.id} className="Projects-project" onClick={() => {
                     setProjectData(p => ({
-                     ...p, name: project.name, id: project.id 
+                      ...p, name: project.name, id: project.id
                     }))
                     isOpen(project.id);
                     handleParentStateChange();
@@ -112,6 +114,7 @@ function Projects({ userId }: ProjectProps) {
                   }>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
                     {project.name}
+                      <AlertModal projectData={projectData}/>
                   </ListGroup.Item>
                 )
               }

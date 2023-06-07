@@ -239,7 +239,19 @@ async function projectPostsGet(userId: number, projectId: number | undefined) {
   }
 }
 
+/** Deletes project and all associated posts */
+async function projectDelete(projectId?: number) {
+  try {
+    const res = await axios.delete(`${BASE_URL}/projects/${projectId}/delete`)
+    console.log('post delete', res.data)
+    return res.data
+  } catch (error: any){
+    console.log(`Error in projecDelete => ${error}`)
+    console.error(`Error in projecDelete => ${error}`)
+    throw error.response.data
+  }
+}
 
 
-export { projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
+export { projectDelete, projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 

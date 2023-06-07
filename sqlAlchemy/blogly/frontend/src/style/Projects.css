@@ -1,0 +1,13 @@
+.font-icon {
+  padding-left: 10px;
+  color: gray;
+  display: none;
+}
+
+.Projects-project:hover .font-icon {
+  display: inline;
+}
+
+.Projects-container {
+  min-height: 25vh;
+}

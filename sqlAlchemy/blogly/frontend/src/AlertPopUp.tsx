@@ -5,7 +5,7 @@ type AlertProp = {
   variant: string;
   message: string | null;
 }
-
+// color schemes for Alert component
 // 'primary',
 //   'secondary',
 //   'success',
