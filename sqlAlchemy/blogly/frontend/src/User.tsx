@@ -72,8 +72,8 @@ function User() {
 
   return (
     <Container className="User-container">
-      <Row className="position-absolute w-100">
-        <Col className="col-3">
+      <Row className="position-absolute w-100 ">
+        <Col className="col-3 p-5">
           <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
           <div className="User-user">
             <div className="User-fn">{user.firstName}</div>
