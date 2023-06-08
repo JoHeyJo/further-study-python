@@ -124,14 +124,14 @@ function Projects({ userId }: ProjectProps) {
                   }}>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
                     <div 
-                    style={{ margin: 0, padding: 0, border: 'none', background: 'none', boxShadow: 'none' }} onClick={(e) => {
+                    style={{ all: 'unset' }} onClick={(e) => {
                       isOpen(projectData.id, e)
                     }}
                     >
                       {project.name}
 
                     </div>
-                    <AlertModal projectData={projectData} projectGet={getProject} />
+                    <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen}/>
                   </ListGroup.Item>
                 )
               }

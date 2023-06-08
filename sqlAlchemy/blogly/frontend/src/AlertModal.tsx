@@ -15,15 +15,14 @@ type ProjectData = {
 type AlertModalProps = {
   projectData: ProjectData;
   projectGet: () => void;
-  // onClick: (event: any) => any;
-
+  isOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 /** show alerts for Project. (refactor to be an edit modal)
  * 
  * 
  *  Projects -> AlertModal
  */
-function AlertModal({ projectData, projectGet }: AlertModalProps) {
+function AlertModal({ projectData, projectGet, isOpen }: AlertModalProps) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -34,6 +33,7 @@ function AlertModal({ projectData, projectGet }: AlertModalProps) {
     try {
       const res = await projectDelete(projectData.id,)
       projectGet();
+      isOpen(false);
     } catch (error: any) {
       console.error(`Error in deleteProject =>${error}`)
     }
