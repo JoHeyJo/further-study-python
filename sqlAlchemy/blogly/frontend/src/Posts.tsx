@@ -80,9 +80,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="">
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
-                  {/* <PostContext.Provider value={PostData}> */}
                   <PopOut postId={undefined} fetchEditPost={fetchPost} />
-                  {/* </PostContext.Provider> */}
                   {
                     posts.map(post =>
                       <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {

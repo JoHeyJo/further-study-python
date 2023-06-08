@@ -111,7 +111,6 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
         fetchProjectPosts();
-        // console.log('PostForm', number)
         console.log('PostForm - submitted edited form')
         fetchEditPost(postId);
       } catch (error: any) {

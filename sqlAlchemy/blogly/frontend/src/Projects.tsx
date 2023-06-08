@@ -10,7 +10,7 @@ import Collapse from 'react-bootstrap/Collapse';
 
 // components/ modules
 import { IProject, IUserId, IPosts, IPost } from './interface';
-import { postsGet, projectsGet, projectPostsGet } from './api';
+import { postsGet, projectsGet, projectPostsGet, projectGet } from './api';
 import Post from "./Post";
 import Posts from "./Posts";
 import { ProjectContextType, ProjectContext } from "./userContext";
@@ -48,12 +48,19 @@ function Projects({ userId }: ProjectProps) {
   const [projects, setProjects] = useState<IProject[]>([])
   const [projectData, setProjectData] = useState<ProjectData>({ name: '', id: 0 });
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(undefined);
+  const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(false);
 
   const ProjectData: ProjectContextType = {
     projectId: projectData.id,
     projectName: projectData.name,
     fetchProjectPosts,
+  }
+
+  /**gets projects */
+  async function getProject(){
+    const res = await projectsGet(userId);
+    console.log('getting projects')
+    setProjects(res);
   }
 
   /** On mount fetches users' projects */
@@ -75,22 +82,22 @@ function Projects({ userId }: ProjectProps) {
   function isOpen(id: number | undefined) {
     if (!open) {
       setOpen(true)
+      setIsPostsShowing(true)
     } else if (projectData.id !== id) {
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
       }, 500)
+      setIsPostsShowing(true)
     } else {
       setOpen(false)
+      setIsPostsShowing(false)
     }
+    console.log('slide over toggled')
   }
-  //The boolean determines whether the Posts slideover is showing
-  const handleParentStateChange = () => {
-    setIsPostsShowing(!isPostsShowing);
-  };
 
   useEffect(() => {
-    setTimeout(() => fetchProjectPosts(), 530)
+    setTimeout(() => fetchProjectPosts(), 520)
   }, [projectData])
 
 
@@ -109,12 +116,11 @@ function Projects({ userId }: ProjectProps) {
                       ...p, name: project.name, id: project.id
                     }))
                     isOpen(project.id);
-                    handleParentStateChange();
                   }
                   }>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
                     {project.name}
-                      <AlertModal projectData={projectData}/>
+                    <AlertModal projectData={projectData} projectGet={getProject}/>
                   </ListGroup.Item>
                 )
               }

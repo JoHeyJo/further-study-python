@@ -14,13 +14,14 @@ type ProjectData = {
 
 type AlertModalProps = {
   projectData: ProjectData;
+  projectGet: () => void;
 }
 /** show alerts for Project. (refactor to be an edit modal)
  * 
  * 
  *  Projects -> AlertModal
  */
-function AlertModal({ projectData }: AlertModalProps) {
+function AlertModal({ projectData, projectGet }: AlertModalProps) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -30,7 +31,7 @@ function AlertModal({ projectData }: AlertModalProps) {
   async function deleteProject() {
     try {
       const res = await projectDelete(projectData.id,)
-      console.log('response in delete', res)
+      projectGet();
     } catch (error: any) {
       console.error(`Error in deleteProject =>${error}`)
     }
@@ -52,8 +53,8 @@ function AlertModal({ projectData }: AlertModalProps) {
             Close
           </Button>
           <Button variant="danger" onClick={() => {
-            handleClose();
             deleteProject();
+            handleClose();
           }}>
             Delete
           </Button>
