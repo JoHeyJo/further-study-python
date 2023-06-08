@@ -80,19 +80,22 @@ function Projects({ userId }: ProjectProps) {
   }
 
   /** controls when slideover opens/closes */
-  function isOpen(id: number | undefined) {
+  function isOpen(id: number | undefined, e: any) {
+    const target = e.target.innerText;
+    console.log(target, projectData.name)
     if (!open) {
       setOpen(true)
-      setIsPostsShowing(true)
-    } else if (projectData.id !== id) {
+      // setIsPostsShowing(true)
+    } else if (target !== projectData.name) {
+      console.log('open new project', projectData.id,id)
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
       }, 500)
-      setIsPostsShowing(true)
+      // setIsPostsShowing(true)
     } else {
       setOpen(false)
-      setIsPostsShowing(false)
+      // setIsPostsShowing(false)
     }
     console.log('slide over toggled')
   }
@@ -112,15 +115,19 @@ function Projects({ userId }: ProjectProps) {
             <ListGroup className="align-items-start">
               {
                 projects.map(project =>
-                  <ListGroup.Item key={project.id} className="Projects-project" onClick={() => {
+                  <ListGroup.Item key={project.id} className="Projects-project" onClick={(e) => {
                     setProjectData(p => ({
                       ...p, name: project.name, id: project.id
-                    }))
+                    }
+                    ))
+                    // isOpen(project.id,e)
                   }}>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
-                    <div style={{ margin: 0, padding: 0, border: 'none', background: 'none', boxShadow: 'none' }} onClick={() => {
-                      isOpen(projectData.id)
-                    }}>
+                    <div 
+                    style={{ margin: 0, padding: 0, border: 'none', background: 'none', boxShadow: 'none' }} onClick={(e) => {
+                      isOpen(projectData.id, e)
+                    }}
+                    >
                       {project.name}
 
                     </div>
