@@ -15,6 +15,8 @@ type ProjectData = {
 type AlertModalProps = {
   projectData: ProjectData;
   projectGet: () => void;
+  // onClick: (event: any) => any;
+
 }
 /** show alerts for Project. (refactor to be an edit modal)
  * 

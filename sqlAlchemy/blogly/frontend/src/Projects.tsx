@@ -57,9 +57,10 @@ function Projects({ userId }: ProjectProps) {
   }
 
   /**gets projects */
-  async function getProject(){
+  async function getProject() {
     const res = await projectsGet(userId);
     console.log('getting projects')
+
     setProjects(res);
   }
 
@@ -115,12 +116,15 @@ function Projects({ userId }: ProjectProps) {
                     setProjectData(p => ({
                       ...p, name: project.name, id: project.id
                     }))
-                    isOpen(project.id);
-                  }
-                  }>
+                  }}>
                     {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
-                    {project.name}
-                    <AlertModal projectData={projectData} projectGet={getProject}/>
+                    <div style={{ margin: 0, padding: 0, border: 'none', background: 'none', boxShadow: 'none' }} onClick={() => {
+                      isOpen(projectData.id)
+                    }}>
+                      {project.name}
+
+                    </div>
+                    <AlertModal projectData={projectData} projectGet={getProject} />
                   </ListGroup.Item>
                 )
               }
