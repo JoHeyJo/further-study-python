@@ -44,7 +44,7 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
         <h1 className="Post-title bg-light border">{post.title}</h1>
         <Stack direction="horizontal" className="justify-content-center" >
           <h6 className="Post-subtitle">Context:</h6>
-          <h3 className="Post-content ms-2">{post.content}</h3>
+          <h5 className="Post-content ms-2">{post.content}</h5>
         </Stack>
         <Stack direction="horizontal" className="justify-content-center" id="problem-stack">
           <h6 className="Post-subtitle">Problem:</h6>
@@ -52,6 +52,9 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
         </Stack>
         <Stack direction="horizontal" className="justify-content-center">
           <h6 className="Post-subtitle">Solution:</h6>
+          <pre>
+
+          </pre>
           <p className="Post-solution container ms-2">{post.solution}</p>
         </Stack>
         <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>

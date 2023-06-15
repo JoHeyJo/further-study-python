@@ -9,6 +9,7 @@ import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
 import { ProjectContext, PostContext } from "./userContext";
+import DraftEditor from "./DraftEditor";
 //styles
 import './style/PostForm.css';
 
@@ -92,6 +93,13 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }))
   }
 
+  function handleEditorData(data:any){
+    setPostData(p => ({
+      ...p,
+      content: data
+    }))
+  }
+
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -163,14 +171,17 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
             <Form.Group controlId="form-problem">
               <InputGroup.Text>Problem:</InputGroup.Text>
               {/* <Form.Label>Problem:</Form.Label> */}
-              <Form.Control
+              {/* <Form.Control
                 as="textarea"
                 // id="PostForm-control-problem"
                 className="PostForm-control input"
                 onChange={handleChange}
                 value={postData.problem}
                 name="problem"
-              />
+              /> */}
+              <div className="PostForm-control input">
+                <DraftEditor handleEditorData={handleEditorData} />
+              </div>
             </Form.Group>
 
             <Form.Group controlId="form-solution">
