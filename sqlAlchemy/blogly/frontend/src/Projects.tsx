@@ -100,6 +100,10 @@ function Projects({ userId }: ProjectProps) {
     console.log('slide over toggled')
   }
 
+  const handleParentStateChange = () => {
+    setIsPostsShowing(!isPostsShowing);
+  };
+
   useEffect(() => {
     setTimeout(() => fetchProjectPosts(), 520)
   }, [projectData])
@@ -129,6 +133,8 @@ function Projects({ userId }: ProjectProps) {
                     }}
                     >
                       {project.name}
+                      {' - '}
+                      {project.description}
 
                     </div>
                     <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen}/>
@@ -145,7 +151,7 @@ function Projects({ userId }: ProjectProps) {
               <Col>
                 <div className="User-posts">
                   <ProjectContext.Provider value={ProjectData}>
-                    <Posts isPostsShowing={isPostsShowing} posts={posts || []} />
+                    <Posts isPostsShowing={handleParentStateChange} posts={posts || []} />
                   </ProjectContext.Provider>
                 </div>
               </Col>

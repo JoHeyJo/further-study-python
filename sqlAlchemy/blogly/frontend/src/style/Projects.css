@@ -1,11 +1,11 @@
 .font-icon {
   padding-left: 10px;
-  color: gray;
-  display: none;
+  opacity: 0;
 }
 
 .Projects-project:hover .font-icon {
-  display: inline;
+  opacity: 1;
+  color: gray;
 }
 
 .Projects-container {
