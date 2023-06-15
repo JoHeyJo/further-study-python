@@ -100,8 +100,13 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }))
   }
 
+  function handleSaveEditorData(){
+
+  }
+
   /**Submit post data */
   async function handleSubmit(e: React.FormEvent) {
+    handleSaveEditorData();
     e.preventDefault();
     //adds post that doesn't correspond to project
     if (userId && !projectId) {
@@ -180,7 +185,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
                 name="problem"
               /> */}
               <div className="PostForm-control input">
-                <DraftEditor handleEditorData={handleEditorData} />
+                <DraftEditor onEditorDataChange={setPostData} />
               </div>
             </Form.Group>
 

@@ -10,8 +10,11 @@ function DraftEditor(handleEditorData: handleEditorData ) {
     EditorState.createEmpty(),
     );
 
+    
   const content = convertToRaw(editorState.getCurrentContent())
   const serialized = JSON.stringify(content)
+  handleEditorData(serialized)
+
     console.log('editorState', serialized)
 
   return <Editor editorState={editorState} onChange={setEditorState} />;
