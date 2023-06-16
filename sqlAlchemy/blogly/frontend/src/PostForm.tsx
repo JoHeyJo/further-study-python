@@ -179,7 +179,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
                 value={postData.problem}
                 name="problem"
               /> */}
-              <div className="PostForm-control input">
+              <div id="PostForm-control-problem" className="PostForm-control input">
                 <DraftEditor onEditorDataChange={handleEditorData} />
               </div>
             </Form.Group>
