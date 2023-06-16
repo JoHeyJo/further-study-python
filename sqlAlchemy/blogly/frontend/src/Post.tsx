@@ -4,6 +4,9 @@ import Button from 'react-bootstrap/Button';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
+import { convertFromRaw } from "draft-js";
+// import type { RawDraftContentBlock } from 'RawDraftContentBlock';
+// import type { RawDraftEntity } from 'RawDraftEntity';
 //components / modules
 import { postDelete } from './api';
 import { ProjectContext } from "./userContext";
@@ -38,6 +41,16 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
     }
   }
 
+  /** convert raw text to data object */
+  function convertRaw(){
+    const data = JSON.parse(post.problem).text
+    console.log(convertFromRaw(data));
+    return convertFromRaw(data);
+    
+  }
+
+  const convertedData = convertRaw();
+
   return (
     <Container>
       <Stack gap={3}>
@@ -53,7 +66,7 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
         <Stack direction="horizontal" className="justify-content-center">
           <h6 className="Post-subtitle">Solution:</h6>
           <pre>
-
+          {/* {convertedData} */}
           </pre>
           <p className="Post-solution container ms-2">{post.solution}</p>
         </Stack>

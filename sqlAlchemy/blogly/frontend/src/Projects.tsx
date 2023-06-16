@@ -82,7 +82,6 @@ function Projects({ userId }: ProjectProps) {
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined, e: any) {
     const target = e.target.innerText;
-    console.log(target, projectData.name)
     if (!open) {
       setOpen(true)
       // setIsPostsShowing(true)
