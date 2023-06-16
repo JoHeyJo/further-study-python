@@ -47,16 +47,9 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
 
-  // const numberid = 1
-
-  // const PostData: PostContextType = {
-  //   fetchEditPost: fetchPost,
-  //   number: numberid,
-  // }
-
   /** fetches Project post onClick */
   async function fetchPost(postId: number) {
-    console.log('Posts - fetching edited post')
+    console.log('Posts - fetching edited post', post)
     const res = await postGet(postId);
     setPost(res);
   }
