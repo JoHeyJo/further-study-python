@@ -6,13 +6,15 @@ type handleEditorData = {
 }
 
 function DraftEditor({ onEditorDataChange }: handleEditorData) {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty(),
-  );
+  const [editorState, setEditorState] = useState({
+   problem: EditorState.createEmpty(),
+
+});
 
 
+  /** Listens for key command and styles text appropriately */
   function handleKeyCommand(command: any, editorState: any,) {
-    const newState = RichUtils.handleKeyCommand(editorState, command)
+    const newState = RichUtils.handleKeyCommand(editorState.problem, command)
 
     if (newState) {
       onEditorChange(newState)
@@ -21,32 +23,25 @@ function DraftEditor({ onEditorDataChange }: handleEditorData) {
     return 'not-handled'
   }
 
-  
-  function onEditorChange(newState: any) {
-    setEditorState(newState)
-    const content = convertToRaw(newState.getCurrentContent())
-    const serialized = JSON.stringify(content)
-    onEditorDataChange(serialized)
+  /** creates 'BOLD' UI styling control */
+  function _onBoldClick(){
+    onEditorChange(RichUtils.toggleInlineStyle(editorState.problem, 'BOLD'))
   }
 
+/** Updates state -> retrieves raw content from state -> updates parent component state w/ serialized data  */  
+  function onEditorChange(newState: any) {
+    setEditorState((s)=>({...s, problem:newState}))
+    const rawContent = convertToRaw(newState.getCurrentContent())
+    const serialized = JSON.stringify(rawContent)
+    onEditorDataChange(serialized)
+  }  
 
-    // const onChange = (newEditorState: any) => {
-    //   setEditorState(newEditorState);
-    // };
-
-    // const handleKeyCommand = (command: any, currentEditorState: any) => {
-    //   const newEditorState = RichUtils.handleKeyCommand(currentEditorState, command);
-
-    //   if (newEditorState) {
-    //     onChange(newEditorState);
-    //     return 'handled';
-    //   }
-
-    //   return 'not-handled';
-    // };
-  
-
-  return <Editor editorState={editorState} handleKeyCommand={handleKeyCommand} onChange={onEditorChange} />;
+  return (
+<>
+{/* <button onClick={_onBoldClick}>Bold</button> */}
+<Editor editorState={editorState.problem} handleKeyCommand={handleKeyCommand} onChange={onEditorChange} />
+</>
+  )
 };
 
 export default DraftEditor;
