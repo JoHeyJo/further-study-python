@@ -1,0 +1,19 @@
+.DraftEditor-control {
+  border: 1px solid grey;
+  border-radius: 5px;
+  opacity: .5;
+  height: 10rem;
+  /* width: 100%; */
+}
+
+.superFancyBlockquote {
+  padding: 10px;
+  border: 1px solid grey;
+  min-height: 200px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  background-color: #fff;
+  border-radius: 5px;
+}

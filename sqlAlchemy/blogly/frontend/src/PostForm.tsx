@@ -93,7 +93,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }))
   }
 
-  function handleEditorData(data:any){
+  function handleEditorData(data: any) {
     setPostData(p => ({
       ...p,
       problem: data,
@@ -137,7 +137,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }
   }
 
-  useEffect(()=>{},[postData])
+  useEffect(() => { }, [postData])
 
   return (
     <Container className="w-30">
@@ -155,48 +155,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
                 name="title"
               />
             </Form.Group>
-
-            <Form.Group controlId="form-content">
-              <InputGroup.Text>Content:</InputGroup.Text>
-              {/* <Form.Label>Content:</Form.Label> */}
-              <Form.Control
-                as="textarea"
-                className="PostForm-control"
-                onChange={handleChange}
-                value={postData.content}
-                name="content"
-              />
-            </Form.Group>
-
-            <Form.Group controlId="form-problem">
-              <InputGroup.Text>Problem:</InputGroup.Text>
-              {/* <Form.Label>Problem:</Form.Label> */}
-              {/* <Form.Control
-                as="textarea"
-                // id="PostForm-control-problem"
-                className="PostForm-control input"
-                onChange={handleChange}
-                value={postData.problem}
-                name="problem"
-              /> */}
-              <div id="PostForm-control-problem" className="PostForm-control input">
-                <DraftEditor onEditorDataChange={handleEditorData} />
-              </div>
-            </Form.Group>
-
-            <Form.Group controlId="form-solution">
-              <InputGroup.Text>Solution:</InputGroup.Text>
-              {/* <Form.Label>Solution:</Form.Label> */}
-              <Form.Control
-                as="textarea"
-                // id="PostForm-control-solution"
-                className="PostForm-control input"
-                onChange={handleChange}
-                value={postData.solution}
-                name="solution"
-              />
-            </Form.Group>
-
+            <DraftEditor onEditorDataChange={handleEditorData}/>
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className="">
               <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>

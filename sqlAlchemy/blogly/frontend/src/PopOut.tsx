@@ -31,7 +31,7 @@ function PopOut({ postId, fetchEditPost }: PopOutProp) {
         <Modal.Header closeButton>
           <Modal.Title>Create post for {projectName}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body >
           {fetchEditPost && <PostForm handleClose={handleClose} postId={postId} fetchEditPost={fetchEditPost}/> }
         </Modal.Body>
         {/* <Modal.Footer>

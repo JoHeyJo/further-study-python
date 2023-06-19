@@ -71,7 +71,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
         <Container>
           <Row className="justify-content-center">
             <Col className="col-4">
-              <Card body style={{ width: '380px' }}>
+              <Card body >
                 <ListGroup className="align-items-start">
                   <PopOut postId={undefined} fetchEditPost={fetchPost} />
                   {
