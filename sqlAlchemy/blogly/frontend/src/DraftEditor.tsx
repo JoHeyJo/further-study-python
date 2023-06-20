@@ -1,12 +1,13 @@
 //dependencies
-import React, { useState } from 'react';
-import { Editor, EditorState, convertToRaw, RichUtils } from 'draft-js';
+import React, { useState, useEffect } from 'react';
+import { Editor, EditorState, convertToRaw, RichUtils, convertFromRaw } from 'draft-js';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 //modules / components
 //styles
 import './style/DraftEditor.css';
 type handleEditorData = {
+  raw: any;
   onEditorDataChange: (field: string, data: any) => void
 }
 type EditorStateObject = {
@@ -28,7 +29,7 @@ function myBlockStyleFn(contentBlock: any) {
  * 
  * 
  */
-function DraftEditor({ onEditorDataChange }: handleEditorData) {
+function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
   const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
@@ -47,6 +48,8 @@ function DraftEditor({ onEditorDataChange }: handleEditorData) {
     return 'not-handled'
   }
 
+
+  /** handles how return key should function */
   const handleReturn = (event: React.KeyboardEvent<{}>, field: keyof EditorStateObject) => {
     if (!event.shiftKey) {
       setEditorState(prevState => ({
@@ -71,20 +74,48 @@ function DraftEditor({ onEditorDataChange }: handleEditorData) {
     onEditorDataChange(field, serialized)
   }
 
+  function convertToRich(raw: any){
+    const contentState = convertFromRaw(JSON.parse(raw));
+    const editorState = EditorState.createWithContent(contentState);
+    return editorState;
+  }
+
+  useEffect(()=>{
+    if(raw){
+      setEditorState((s) => ({
+        content: convertToRich(raw.content),
+        problem: convertToRich(raw.problem),
+        solution: convertToRich(raw.solution)
+      }))
+    }
+  },[])
+
   return (
     <>
       {/* <button onClick={_onBoldClick}>Bold</button> */}
       <Form.Group controlId="form-content">
         <InputGroup.Text>Content:</InputGroup.Text>
-        <Editor handleReturn={(event) => handleReturn(event, "content")} blockStyleFn={myBlockStyleFn} editorState={editorState.content} handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)} onChange={(state) => onEditorChange('content', state)} />
+        <Editor handleReturn={(event) => handleReturn(event, "content")}
+          blockStyleFn={myBlockStyleFn}
+          editorState={editorState.content}
+          handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)}
+          onChange={(state) => onEditorChange('content', state)} />
       </Form.Group>
       <Form.Group controlId="form-problem">
         <InputGroup.Text>Problem:</InputGroup.Text>
-        <Editor handleReturn={(event) => handleReturn(event, "problem")} blockStyleFn={myBlockStyleFn} editorState={editorState.problem} handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)} onChange={(state) => onEditorChange('problem', state)} />
+        <Editor handleReturn={(event) => handleReturn(event, "problem")}
+          blockStyleFn={myBlockStyleFn}
+          editorState={editorState.problem}
+          handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)}
+          onChange={(state) => onEditorChange('problem', state)} />
       </Form.Group>
       <Form.Group controlId="form-solution">
         <InputGroup.Text>Solution:</InputGroup.Text>
-        <Editor handleReturn={(event) => handleReturn(event, "solution")} blockStyleFn={myBlockStyleFn} editorState={editorState.solution} handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)} onChange={(state) => onEditorChange('solution', state)} />
+        <Editor handleReturn={(event) => handleReturn(event, "solution")}
+          blockStyleFn={myBlockStyleFn}
+          editorState={editorState.solution}
+          handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)}
+          onChange={(state) => onEditorChange('solution', state)} />
       </Form.Group>
     </>
   )

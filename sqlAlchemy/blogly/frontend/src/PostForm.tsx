@@ -31,6 +31,7 @@ const defaultAlert: IAlert = { error: null };
 function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
+  const [rawData, setRawData] = useState<any | undefined>(undefined);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
   // const { fetchEditPost, number } = useContext(PostContext);
@@ -57,8 +58,8 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
       if (postId) {
         const post: IPost = await fetchPost(postId);
         fetchUser(post.userId);
+        setRawData(extractRaw(post));
       }
-
       if (projectId) {
         setPostData(p => {
           p.projectId = projectId
@@ -92,6 +93,12 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
       [title]: content
     }))
   }
+
+/** retrieves raw data from post: solution, content, problem */
+function extractRaw(post: IPost){
+  const {content, problem, solution } = post;
+  return { 'content': content, 'problem': problem, 'solution': solution }
+}
 
   function handleEditorData(field: string, data: any) {
     setPostData(p => ({
@@ -155,7 +162,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
                 name="title"
               />
             </Form.Group>
-            <DraftEditor onEditorDataChange={handleEditorData}/>
+            <DraftEditor raw={rawData} onEditorDataChange={handleEditorData}/>
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className="">
               <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
