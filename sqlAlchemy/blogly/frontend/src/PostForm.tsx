@@ -93,10 +93,10 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }))
   }
 
-  function handleEditorData(data: any) {
+  function handleEditorData(field: string, data: any) {
     setPostData(p => ({
       ...p,
-      problem: data,
+      [field]: data,
     }))
   }
 
