@@ -49,7 +49,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
 
   /** fetches Project post onClick */
   async function fetchPost(postId: number) {
-    console.log('Posts - fetching edited post', post)
+    console.log('Posts - fetching edited post')
     const res = await postGet(postId);
     setPost(res);
   }
@@ -71,7 +71,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
         <Container>
           <Row className="justify-content-center">
             <Col className="col-4">
-              <Card body >
+              <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
                   <PopOut postId={undefined} fetchEditPost={fetchPost} />
                   {
