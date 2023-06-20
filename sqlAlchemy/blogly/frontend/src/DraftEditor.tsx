@@ -9,6 +9,11 @@ import './style/DraftEditor.css';
 type handleEditorData = {
   onEditorDataChange: (field: string, data: any) => void
 }
+type EditorStateObject = {
+  content: EditorState;
+  problem: EditorState;
+  solution: EditorState;
+};
 
 function myBlockStyleFn(contentBlock: any) {
   const type = contentBlock.getType();
@@ -18,13 +23,13 @@ function myBlockStyleFn(contentBlock: any) {
   return ''
 }
 
-/** Contols input for content, problem, solution
+/** Controls input for content, problem, solution
  * 
  * 
  * 
  */
 function DraftEditor({ onEditorDataChange }: handleEditorData) {
-  const [editorState, setEditorState] = useState({
+  const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
     solution: EditorState.createEmpty(),
@@ -32,23 +37,26 @@ function DraftEditor({ onEditorDataChange }: handleEditorData) {
 
   /** Listens for key command and styles text appropriately */
   function handleKeyCommand(field: any, command: any, editorState: any) {
-    const newState = RichUtils.handleKeyCommand(editorState.field, command)
+    const newState = RichUtils.handleKeyCommand(editorState[field], command)
 
     if (newState) {
+      console.log('NEWSTATE key command', newState)
       onEditorChange(field, newState)
       return 'handled';
     }
     return 'not-handled'
   }
 
-  function handleReturn(command: any, editorState: any){
-    if (!command.shiftKey) {
-      // Create a new paragraph (line break) on Enter
-      // setEditorState(RichUtils.insertSoftNewline(editorState.));
+  const handleReturn = (event: React.KeyboardEvent<{}>, field: keyof EditorStateObject) => {
+    if (!event.shiftKey) {
+      setEditorState(prevState => ({
+        ...prevState,
+        [field]: RichUtils.insertSoftNewline(prevState[field])
+      }));
       return 'handled';
     }
     return 'not-handled';
-  }
+  };
 
   /** creates 'BOLD' UI styling control */
   // function _onBoldClick(){
@@ -68,17 +76,15 @@ function DraftEditor({ onEditorDataChange }: handleEditorData) {
       {/* <button onClick={_onBoldClick}>Bold</button> */}
       <Form.Group controlId="form-content">
         <InputGroup.Text>Content:</InputGroup.Text>
-        {/* <div className="DraftEditor-control"> */}
-          <Editor readOnly={false} blockStyleFn={myBlockStyleFn} editorState={editorState.content} handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)} onChange={(state) => onEditorChange('content', state)} />
-        {/* </div> */}
+        <Editor handleReturn={(event) => handleReturn(event, "content")} blockStyleFn={myBlockStyleFn} editorState={editorState.content} handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)} onChange={(state) => onEditorChange('content', state)} />
       </Form.Group>
       <Form.Group controlId="form-problem">
         <InputGroup.Text>Problem:</InputGroup.Text>
-          <Editor blockStyleFn={myBlockStyleFn} editorState={editorState.problem} handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)} onChange={(state) => onEditorChange('problem', state)} />
+        <Editor handleReturn={(event) => handleReturn(event, "problem")} blockStyleFn={myBlockStyleFn} editorState={editorState.problem} handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)} onChange={(state) => onEditorChange('problem', state)} />
       </Form.Group>
       <Form.Group controlId="form-solution">
         <InputGroup.Text>Solution:</InputGroup.Text>
-          <Editor blockStyleFn={myBlockStyleFn} editorState={editorState.solution} handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)} onChange={(state) => onEditorChange('solution', state)} />
+        <Editor handleReturn={(event) => handleReturn(event, "solution")} blockStyleFn={myBlockStyleFn} editorState={editorState.solution} handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)} onChange={(state) => onEditorChange('solution', state)} />
       </Form.Group>
     </>
   )
