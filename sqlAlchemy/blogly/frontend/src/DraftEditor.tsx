@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 //styles
 import './style/DraftEditor.css';
 type handleEditorData = {
-  raw: any;
+  fetchRaw: () => any;
   onEditorDataChange: (field: string, data: any) => void
 }
 type EditorStateObject = {
@@ -29,7 +29,7 @@ function myBlockStyleFn(contentBlock: any) {
  * 
  * 
  */
-function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
+function DraftEditor({ fetchRaw, onEditorDataChange }: handleEditorData) {
   const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
@@ -75,12 +75,14 @@ function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
   }
 
   function convertToRich(raw: any){
+    console.log('raw in convertToRich:', raw);
     const contentState = convertFromRaw(JSON.parse(raw));
     const editorState = EditorState.createWithContent(contentState);
     return editorState;
   }
 
   useEffect(()=>{
+    const raw = fetchRaw();
     if(raw){
       setEditorState((s) => ({
         content: convertToRich(raw.content),

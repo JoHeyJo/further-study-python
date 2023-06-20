@@ -34,7 +34,6 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [rawData, setRawData] = useState<any | undefined>(undefined);
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
-  // const { fetchEditPost, number } = useContext(PostContext);
 
   const params = useParams();
   const userId = +params.user_id!;
@@ -126,7 +125,6 @@ function extractRaw(post: IPost){
         await postUpdate(postId, postData);
         setPostData(defaultPost);
         fetchProjectPosts();
-        console.log('PostForm - submitted edited form')
         fetchEditPost(postId);
       } catch (error: any) {
         console.error(`Error updating post => ${error}`)
@@ -146,6 +144,10 @@ function extractRaw(post: IPost){
 
   useEffect(() => { }, [postData])
 
+    async function fetchRawData() {
+       return rawData;
+    }
+
   return (
     <Container className="w-30">
       <Row >
@@ -162,7 +164,7 @@ function extractRaw(post: IPost){
                 name="title"
               />
             </Form.Group>
-            <DraftEditor raw={rawData} onEditorDataChange={handleEditorData}/>
+            <DraftEditor fetchRaw={fetchRawData} onEditorDataChange={handleEditorData}/>
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className="">
               <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
