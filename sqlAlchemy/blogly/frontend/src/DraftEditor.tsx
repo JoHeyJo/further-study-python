@@ -7,7 +7,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 //styles
 import './style/DraftEditor.css';
 type handleEditorData = {
-  fetchRaw: () => any;
+  raw: any
   onEditorDataChange: (field: string, data: any) => void
 }
 type EditorStateObject = {
@@ -29,12 +29,13 @@ function myBlockStyleFn(contentBlock: any) {
  * 
  * 
  */
-function DraftEditor({ fetchRaw, onEditorDataChange }: handleEditorData) {
+function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
   const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
     solution: EditorState.createEmpty(),
   });
+
 
   /** Listens for key command and styles text appropriately */
   function handleKeyCommand(field: any, command: any, editorState: any) {
@@ -81,16 +82,16 @@ function DraftEditor({ fetchRaw, onEditorDataChange }: handleEditorData) {
     return editorState;
   }
 
-  useEffect(()=>{
-    const raw = fetchRaw();
-    if(raw){
-      setEditorState((s) => ({
-        content: convertToRich(raw.content),
-        problem: convertToRich(raw.problem),
-        solution: convertToRich(raw.solution)
-      }))
-    }
-  },[])
+  useEffect(() => {
+      if(raw){
+        setEditorState((s) => ({
+          content: convertToRich(raw.content),
+          problem: convertToRich(raw.problem),
+          solution: convertToRich(raw.solution)
+        }))
+
+      }
+  },[raw])
 
   return (
     <>

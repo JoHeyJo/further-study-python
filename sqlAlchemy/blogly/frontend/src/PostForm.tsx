@@ -31,7 +31,7 @@ const defaultAlert: IAlert = { error: null };
 function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
-  const [rawData, setRawData] = useState<any | undefined>(undefined);
+  const [rawData, setRawData] = useState<any>();
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
 
@@ -57,7 +57,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
       if (postId) {
         const post: IPost = await fetchPost(postId);
         fetchUser(post.userId);
-        setRawData(extractRaw(post));
+        console.log('rawData', rawData)
       }
       if (projectId) {
         setPostData(p => {
@@ -79,6 +79,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   async function fetchPost(postId: number): Promise<IPost> {
     const res = await postEdit(postId);
     setPostData(res);
+    setRawData(extractRaw(res));
     return res
   }
 
@@ -93,11 +94,11 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }))
   }
 
-/** retrieves raw data from post: solution, content, problem */
-function extractRaw(post: IPost){
-  const {content, problem, solution } = post;
-  return { 'content': content, 'problem': problem, 'solution': solution }
-}
+  /** retrieves raw data from post: solution, content, problem */
+  function extractRaw(post: IPost) {
+    const { content, problem, solution } = post;
+    return { 'content': content, 'problem': problem, 'solution': solution }
+  }
 
   function handleEditorData(field: string, data: any) {
     setPostData(p => ({
@@ -144,10 +145,6 @@ function extractRaw(post: IPost){
 
   useEffect(() => { }, [postData])
 
-    async function fetchRawData() {
-       return rawData;
-    }
-
   return (
     <Container className="w-30">
       <Row >
@@ -164,7 +161,7 @@ function extractRaw(post: IPost){
                 name="title"
               />
             </Form.Group>
-            <DraftEditor fetchRaw={fetchRawData} onEditorDataChange={handleEditorData}/>
+            <DraftEditor raw={rawData} onEditorDataChange={handleEditorData} />
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className="">
               <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
