@@ -29,3 +29,10 @@ a:hover {
 .Posts-post-icon{
   color: grey;
 }
+
+.underline {
+  /* display: inline-block;
+  border-bottom: 1px solid #000;
+  text-decoration: none; */
+  /* To remove default text underline */
+}

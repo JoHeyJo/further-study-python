@@ -82,7 +82,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                         handlePostRender();
                       }
                       }>
-                        {p.title}
+                        <span className="underline">{p.title}</span>
                         {p.id === (post && post.id)
                         && <FontAwesomeIcon className="Posts-post-icon" icon={faAnglesRight} />
                         }
