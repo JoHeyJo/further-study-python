@@ -1,20 +1,17 @@
 //dependencies
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom'
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Button } from "react-bootstrap";
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Collapse from 'react-bootstrap/Collapse';
 
 // components/ modules
-import { IProject, IUserId, IPosts, IPost } from './interface';
-import { postsGet, projectsGet, projectPostsGet, projectGet } from './api';
-import Post from "./Post";
+import { IProject, IPost } from './interface';
+import { projectsGet, projectPostsGet, projectGet } from './api';
 import Posts from "./Posts";
 import { ProjectContextType, ProjectContext } from "./userContext";
 import AlertModal from "./AlertModal";
+import PopOut from "./PopOut";
 
 //styles
 import './style/Projects.css';
@@ -115,6 +112,7 @@ function Projects({ userId }: ProjectProps) {
 
         <Row className="Projects-container justify-content-center">
           <Col className="col-6">
+            <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined}/>
             <ListGroup className="align-items-start">
               {
                 projects.map(project =>
@@ -159,7 +157,7 @@ function Projects({ userId }: ProjectProps) {
         </Row>
 
       </div>
-      <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link>
+      {/* <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link> */}
     </>
   )
 }

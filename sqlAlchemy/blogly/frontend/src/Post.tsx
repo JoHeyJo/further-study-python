@@ -47,23 +47,23 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
   return (
     <Container>
       <Stack gap={3}>
-        <h1 className="Post-title bg-light border">{post.title}</h1>
-        <Stack direction="horizontal" className="justify-content-center" >
+        <h2 className="Post-title bg-light border">{post.title}</h2>
+        <Stack direction="horizontal" className="" >
           <h6 className="Post-subtitle">Context:</h6>
           <h5 className="Post-content ms-2">{content}</h5>
         </Stack>
-        <Stack direction="horizontal" className="justify-content-center" id="problem-stack">
+        <Stack direction="horizontal" className="" id="problem-stack">
           <h6 className="Post-subtitle">Problem:</h6>
           <div className="Post-problem ms-2">{problem}</div>
         </Stack>
-        <Stack direction="horizontal" className="justify-content-center">
+        <Stack direction="horizontal" className="">
           <h6 className="Post-subtitle">Solution:</h6>
           <div className="Post-solution container ms-2">{solution}</div>
         </Stack>
         <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>
       </Stack>
       <div className="Post-controls">
-        <PopOut postId={post.id} fetchEditPost={fetchEditPost} />
+        <PopOut action={'edit'} postId={post.id} fetchEditPost={fetchEditPost} />
         <Button onClick={() => {
           deletePost();
           handlePostRender(false)

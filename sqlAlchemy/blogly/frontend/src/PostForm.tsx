@@ -16,7 +16,7 @@ import './style/PostForm.css';
 type PostFormProp = {
   handleClose: () => void | undefined;
   postId: number | undefined;
-  fetchEditPost: (postId: number) => void;
+  fetchEditPost?: (postId: number) => void;
 }
 const defaultPost: IPost = { title: '', content: '', userId: 0, firstName: '', lastName: '', id: 0, createdAt: '', problem: '', solution: '', projectId: 0 }
 const defaultAlert: IAlert = { error: null };
@@ -121,7 +121,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
       }
     }
     //edit individual post
-    if (postId) {
+    if (postId && fetchEditPost) {
       try {
         await postUpdate(postId, postData);
         setPostData(defaultPost);
