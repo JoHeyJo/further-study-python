@@ -1,6 +1,9 @@
 .Posts-post {
   position: relative;
   border: none;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .Posts-post::after {
@@ -20,7 +23,9 @@ a {
 }
 
 a:hover {
-  /* text-decoration: line-through;
-   */
-   color: rgb(112, 112, 11);
+  color: rgb(112, 112, 11);
+}
+
+.Posts-post-icon{
+  color: grey;
 }

@@ -118,13 +118,13 @@ function Projects({ userId }: ProjectProps) {
             <ListGroup className="align-items-start">
               {
                 projects.map(project =>
-                  <ListGroup.Item key={project.id} className="Projects-project" onClick={(e) => {
+                  <ListGroup.Item key={project.id} className={projectData.id === project.id ? "Projects-project selected" : "Projects-project"} onClick={(e) => {
                     setProjectData(p => ({
                       ...p, name: project.name, id: project.id
                     }
                     ))
                   }}>
-                    <div 
+                    <div
                     style={{ all: 'unset' }} onClick={(e) => {
                       isOpen(projectData.id, e)
                     }}

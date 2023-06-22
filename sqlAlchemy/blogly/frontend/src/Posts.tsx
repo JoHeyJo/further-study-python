@@ -7,13 +7,14 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 
 // components/ modules
 import { IPost } from './interface';
 import { postGet } from './api'
 import Post from "./Post";
 import PopOut from "./PopOut";
-import { PostContextType, PostContext } from "./userContext";
 
 //styles
 import './style/Posts.css';
@@ -75,14 +76,16 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                 <ListGroup className="align-items-start">
                   <PopOut action={'new post'} postId={undefined} fetchEditPost={fetchPost} />
                   {
-                    posts.map(post =>
-                      <ListGroup.Item key={post.id} className="Posts-post" onClick={() => {
-                        fetchPost(post.id);
+                    posts.map(p =>
+                      <ListGroup.Item key={p.id} className="Posts-post" onClick={() => {
+                        fetchPost(p.id);
                         handlePostRender();
                       }
                       }>
-                        {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
-                        {post.title}
+                        {p.title}
+                        {p.id === (post && post.id)
+                        && <FontAwesomeIcon className="Posts-post-icon" icon={faAnglesRight} />
+                        }
                       </ListGroup.Item>
                     )
                   }

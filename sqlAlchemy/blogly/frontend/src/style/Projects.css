@@ -12,11 +12,18 @@
   min-height: 25vh;
 }
 
-.list-group-item {
+.Projects-project{
   position: relative;
-  border-bottom: 2px solid grey;
+  border: none;
+  border-bottom: 1px solid grey;
+  /* border-radius: 0;
+  border-radius: 10px 10px 0 0; */
+  /* width: 100%; */
 }
 
-.Posts-post::after {
-
+.selected {
+  /* text-shadow: 2px 4px 4px rgba(3, 19, 49, 0.9); */
+  /* box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2); */
+  box-shadow: inset 0em -.4em lightgray;
 }
+
