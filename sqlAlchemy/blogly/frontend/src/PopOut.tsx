@@ -35,17 +35,23 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   }
 
   function modalAction() {
-    const modalAction = action === 'new project'
+    return action === 'new project'
       ? <ProjectForm />
       : <PostForm handleClose={handleClose} postId={postId} fetchEditPost={fetchEditPost} />
-    return modalAction;
   }
+
+  function modalHeader(){
+    return action === 'new project'
+    ? "Create new project"
+    : `create post for ${projectName}`
+  }
+  
   return (
     <>
       {buttonStyle()}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create post for {projectName}</Modal.Title>
+          <Modal.Title>{modalHeader()} </Modal.Title>
         </Modal.Header>
         <Modal.Body >
           {modalAction()}

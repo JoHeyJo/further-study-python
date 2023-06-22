@@ -107,12 +107,14 @@ function Projects({ userId }: ProjectProps) {
 
   return (
     <>
-      <h3>Projects</h3>
+      <h3>Projects
+
+            <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined}/>
+      </h3>
       <div>
 
         <Row className="Projects-container justify-content-center">
           <Col className="col-6">
-            <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined}/>
             <ListGroup className="align-items-start">
               {
                 projects.map(project =>
@@ -121,9 +123,7 @@ function Projects({ userId }: ProjectProps) {
                       ...p, name: project.name, id: project.id
                     }
                     ))
-                    // isOpen(project.id,e)
                   }}>
-                    {/* <Link to={`/users/${userId}/projects/${project.id}`}>{project.name}</Link> */}
                     <div 
                     style={{ all: 'unset' }} onClick={(e) => {
                       isOpen(projectData.id, e)

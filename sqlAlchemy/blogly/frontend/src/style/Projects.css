@@ -11,3 +11,12 @@
 .Projects-container {
   min-height: 25vh;
 }
+
+.list-group-item {
+  position: relative;
+  border-bottom: 2px solid grey;
+}
+
+.Posts-post::after {
+
+}

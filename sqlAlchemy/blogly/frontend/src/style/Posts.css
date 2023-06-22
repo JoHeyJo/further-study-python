@@ -1,9 +1,9 @@
-.list-group-item {
+.Posts-post {
   position: relative;
   border: none;
 }
 
-.list-group-item::after {
+.Posts-post::after {
   content: "";
   display: block;
   position: absolute;
