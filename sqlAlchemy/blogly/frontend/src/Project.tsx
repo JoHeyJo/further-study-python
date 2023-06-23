@@ -6,11 +6,9 @@ import Stack from 'react-bootstrap/Stack';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 //components / modules
 import { projectGet, projectPostsGet } from './api';
 import { IProject, IPost } from "./interface";
-import Posts from "./Posts";
 
 
 
@@ -57,7 +55,7 @@ function Project() {
               {
                 posts.map(post =>
                   <ListGroup.Item key={post.id} className="Projects-post">
-                    <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                    {/* <Link to={`/posts/${post.id}`}>{post.title}</Link> */}
                   </ListGroup.Item>
                 )
               }

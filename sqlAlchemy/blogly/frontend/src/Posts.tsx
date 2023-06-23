@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
 
 // components/ modules
 import { IPost } from './interface';
@@ -82,9 +83,12 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                         handlePostRender();
                       }
                       }>
-                        <span className="underline">{p.title}</span>
+                        <span className={`${p.id === (post && post.id) ? 'title-selected' : ''}`}>{p.title}
+                          {/* <FontAwesomeIcon className={`${p.id === (post && post.id) ? "Posts-post-icon-right-selected" : "Posts-post-icon-right" }`}icon={faAnglesRight} /> */}
+                          </span>
                         {p.id === (post && post.id)
-                        && <FontAwesomeIcon className="Posts-post-icon" icon={faAnglesRight} />
+                        && 
+                        <FontAwesomeIcon className="Posts-post-icon-right" icon={faAnglesRight} />
                         }
                       </ListGroup.Item>
                     )

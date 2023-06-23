@@ -7,7 +7,7 @@ import Collapse from 'react-bootstrap/Collapse';
 
 // components/ modules
 import { IProject, IPost } from './interface';
-import { projectsGet, projectPostsGet, projectGet } from './api';
+import { projectsGet, projectPostsGet } from './api';
 import Posts from "./Posts";
 import { ProjectContextType, ProjectContext } from "./userContext";
 import AlertModal from "./AlertModal";

@@ -26,13 +26,21 @@ a:hover {
   color: rgb(112, 112, 11);
 }
 
-.Posts-post-icon{
+.Posts-post-icon-left{
   color: grey;
+  
 }
 
-.underline {
-  /* display: inline-block;
-  border-bottom: 1px solid #000;
-  text-decoration: none; */
-  /* To remove default text underline */
+.Posts-post-icon-right{
+color: rgba(211, 211, 211);
+/* padding-left: .5rem; */
+}
+
+.Posts-post-icon-right-selected{
+color: rgba(211, 211, 211, 0);
+}
+
+
+.title-selected {
+color: grey;
 }

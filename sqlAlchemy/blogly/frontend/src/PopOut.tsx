@@ -7,6 +7,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import PostForm from './PostForm';
 import { ProjectContext } from './userContext';
 import ProjectForm from './ProjectForm';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 
 type PopOutProp = {
   action: string;
@@ -30,7 +31,7 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
 
   function buttonStyle() {
     if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
-    if (action === 'edit') return <Button onClick={handleShow}>Edit</Button>
+    if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
     if (action === 'new project') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginRight: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
   }
 
