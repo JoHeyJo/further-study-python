@@ -12,16 +12,15 @@
   min-height: 25vh;
 }
 
-/* .Projects-project{
-  border: none;
-  border-bottom: 1px solid grey;
-
-} */
-
 /* corrects the curved affect of the bottom border due to margin-collapsing  */
 .Projects-project {
-  position: relative;
+  /* position: relative; */
   border: none;
+
+}
+.selected {
+  /* border: none; */
+  /* border-bottom: 1px solid grey; */
 }
 
 .Projects-project::after {
@@ -33,12 +32,15 @@
     width: 100%;
     height: 1px;
     background-color: #808080;
-}
+  }
 
-.selected {
-  font-weight: 400;
-  color: grey;
-  box-shadow: inset 0em -.2em lightgray;
-  border-bottom: 0px;
+.selected::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  border-bottom: 5px solid rgba(211, 211, 211, .9);
 }
-
