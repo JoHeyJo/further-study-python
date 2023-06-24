@@ -89,7 +89,6 @@ function User() {
         <Col>
           <div className="User-posts"><Projects userId={+params.user_id!}/></div>
         </Col>
-
       </Row>
     </Container>
   )

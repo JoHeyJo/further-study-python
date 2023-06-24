@@ -83,7 +83,7 @@ function Projects({ userId }: ProjectProps) {
       setOpen(true)
       // setIsPostsShowing(true)
     } else if (target !== projectData.name) {
-      console.log('open new project', projectData.id,id)
+      console.log('open new project', projectData.id, id)
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
@@ -107,9 +107,9 @@ function Projects({ userId }: ProjectProps) {
 
   return (
     <>
-      <h3>Projects
-
-            <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined}/>
+      <h3>
+        Projects
+        <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined} />
       </h3>
       <div>
 
@@ -125,16 +125,15 @@ function Projects({ userId }: ProjectProps) {
                     ))
                   }}>
                     <div
-                    style={{ all: 'unset' }} onClick={(e) => {
-                      isOpen(projectData.id, e)
-                    }}
+                      style={{ all: 'unset' }} onClick={(e) => {
+                        isOpen(projectData.id, e)
+                      }}
                     >
                       {project.name}
                       {' - '}
                       {project.description}
-
                     </div>
-                    <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen}/>
+                    <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen} />
                   </ListGroup.Item>
                 )
               }
@@ -157,7 +156,6 @@ function Projects({ userId }: ProjectProps) {
         </Row>
 
       </div>
-      {/* <Link to={`/users/${userId}/projects/new`}><Button variant="primary">Create Project</Button></Link> */}
     </>
   )
 }

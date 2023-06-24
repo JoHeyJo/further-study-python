@@ -28,6 +28,8 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
+  
+  const customDialogClassName = 'custom-modal-dialog';
 
   function buttonStyle() {
     if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
@@ -50,21 +52,13 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   return (
     <>
       {buttonStyle()}
-      <Modal show={show} onHide={handleClose}>
+      <Modal dialogClassName={action === 'new post' || action === 'edit' ? customDialogClassName : ''} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{modalHeader()} </Modal.Title>
         </Modal.Header>
         <Modal.Body >
           {modalAction()}
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );
