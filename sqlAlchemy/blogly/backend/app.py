@@ -15,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_fs'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
+app.config["JWT_SECRET_KEY"] = "super-duper-secret"
 app.app_context().push()
 jwt = JWTManager(app)
 
