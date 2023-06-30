@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_debugtoolbar import DebugToolbarExtension
 # from werkzeug.exceptions import BadRequest
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
 ######## Double check exception key works ##########
 app = Flask(__name__)
@@ -15,6 +16,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.app_context().push()
+jwt = JWTManager(app)
 
 # Having the Debug Toolbar show redirects explicitly is often useful;
 # however, if you want to turn it off, you can uncomment this line:
@@ -23,10 +25,10 @@ app.app_context().push()
 
 toolbar = DebugToolbarExtension(app)
 connect_db(app)
+
 db.create_all()
+
 # do this when you want to have your root route be a certain page/component
-
-
 @app.get('/')
 def root():
     """Homepage redirects to list of users."""
@@ -40,6 +42,7 @@ def not_found_error(error):
 
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
+@jwt_required()
 def users_all():
     """Retrieves all users in database"""
     try:
