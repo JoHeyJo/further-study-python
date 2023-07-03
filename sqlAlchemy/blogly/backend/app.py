@@ -41,9 +41,38 @@ def root():
 def not_found_error(error):
     return jsonify({'error': 'Not found'}), 404
 
+##############################################################################
+# User signup/login/logout
+
+@app.post('/signup')
+def signup():
+    """    Create new user, add to DB and return token.
+
+    Return error message if the there already is a user with that username. """
+    first_name = request.json["firstName"]
+    last_name = request.json["lastName"]
+    password = request.json["password"]
+    email = request.json["email"]
+    image = request.json.get("image") or None
+    try:
+        token = User.signup(
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
+            email=email,
+            image_url=image
+        )
+        db.session.commit()
+        return jsonify({"token": token})
+
+    except IntegrityError as e:
+        pgerror = e.orig.diag.message_detail
+        message = pgerror.split('DETAIL: ')[0].strip()
+        return jsonify({"error": message}), 401
+
+
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
-@jwt_required()
 def users_all():
     """Retrieves all users in database"""
     try:

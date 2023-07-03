@@ -2,7 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import DateTime
 from datetime import datetime
 from freezegun import freeze_time
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token
 
+bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 
@@ -20,9 +23,48 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String, nullable=True)
+    email = db.Column(db.String(255), unique=True, nullable=False,)
+    # ********************CHANGE TO NOT NULL BEFORE DEPLOYMENT 
+    password = db.Column(db.Text)
+
     posts = db.relationship("Post", backref="user")
 
+    def __repr__(self):
+        return f"< User #{self.email}: {self.first_name}, {self.last_name}>"
     # gives "special" functionality to certain methods to make them act as getters, setters, or deleters when we define properties in a class
+    
+    @classmethod
+    def signup(cls, email, first_name, last_name, image_url, password):
+        """Sign up user. Hashes password and adds user to system."""
+
+        hashed_password = bcrypt.generate_password_hash(password).decode('UTF-8')
+
+        user = User(email=email, first_name=first_name, last_name=last_name, image_url=image_url, password=hashed_password)
+
+        token = create_access_token(identity=email)
+
+        db.session.add(user)
+        return token
+
+    @classmethod
+    def authenticate(cls, email, password):
+        """Find user with `username` and `password`.
+
+        It searches for a user whose password hash matches this password
+        and, if it finds such a user, returns that user object.
+
+        If can't find matching user (or if password is wrong), returns False.
+        """
+
+        user = cls.query.filter_by(email=email).first()
+
+        if user:
+            is_auth = bcrypt.check_password_hash(user.password, password)
+            if is_auth:
+                token = create_access_token(identity=email)
+                return token
+        return False
+
     @property
     def full_name(self):
         """Return full name of user"""
