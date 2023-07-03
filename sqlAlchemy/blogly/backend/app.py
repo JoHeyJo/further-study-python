@@ -47,7 +47,6 @@ def not_found_error(error):
 @app.post('/signup')
 def signup():
     """    Create new user, add to DB and return token.
-
     Return error message if the there already is a user with that username. """
     first_name = request.json["firstName"]
     last_name = request.json["lastName"]
