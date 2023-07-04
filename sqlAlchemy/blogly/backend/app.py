@@ -68,10 +68,25 @@ def signup():
         pgerror = e.orig.diag.message_detail
         message = pgerror.split('DETAIL: ')[0].strip()
         return jsonify({"error": message}), 401
+    
+@app.post('/login')
+def login():
+    """Validates user credentials."""
+    email = request.json['email']
+    password = request.json['password']
+    token = User.authenticate(email=email, password=password)
+    try:
+        if token:
+            return jsonify({"token": token})
+        else:
+            return jsonify({"error": "Invalid login credentials."}), 401
+    except IntegrityError as e:
+        return jsonify({"error": e}), 401
 
 
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
+@jwt_required()
 def users_all():
     """Retrieves all users in database"""
     try:
