@@ -101,12 +101,12 @@ def users_all():
         return jsonify({"error": error})
 
 
-@app.get("/users/<int:id>")
-def users_get(id):
+@app.get("/users/<email>")
+def users_get(email):
     """Retrieves user with matching ID"""
-    user = User.query.get_or_404(id)
+    user = User.query.get_or_404(email)
     serialized = User.serialize(user)
-    user_data = {'id': serialized['id'], 'firstName': serialized['first_name'],
+    user_data = {'id': serialized['id'], 'email': serialized['email'], 'firstName': serialized['first_name'],
                  'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
 
     return jsonify(user_data)
