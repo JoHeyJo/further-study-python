@@ -86,7 +86,7 @@ def login():
 
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
-@jwt_required()
+# @jwt_required()
 def users_all():
     """Retrieves all users in database"""
     try:
