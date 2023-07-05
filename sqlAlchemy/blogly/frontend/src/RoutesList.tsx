@@ -13,6 +13,13 @@ import Project from './Project';
 import Projects from './Projects';
 import NotFound from './NotFound';
 import SignupForm from './auth/SignupForm';
+import { IUser } from "./interface";
+
+type RoutesListProps = {
+  signup: (formData: IUser) => void;
+  login: (formData: IUser) => void;
+  logout: () => void;
+}
 /** Site-wide routes. 
  * 
  * Most of site is available if logged out however certain actions are limited
@@ -21,7 +28,7 @@ import SignupForm from './auth/SignupForm';
  * 
  */
 
-function RoutesList(){
+function RoutesList({signup, login, logout}: RoutesListProps){
   return (
     <>
     <BrowserRouter>

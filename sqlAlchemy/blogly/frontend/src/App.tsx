@@ -1,11 +1,13 @@
 //dependencies
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // components/modules
 import { IUser } from './interface'
-import { signup, login } from './api';
-import { BuglyApi } from './api';
+import { BuglyApi, signup, login, userGet } from './api';
 import { UserContextType, UserContext } from './userContext';
+import decode from "jwt-decode";
+import RoutesList from './RoutesList';
 // style
 import './style/App.css';
 import { error } from 'console';
@@ -63,15 +65,42 @@ function App() {
    */
 
   useEffect(() => {
-    async function getCurrentUser(){
-      const res = await getUser()
+    async function getUser(){
+      const  email: string | null = token && decode(token)
+      try{
+        const res = await userGet(email)
+        setCurrentUser({...res});
+        token && localStorage.setItem("blogly-token", token)
+        setIsLoading(false)
+      } catch (error: any){
+        console.error('APP getUser error:', error)
+        setIsLoading(false)
+      }
     }
-  })
+    if (token){
+      BuglyApi.token = token;
+      getUser();
+    } else {
+      setIsLoading(false);
+    }
+  },[token])
+
+
+  if (isLoading) return 'Loading...';
 
   return (
-    <div className="App">
-
-    </div>
+    <UserContext.Provider value={ UserData }>
+      <div className="App">
+        <BrowserRouter>
+          {/* <NavBar logout={logout} /> */}
+          <RoutesList
+            signup={signup}
+            login={login}
+            logout={logout}
+          />
+        </BrowserRouter>
+      </div>
+    </UserContext.Provider>
   );
 }
 
