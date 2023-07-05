@@ -1,4 +1,13 @@
 import { createContext } from 'react';
+import { IUser } from './interface';
+
+export type UserContextType = {
+  user: IUser | null;
+}
+
+export const UserContext = createContext<UserContextType>({
+  user: { id:0, firstName:'', lastName:'', image:'', email:'' }
+})
 
 export type ProjectContextType = {
   projectId: number | undefined;

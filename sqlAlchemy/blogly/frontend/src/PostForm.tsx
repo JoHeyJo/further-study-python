@@ -29,7 +29,7 @@ const defaultAlert: IAlert = { error: null };
  * Modal -> PostForm
 */
 function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
-  const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '' })
+  const [userData, setUserData] = useState<IUser>({ id: 0, firstName: '', lastName: '', image: '', email: '' })
   const [postData, setPostData] = useState<IPost>(defaultPost);
   const [rawData, setRawData] = useState<any>();
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
@@ -172,7 +172,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
       </Row>
       {
         alert.error &&
-        <AlertPopUp variant={'danger'} message={alert.error} />
+        <AlertPopUp variant={'danger'} message={[alert.error]} />
       }
     </Container>
   )

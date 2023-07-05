@@ -10,10 +10,41 @@ const BASE_URL = "http://127.0.0.1:5000";
 //   throw Array.isArray(message) ? message : [message];
 // }
 
-/**Returns first and last of all users */
-async function usersGet() {
+
+export class BuglyApi {
+
+  static token: string | null = null;
+}
+
+/** sign up user */
+async function signup(userData: any) {
   try {
-    const res = await axios.get(`${BASE_URL}/users`);
+    const token: string = await axios.post(`${BASE_URL}/signup`, userData);
+    console.log('signup', token)
+    return token;
+  } catch (error) {
+    console.error("Signup Error:", error);
+    throw error;
+  }
+}
+
+/** login user */
+async function login(userData: any) {
+  try {
+    const token: string = await axios.post(`${BASE_URL}/signup`, userData);
+    console.log('signup', token)
+    return token;
+  } catch (error: any) {
+    console.error("Login Error:", error);
+    throw error;
+  }
+}
+
+/**Returns first and last of all users */
+async function usersGet(token: any) {
+  const headers = { Authorization: `Bearer ${token}` }; // Replace `token` with your actual token value
+  try {
+    const res = await axios.get(`${BASE_URL}/users`, { headers });
     console.log('user data', res.data)
     return res.data;
   } catch (error: any) {
@@ -245,7 +276,7 @@ async function projectDelete(projectId?: number) {
     const res = await axios.delete(`${BASE_URL}/projects/${projectId}/delete`)
     console.log('post delete', res.data)
     return res.data
-  } catch (error: any){
+  } catch (error: any) {
     console.log(`Error in projecDelete => ${error}`)
     console.error(`Error in projecDelete => ${error}`)
     throw error.response.data
@@ -253,5 +284,5 @@ async function projectDelete(projectId?: number) {
 }
 
 
-export { projectDelete, projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
+export { login, signup, projectDelete, projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 

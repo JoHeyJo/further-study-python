@@ -9,6 +9,8 @@ import HomePage from "./HomePages";
 // style
 import './style/Users.css';
 
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4ODQ4OTk3NywianRpIjoiNTRlMzMwZWMtNzhjNS00ZGU2LThiYjQtY2YwNWIzY2NjM2I4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImpAdGVzdC5jb20iLCJuYmYiOjE2ODg0ODk5NzcsImV4cCI6MTY4ODQ5MDg3N30.4lIVoGSMIY8m0Yi8TiH4c5O68M7xwb7BnSRhW8bxfXg";
 /** displays list of all users
  * 
  * State:
@@ -21,7 +23,7 @@ function Users() {
   /**Fetches all users from database */
   useEffect(() => {
     async function fetchUsers() {
-      const res = await usersGet();
+      const res = await usersGet(token);
       setUsers(res)
     }
     fetchUsers();

@@ -3,6 +3,7 @@ export interface IUser {
   firstName: string | undefined;
   lastName: string | undefined;
   image: string;
+  email: string;
 }
 
 export interface IPost {

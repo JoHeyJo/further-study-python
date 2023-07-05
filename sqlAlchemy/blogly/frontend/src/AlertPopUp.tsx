@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 
 type AlertProp = {
   variant: string;
-  message: string | null;
+  message: string[];
 }
 // color schemes for Alert component
 // 'primary',
@@ -30,11 +30,13 @@ function AlertPopUp({ variant, message }: AlertProp) {
   // useEffect(() => show(),[])
   return (
     <>
-      {
+      {message.map((m) =>
         isShowing &&
         <Alert key={variant} variant={variant}>
-          {message}
+          {m}
         </Alert>
+
+      )
       }
     </>
   );

@@ -111,7 +111,7 @@ function ProjectForm() {
 
         {
           alert.error &&
-          <AlertPopUp variant={'danger'} message={alert.error} />
+          <AlertPopUp variant={'danger'} message={[alert.error]} />
         }
 
       </form>

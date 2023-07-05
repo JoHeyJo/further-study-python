@@ -10,7 +10,7 @@ import { userAdd, userUpdate, userEdit } from './api';
 import './style/Form.css';
 import AlertPopUp from './AlertPopUp';
 
-const defaultUser = { id: 0, firstName: undefined, lastName: undefined, image: '' };
+const defaultUser = { id: 0, firstName: undefined, lastName: undefined, image: '', email: '' };
 const defaultAlert: IAlert = { error: null };
 
 /** Handles user information and renders form for new/edit user
@@ -115,7 +115,7 @@ function UserForm() {
 
         {
           alert.error && 
-          <AlertPopUp variant={'danger'} message={alert.error}/>
+          <AlertPopUp variant={'danger'} message={[alert.error]}/>
         }
 
       </form>

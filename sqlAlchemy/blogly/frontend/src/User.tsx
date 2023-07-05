@@ -18,7 +18,7 @@ import Post from './Post';
 import './style/User.css'
 import img from './default.png'
 
-const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '' }
+const defaultUser: IUser = { id: 0, firstName: '', lastName: '', image: '', email: '' }
 
 /** Displays user information
  * 
