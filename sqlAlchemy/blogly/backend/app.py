@@ -104,7 +104,9 @@ def users_all():
 @app.get("/users/<email>")
 def users_get(email):
     """Retrieves user with matching ID"""
-    user = User.query.get_or_404(email)
+    print('in users_get',email)
+    # user = User.query.get_or_404(email)
+    user = User.query.filter(User.email == email).first()
     serialized = User.serialize(user)
     user_data = {'id': serialized['id'], 'email': serialized['email'], 'firstName': serialized['first_name'],
                  'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
