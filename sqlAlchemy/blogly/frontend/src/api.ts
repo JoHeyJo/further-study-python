@@ -16,12 +16,14 @@ export class BuglyApi {
   static token: string | null = null;
 }
 
+
+console.log('api token ===',BuglyApi.token)
 /** sign up user */
 async function signup(userData: any) {
   try {
-    const token: string = await axios.post(`${BASE_URL}/signup`, userData);
-    console.log('signup', token)
-    return token;
+    const res: any = await axios.post(`${BASE_URL}/signup`, userData);
+    console.log('signup', res.data.token)
+    return res.data.token;
   } catch (error) {
     console.error("Signup Error:", error);
     throw error;
@@ -45,7 +47,6 @@ async function usersGet(token: any) {
   const headers = { Authorization: `Bearer ${token}` }; // Replace `token` with your actual token value
   try {
     const res = await axios.get(`${BASE_URL}/users`, { headers });
-    console.log('user data', res.data)
     return res.data;
   } catch (error: any) {
     console.error("API get all users Error:" + error.response);
@@ -64,9 +65,9 @@ async function userAdd(data: IUser) {
 }
 
 /**returns user with matching ID */
-async function userGet(email: string | null) {
+async function userGet(id: number | string | undefined | null) {
   try {
-    const res = await axios.get(`${BASE_URL}/users/${email}`)
+    const res = await axios.get(`${BASE_URL}/users/${id}`)
     return res.data
   } catch (error: any) {
     console.error("API get user Error:" + error.message)

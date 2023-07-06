@@ -37,21 +37,22 @@ function App() {
       const token = await signup(formData);
       BuglyApi.token = token;
       setToken(token);
+      console.log('App token:', token)
     } catch (error: any) {
       console.error('App signUp error:', error)
     }
   }
 
-  async function loginUser(formData:IUser) {
+  async function loginUser(formData: IUser) {
     try {
       const token = await login(formData);
       BuglyApi.token = token;
       setToken(token);
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('App userLogin error:', error)
     }
   }
-  
+
   async function logout() {
     setCurrentUser(null);
     setToken(null);
@@ -65,36 +66,36 @@ function App() {
    */
 
   useEffect(() => {
-    async function getUser(){
-      const  email: string | null = token && decode(token)
-      try{
+    async function getUser() {
+      const email: string | null = token && decode(token)
+      try {
         const res = await userGet(email)
-        setCurrentUser({...res});
+        setCurrentUser({ ...res });
         token && localStorage.setItem("blogly-token", token)
         setIsLoading(false)
-      } catch (error: any){
+      } catch (error: any) {
         console.error('APP getUser error:', error)
         setIsLoading(false)
       }
     }
-    if (token){
+    console.log('token in App===',token)
+    if (token) {
       BuglyApi.token = token;
       getUser();
     } else {
       setIsLoading(false);
     }
-  },[token])
+  }, [token])
 
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <p>'Loading...'</p>;
 
   return (
-    <UserContext.Provider value={ UserData }>
+    <UserContext.Provider value={UserData}>
       <div className="App">
         <BrowserRouter>
-          {/* <NavBar logout={logout} /> */}
           <RoutesList
-            signup={signup}
+            signup={signUp}
             login={login}
             logout={logout}
           />

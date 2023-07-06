@@ -19,7 +19,6 @@ function HomePage() {
   useEffect(() => {
     async function fetchPosts() {
       let res = await postsGetAll();
-      console.log(res)
       res.reverse();
       res = res.slice(0, 6)
       setPosts(res)

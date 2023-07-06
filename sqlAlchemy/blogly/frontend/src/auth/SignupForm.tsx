@@ -3,6 +3,10 @@ import AlertPopUp from "../AlertPopUp";
 // import "./SignupForm.css";
 import { useNavigate } from "react-router-dom";
 
+type SignUpFormProp = {
+  signup: () => void;
+}
+
 /** Signup form.
  *
  * Shows form and manages update to state on changes.
