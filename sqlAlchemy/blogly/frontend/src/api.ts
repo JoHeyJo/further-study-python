@@ -65,9 +65,9 @@ async function userAdd(data: IUser) {
 }
 
 /**returns user with matching ID */
-async function userGet(id: number | string | undefined | null) {
+async function userGet(email: number | string | undefined | null) {
   try {
-    const res = await axios.get(`${BASE_URL}/users/${id}`)
+    const res = await axios.get(`${BASE_URL}/users/${email}`)
     return res.data
   } catch (error: any) {
     console.error("API get user Error:" + error.message)

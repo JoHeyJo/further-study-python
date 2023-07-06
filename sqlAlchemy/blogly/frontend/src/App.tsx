@@ -67,9 +67,12 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      const email: string | null = token && decode(token)
+      const email: string | null = token && (decode(token) as { sub: string }).sub;
+
       try {
+        console.log('App getUser email',email)
         const res = await userGet(email)
+        console.log('App getUser',res)
         setCurrentUser({ ...res });
         token && localStorage.setItem("blogly-token", token)
         setIsLoading(false)
