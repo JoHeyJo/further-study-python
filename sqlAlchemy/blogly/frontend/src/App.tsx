@@ -99,7 +99,7 @@ function App() {
         <BrowserRouter>
           <RoutesList
             signup={signUp}
-            login={login}
+            login={loginUser}
             logout={logout}
           />
         </BrowserRouter>

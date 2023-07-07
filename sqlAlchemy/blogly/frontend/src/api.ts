@@ -17,12 +17,11 @@ export class BuglyApi {
 }
 
 
-console.log('api token ===',BuglyApi.token)
-/** sign up user */
+console.log('api token ===', BuglyApi.token)
+/**Sign up user */
 async function signup(userData: any) {
   try {
     const res: any = await axios.post(`${BASE_URL}/signup`, userData);
-    console.log('signup', res.data.token)
     return res.data.token;
   } catch (error) {
     console.error("Signup Error:", error);
@@ -30,12 +29,12 @@ async function signup(userData: any) {
   }
 }
 
-/** login user */
+/**Login user */
 async function login(userData: any) {
   try {
-    const token: string = await axios.post(`${BASE_URL}/signup`, userData);
-    console.log('signup', token)
-    return token;
+    const res: any = await axios.post(`${BASE_URL}/login`, userData);
+    console.log('signup', res)
+    return res.data.token;
   } catch (error: any) {
     console.error("Login Error:", error);
     throw error;

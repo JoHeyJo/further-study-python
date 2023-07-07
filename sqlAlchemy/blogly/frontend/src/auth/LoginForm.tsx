@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AlertPopUp from "../AlertPopUp";
-import "./LoginForm.css";
+// import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 
 /** Login form.
@@ -36,7 +36,7 @@ function LoginForm({ login }:any) {
     evt.preventDefault();
     try {
       await login(formData);
-      navigate("/companies")
+      // navigate("/users")
     } catch (err: any) {
       setFormErrors(err);
     }

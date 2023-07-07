@@ -14,6 +14,7 @@ import Projects from './Projects';
 import NotFound from './NotFound';
 import SignupForm from './auth/SignupForm';
 import { IUser } from "./interface";
+import LoginForm from "./auth/LoginForm";
 
 type RoutesListProps = {
   signup: (formData: IUser) => void;
@@ -34,6 +35,7 @@ function RoutesList({signup, login, logout}: RoutesListProps){
       <Routes>
         <Route path='/' element={<Users />} />
         <Route path='/signup' element={<SignupForm signup={signup}/>} />
+        <Route path="/login" element={<LoginForm login={login}/>} />
         <Route path='/form' element={<UserForm />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/:user_id' element={<User />} />
