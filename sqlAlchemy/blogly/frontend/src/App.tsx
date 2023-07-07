@@ -74,6 +74,7 @@ function App() {
         const res = await userGet(email)
         console.log('App getUser',res)
         setCurrentUser({ ...res });
+        console.log('TOEKN IN APP',token)
         token && localStorage.setItem("blogly-token", token)
         setIsLoading(false)
       } catch (error: any) {

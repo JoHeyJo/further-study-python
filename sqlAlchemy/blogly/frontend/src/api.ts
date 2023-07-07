@@ -42,8 +42,9 @@ async function login(userData: any) {
 }
 
 /**Returns first and last of all users */
-async function usersGet(token: any) {
-  const headers = { Authorization: `Bearer ${token}` }; // Replace `token` with your actual token value
+async function usersGet() {
+  console.log('TOKEN in api',BuglyApi.token)
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }; // Replace `token` with your actual token value
   try {
     const res = await axios.get(`${BASE_URL}/users`, { headers });
     return res.data;

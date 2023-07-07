@@ -23,7 +23,7 @@ function Users() {
   /**Fetches all users from database */
   useEffect(() => {
     async function fetchUsers() {
-      const res = await usersGet(token);
+      const res = await usersGet();
       setUsers(res)
     }
     fetchUsers();
