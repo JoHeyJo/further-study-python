@@ -19,7 +19,7 @@ import LoginForm from "./auth/LoginForm";
 type RoutesListProps = {
   signup: (formData: IUser) => void;
   login: (formData: IUser) => void;
-  logout: () => void;
+  currentUser: IUser | null;
 }
 /** Site-wide routes. 
  * 
@@ -29,7 +29,7 @@ type RoutesListProps = {
  * 
  */
 
-function RoutesList({signup, login, logout}: RoutesListProps){
+function RoutesList({signup, login, currentUser}: RoutesListProps){
   return (
     <>
       <Routes>

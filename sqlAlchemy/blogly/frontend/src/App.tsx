@@ -8,9 +8,11 @@ import { BuglyApi, signup, login, userGet } from './api';
 import { UserContextType, UserContext } from './userContext';
 import decode from "jwt-decode";
 import RoutesList from './RoutesList';
+import Navigation from './Navigation';
 // style
 import './style/App.css';
 import { error } from 'console';
+import { Navbar } from 'react-bootstrap';
 
 /** Blogly application 
  * 
@@ -98,10 +100,11 @@ function App() {
     <UserContext.Provider value={UserData}>
       <div className="App">
         <BrowserRouter>
+        <Navigation logout={logout}/>
           <RoutesList
             signup={signUp}
             login={loginUser}
-            logout={logout}
+            currentUser={currentUser}
           />
         </BrowserRouter>
       </div>
