@@ -12,8 +12,7 @@ import RoutesList from './RoutesList';
 import Navigation from './Navigation';
 // style
 import './style/App.css';
-import { error } from 'console';
-import { Navbar } from 'react-bootstrap';
+
 
 /** Blogly application 
  * 
@@ -40,7 +39,6 @@ function App() {
       const token = await signup(formData);
       BuglyApi.token = token;
       setToken(token);
-      console.log('App token:', token)
     } catch (error: any) {
       console.error('App signUp error:', error)
     }
@@ -73,11 +71,8 @@ function App() {
       const email: string | null = token && (decode(token) as { sub: string }).sub;
 
       try {
-        console.log('App getUser email', email)
         const res = await userGet(email)
-        console.log('App getUser', res)
         setCurrentUser({ ...res });
-        console.log('TOEKN IN APP', token)
         token && localStorage.setItem("blogly-token", token)
         setIsLoading(false)
       } catch (error: any) {
@@ -85,7 +80,6 @@ function App() {
         setIsLoading(false)
       }
     }
-    console.log('token in App===', token)
     if (token) {
       BuglyApi.token = token;
       getUser();

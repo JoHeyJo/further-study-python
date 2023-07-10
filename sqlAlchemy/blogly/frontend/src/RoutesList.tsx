@@ -1,12 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-// components
+// components / modules
 import UserForm from './UserForm';
 import Users from './Users';
 import User from './User';
-import EditUser from './EditUser';
-import PostForm from './PostForm';
-import Post from './Post';
 import HomePage from './HomePages';
 import ProjectForm from './ProjectForm';
 import Project from './Project';
@@ -33,11 +30,10 @@ function RoutesList({ signup, login, currentUser }: RoutesListProps) {
   return (
     <>
       <Routes>
-        {currentUser
-          ? <Route path="/projects" element={<Projects userId={currentUser?.id} />
-          : <Route path='/' element={<LoginForm login={login} />} />
-      }
-        <Route path='/' element={<LoginForm login={login} />} />
+        <Route path='/' element={currentUser
+          ? <Users />
+          : <LoginForm login={login} />}
+        />
         <Route path='/signup' element={<SignupForm signup={signup} />} />
         <Route path="/login" element={<LoginForm login={login} />} />
         <Route path="/projects" element={<Projects userId={currentUser?.id} />} />
