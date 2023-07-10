@@ -58,19 +58,20 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
   }
 
   // debugger
+  const title = post ? post.title : null;
   const problem = post ? <DraftEditorConvertFromRaw rawContent={post.problem} /> : null;
   const solution = post ? <DraftEditorConvertFromRaw rawContent={post.solution} /> : null;
   const content = post ? <DraftEditorConvertFromRaw rawContent={post.content} /> : null;
 
-  // const convertedPost = { 'title': post.title, 'problem': problem, 'solution': solution, 'content': content }
+  const convertedPost = { 'title': post, 'problem': problem, 'solution': solution, 'content': content }
 
   return (
     <Container>
       <Stack gap={3}>
-        {/* <h2 className="Post-title bg-light border">{post.title}</h2> */}
+        <h2 className="Post-title bg-light border">{title}</h2>
         <span className="d-flex justify-content-end">
-          {/* <PopOut action={'edit'} postId={post.id} fetchEditPost={fetchEditPost} /> */}
-          {/* <ViewPopOut post={convertedPost} /> */}
+          {/* <PopOut action={'edit'} postId={post.id || postId} fetchEditPost={fetchEditPost} /> */}
+          <ViewPopOut post={convertedPost} />
         </span>
         <Stack direction="horizontal" className="" >
           <h6 className="Post-subtitle">Context:</h6>
@@ -84,7 +85,7 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
           <h6 className="Post-subtitle">Solution:</h6>
           <div className="Post-solution container ms-2">{solution}</div>
         </Stack>
-        {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */}
+        {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */} 
       </Stack>
       <div className="Post-controls">
 
