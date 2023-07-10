@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Routes, Route, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
+
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -71,7 +71,7 @@ function User() {
   }
 
   return (
-    <Container className="User-container">
+    <>
       <Row className="position-absolute">
         <Col className="col-3 p-5">
           <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
@@ -87,10 +87,10 @@ function User() {
       </Row>
       <Row>
         <Col>
-          <div className="User-posts"><Projects userId={+params.user_id!}/></div>
+          <div className="User-posts"><Projects userId={+params.user_id!} /></div>
         </Col>
       </Row>
-    </Container>
+    </>
   )
 }
 

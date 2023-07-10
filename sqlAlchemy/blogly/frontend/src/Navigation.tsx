@@ -15,18 +15,8 @@ const { user } = useContext(UserContext)
     return (
       <ul className="navbar-nav ms-auto">
         <li className="nav-item me-4">
-          <NavLink className="nav-link" to="/companies">
-            Companies
-          </NavLink>
-        </li>
-        <li className="nav-item me-4">
-          <NavLink className="nav-link" to="/jobs">
-            Jobs
-          </NavLink>
-        </li>
-        <li className="nav-item me-4">
-          <NavLink className="nav-link" to="/profile">
-            Profile
+          <NavLink className="nav-link" to="/projects">
+            Projects
           </NavLink>
         </li>
         <li className="nav-item">
@@ -57,8 +47,8 @@ const { user } = useContext(UserContext)
   return (
     <nav className="Navigation navbar navbar-expand-md">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          Jobly
+        <Link className="navbar-brand" to={user ? "/users" : "/login"}>
+          Bugly
         </Link>
         {user ? loggedInNav() : loggedOutNav()}
       </div>

@@ -1,6 +1,16 @@
 import axios from 'axios';
 import { IUser, IPost, IProject } from './interface'
 
+
+type ApiResponse = {
+  data: {
+    token: string;
+  };
+  status: number;
+  statusText: string;
+  headers: object; 
+  config: object;
+}
 const BASE_URL = "http://127.0.0.1:5000";
 // try {
 //   return (await axios({ url, method, data, params, headers })).data;
@@ -19,9 +29,9 @@ export class BuglyApi {
 
 console.log('api token ===', BuglyApi.token)
 /**Sign up user */
-async function signup(userData: any) {
+async function signup(userData: IUser) {
   try {
-    const res: any = await axios.post(`${BASE_URL}/signup`, userData);
+    const res: ApiResponse = await axios.post(`${BASE_URL}/signup`, userData);
     return res.data.token;
   } catch (error) {
     console.error("Signup Error:", error);
@@ -30,9 +40,10 @@ async function signup(userData: any) {
 }
 
 /**Login user */
-async function login(userData: any) {
+async function login(userData: IUser) {
   try {
-    const res: any = await axios.post(`${BASE_URL}/login`, userData);
+    const res: ApiResponse = await axios.post(`${BASE_URL}/login`, userData);
+    console.log('login res =====',res)
     console.log('signup', res)
     return res.data.token;
   } catch (error: any) {
@@ -212,7 +223,7 @@ async function projectsGet(userId: number | undefined) {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects`);
     return res.data;
   } catch (error: any) {
-    console.error(error);
+    console.error('Error in projectsGet',error);
     console.log(error)
     throw error.response.data
   }
@@ -261,7 +272,7 @@ async function projectPostAdd(userId: number, projectId: number | undefined, pos
 }
 
 //** Retrieves posts corresponding to project */
-async function projectPostsGet(userId: number, projectId: number | undefined) {
+async function projectPostsGet(userId: number | undefined, projectId: number | undefined) {
   try {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects/${projectId}`);
     return res.data;

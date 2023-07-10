@@ -22,7 +22,7 @@ import './style/Posts.css';
 
 type PostsProps = {
   posts: IPost[];
-  isPostsShowing: any;
+  isPostsShowing: () => void;
 }
 /** Renders list of posts by title
  * 
@@ -43,7 +43,7 @@ type PostsProps = {
   imageUrl: '' | null;}
   ,{},{}]
  * 
- * User - Posts
+ *  - Posts
  */
 function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)

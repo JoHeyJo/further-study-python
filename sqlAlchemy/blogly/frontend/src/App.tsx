@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 // components/modules
 import { IUser } from './interface'
 import { BuglyApi, signup, login, userGet } from './api';
@@ -72,11 +73,11 @@ function App() {
       const email: string | null = token && (decode(token) as { sub: string }).sub;
 
       try {
-        console.log('App getUser email',email)
+        console.log('App getUser email', email)
         const res = await userGet(email)
-        console.log('App getUser',res)
+        console.log('App getUser', res)
         setCurrentUser({ ...res });
-        console.log('TOEKN IN APP',token)
+        console.log('TOEKN IN APP', token)
         token && localStorage.setItem("blogly-token", token)
         setIsLoading(false)
       } catch (error: any) {
@@ -84,7 +85,7 @@ function App() {
         setIsLoading(false)
       }
     }
-    console.log('token in App===',token)
+    console.log('token in App===', token)
     if (token) {
       BuglyApi.token = token;
       getUser();
@@ -97,18 +98,22 @@ function App() {
   if (isLoading) return <p>'Loading...'</p>;
 
   return (
-    <UserContext.Provider value={UserData}>
-      <div className="App">
-        <BrowserRouter>
-        <Navigation logout={logout}/>
-          <RoutesList
-            signup={signUp}
-            login={loginUser}
-            currentUser={currentUser}
-          />
-        </BrowserRouter>
-      </div>
-    </UserContext.Provider>
+    <Container className="User-container">
+
+      <UserContext.Provider value={UserData}>
+        <div className="App">
+          <BrowserRouter>
+            <Navigation logout={logout} />
+            <RoutesList
+              signup={signUp}
+              login={loginUser}
+              currentUser={currentUser}
+            />
+          </BrowserRouter>
+        </div>
+      </UserContext.Provider>
+    </Container>
+
   );
 }
 

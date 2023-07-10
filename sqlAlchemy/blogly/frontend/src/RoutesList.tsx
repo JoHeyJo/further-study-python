@@ -29,13 +29,18 @@ type RoutesListProps = {
  * 
  */
 
-function RoutesList({signup, login, currentUser}: RoutesListProps){
+function RoutesList({ signup, login, currentUser }: RoutesListProps) {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Users />} />
-        <Route path='/signup' element={<SignupForm signup={signup}/>} />
-        <Route path="/login" element={<LoginForm login={login}/>} />
+        {currentUser
+          ? <Route path="/projects" element={<Projects userId={currentUser?.id} />
+          : <Route path='/' element={<LoginForm login={login} />} />
+      }
+        <Route path='/' element={<LoginForm login={login} />} />
+        <Route path='/signup' element={<SignupForm signup={signup} />} />
+        <Route path="/login" element={<LoginForm login={login} />} />
+        <Route path="/projects" element={<Projects userId={currentUser?.id} />} />
         <Route path='/form' element={<UserForm />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/:user_id' element={<User />} />

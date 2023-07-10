@@ -36,7 +36,7 @@ function LoginForm({ login }:any) {
     evt.preventDefault();
     try {
       await login(formData);
-      // navigate("/users")
+      navigate("/users")
     } catch (err: any) {
       setFormErrors(err);
     }
@@ -45,7 +45,7 @@ function LoginForm({ login }:any) {
   /** Update form data field */
   function handleChange(evt: any) {
     const { name, value } = evt.target;
-    setFormData(l => ({ ...l, [name]: value }));
+    setFormData(data => ({ ...data, [name]: value }));
   }
 
   return (

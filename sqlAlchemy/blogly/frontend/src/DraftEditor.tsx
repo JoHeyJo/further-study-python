@@ -6,10 +6,16 @@ import InputGroup from 'react-bootstrap/InputGroup';
 //modules / components
 //styles
 import './style/DraftEditor.css';
-type handleEditorData = {
-  raw: any
+
+type DraftEditorProp = {
+  raw: {
+    content: string;
+    problem: string;
+    solution: string;
+  }
   onEditorDataChange: (field: string, data: any) => void
 }
+
 type EditorStateObject = {
   content: EditorState;
   problem: EditorState;
@@ -29,7 +35,7 @@ function myBlockStyleFn(contentBlock: any) {
  * 
  * 
  */
-function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
+function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
   const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
@@ -84,6 +90,7 @@ function DraftEditor({ raw, onEditorDataChange }: handleEditorData) {
 
   useEffect(() => {
       if(raw){
+        console.log('raw in drafteditor', raw)
         setEditorState((s) => ({
           content: convertToRich(raw.content),
           problem: convertToRich(raw.problem),

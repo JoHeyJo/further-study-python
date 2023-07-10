@@ -17,7 +17,7 @@ import PopOut from "./PopOut";
 import './style/Projects.css';
 
 type ProjectProps = {
-  userId: number;
+  userId?: number;
 }
 
 type ProjectData = {
@@ -57,7 +57,6 @@ function Projects({ userId }: ProjectProps) {
   async function getProject() {
     const res = await projectsGet(userId);
     console.log('getting projects')
-
     setProjects(res);
   }
 
