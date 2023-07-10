@@ -27,6 +27,7 @@ import './style/App.css';
  */
 function App() {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+  //this allows app to retrieve token on render. However, at first render it'll trigger error handling for getUser
   const [token, setToken] = useState<string | null>(localStorage.getItem("blogly-token"));
   const [isLoading, setIsLoading] = useState(true);
 
@@ -89,7 +90,7 @@ function App() {
   }, [token])
 
 
-  if (isLoading) return <p>'Loading...'</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Container className="User-container">

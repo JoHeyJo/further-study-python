@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { IUser } from "./interface";
 import { UserContext } from "./userContext";
 
 
@@ -15,7 +14,7 @@ const { user } = useContext(UserContext)
     return (
       <ul className="navbar-nav ms-auto">
         <li className="nav-item me-4">
-          <NavLink className="nav-link" to="/projects">
+          <NavLink className="nav-link" to={`projects/${user?.id}`}>
             Projects
           </NavLink>
         </li>

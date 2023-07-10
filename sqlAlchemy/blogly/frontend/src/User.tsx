@@ -72,19 +72,19 @@ function User() {
 
   return (
     <>
-      <Row className="position-absolute">
+      {/* <Row className="position-absolute">
         <Col className="col-3 p-5">
           <img src={img} alt={`${user.firstName || 'default profile'} profile picture`} height="400px" width="400px"></img>
           <div className="User-user">
             <div className="User-fn">{user.firstName}</div>
             <div className="User-ln">{user.lastName}</div>
           </div>
-          <div>
+          <div> */}
             {/* <Button variant="primary" onClick={handleClick}>Edit</Button>
             <Button variant="danger" onClick={() => removeUser(user.id)}>Delete</Button> */}
-          </div>
-        </Col>
-      </Row>
+          {/* </div> */}
+        {/* </Col>
+      </Row> */}
       <Row>
         <Col>
           <div className="User-posts"><Projects userId={+params.user_id!} /></div>

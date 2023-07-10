@@ -28,20 +28,20 @@ function Users() {
   }, [])
 
   return (
-    <Container>
+    // <Container>
       <div className="Users-container">
-        <h1>
+        {/* <h1>
           Users
         </h1>
         <div className="Users-box">
           {users.map(u => <li key={u.id} className="Users-user"><Link to={`/users/${u.id}`} > {u.firstName} {u.lastName}</Link></li>)}
-        </div>
-        <Link to="/signup">
+        </div> */}
+        {/* <Link to="/signup">
           <Button variant="primary">Add user</Button>
-        </Link>
+        </Link> */}
         <HomePage />
       </div>
-    </Container>
+    // {/* </Container> */}
   )
 }
 

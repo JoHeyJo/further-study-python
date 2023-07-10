@@ -97,7 +97,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
               </Card>
             </Col>
             <Col>
-              {isPostRendering && post && <Post post={post} handlePostRender={setIsPostRendering} fetchEditPost={fetchPost}/>}
+              {isPostRendering && post && <Post initialPost={post} handlePostRender={setIsPostRendering} fetchEditPost={fetchPost}/>}
             </Col>
           </Row>
         </Container>

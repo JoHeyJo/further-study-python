@@ -57,7 +57,7 @@ function SignupForm({ signup }: any) {
   return (
     <div className="SignupForm">
       <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-        <h2 className="mb-3">Sign Up</h2>
+        <h3 className="mb-3">Sign Up</h3>
         <div className="card">
           <div className="card-body">
             <form onSubmit={handleSubmit}>

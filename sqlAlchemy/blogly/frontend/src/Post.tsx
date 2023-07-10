@@ -1,13 +1,11 @@
 //dependencies
 import React, { useState, useEffect, useContext } from "react";
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Stack from 'react-bootstrap/Stack';
-
-
 //components / modules
-import { postDelete } from './api';
+import { postDelete, postGet } from './api';
 import { ProjectContext } from "./userContext";
 import PopOut from "./PopOut";
 import DraftEditorConvertFromRaw from "./DraftEditorConvertFromRaw";
@@ -28,9 +26,26 @@ type PostProp = {
  * 
  * User -> Posts -> Post
  */
-function Post({ post, handlePostRender, fetchEditPost }: any) {
-  const navigate = useNavigate();
+function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
+  const [post, setPost] = useState(initialPost)
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
+  const postId = +useParams().post_id!;
+
+  if (!post) {
+    fetchPost();
+  }
+
+  /** retrieves post corresponding to id */
+  async function fetchPost() {
+    try {
+      const res = await postGet(postId);
+      setPost(res);
+      console.log('res in  fetchPost', res)
+      return res;
+    } catch (error: any) {
+      console.error(`Error in fetchPost => ${error}`)
+    }
+  }
 
   /** Deletes user post */
   async function deletePost() {
@@ -42,19 +57,20 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
     }
   }
 
-  const problem = <DraftEditorConvertFromRaw rawContent={post.problem}/>
-  const solution = <DraftEditorConvertFromRaw rawContent={post.solution}/>
-  const content = <DraftEditorConvertFromRaw rawContent={post.content}/>
+  // debugger
+  const problem = post ? <DraftEditorConvertFromRaw rawContent={post.problem} /> : null;
+  const solution = post ? <DraftEditorConvertFromRaw rawContent={post.solution} /> : null;
+  const content = post ? <DraftEditorConvertFromRaw rawContent={post.content} /> : null;
 
-  const convertedPost = {'title': post.title ,'problem': problem, 'solution': solution, 'content':content}
+  // const convertedPost = { 'title': post.title, 'problem': problem, 'solution': solution, 'content': content }
 
   return (
     <Container>
       <Stack gap={3}>
-        <h2 className="Post-title bg-light border">{post.title}</h2>
+        {/* <h2 className="Post-title bg-light border">{post.title}</h2> */}
         <span className="d-flex justify-content-end">
-         <PopOut action={'edit'} postId={post.id} fetchEditPost={fetchEditPost} />
-         <ViewPopOut post={convertedPost} />
+          {/* <PopOut action={'edit'} postId={post.id} fetchEditPost={fetchEditPost} /> */}
+          {/* <ViewPopOut post={convertedPost} /> */}
         </span>
         <Stack direction="horizontal" className="" >
           <h6 className="Post-subtitle">Context:</h6>
@@ -68,10 +84,10 @@ function Post({ post, handlePostRender, fetchEditPost }: any) {
           <h6 className="Post-subtitle">Solution:</h6>
           <div className="Post-solution container ms-2">{solution}</div>
         </Stack>
-        <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6>
+        {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */}
       </Stack>
       <div className="Post-controls">
-      
+
         <Button onClick={() => {
           deletePost();
           handlePostRender(false)

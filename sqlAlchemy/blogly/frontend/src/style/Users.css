@@ -1,12 +1,9 @@
 .Users-container {
-  padding-left: 2rem;
   display: flex;
   flex-direction: column;
   text-align: justify;
 }
 
 button {
-  /* width: 8%; */
   margin: 1rem;
-  /* margin-top: 2rem; */
 }

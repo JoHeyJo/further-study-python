@@ -1,9 +1,7 @@
 //Dependencies
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
 import { postsGetAll } from './api'
-//Modules
-//Components
+//Components & models
 import { Link } from 'react-router-dom';
 import { IPosts, IPost } from "./interface";
 
@@ -12,6 +10,7 @@ import { IPosts, IPost } from "./interface";
  * State: 
  * - Posts => [{title: '', content: '', userId: 0, id},{},...]
  * 
+ * Users -> Homepage
 */
 function HomePage() {
   const [posts, setPosts] = useState<IPost[]>([])

@@ -47,3 +47,10 @@
   height: 1px;
   border-bottom: 4px solid rgba(211, 211, 211, .9);
 }
+
+.Projects-title {
+  border-top: 2px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

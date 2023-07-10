@@ -36,7 +36,7 @@ type ProjectData = {
  * name: string;
  * description: string;
  * userId: number;
-  ,{},{}]
+  ,{},{}]π
  * 
  * User - Projects
  */
@@ -106,13 +106,13 @@ function Projects({ userId }: ProjectProps) {
 
   return (
     <>
-      <h3>
+      <h3 className="Projects-title">
         Projects
         <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined} />
       </h3>
       <div>
 
-        <Row className="Projects-container justify-content-center">
+        <Row className="Projects-container">
           <Col className="col-6">
             <ListGroup className="align-items-start">
               {
