@@ -14,7 +14,7 @@ const { user } = useContext(UserContext)
     return (
       <ul className="navbar-nav ms-auto">
         <li className="nav-item me-4">
-          <NavLink className="nav-link" to={`projects/${user?.id}`}>
+          <NavLink className="nav-link" to={`users/${user?.id}`}>
             Projects
           </NavLink>
         </li>

@@ -24,7 +24,7 @@ type PostProp = {
  * State:
  *  - post = {id=0, title='', content='', user_id,...}
  * 
- * User -> Posts -> Post
+ * User -> [Posts/Homepage] -> Post
  */
 function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
   const [post, setPost] = useState(initialPost)
@@ -57,7 +57,6 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
     }
   }
 
-  // debugger
   const title = post ? post.title : null;
   const problem = post ? <DraftEditorConvertFromRaw rawContent={post.problem} /> : null;
   const solution = post ? <DraftEditorConvertFromRaw rawContent={post.solution} /> : null;
@@ -70,8 +69,8 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
       <Stack gap={3}>
         <h2 className="Post-title bg-light border">{title}</h2>
         <span className="d-flex justify-content-end">
-          {/* <PopOut action={'edit'} postId={post.id || postId} fetchEditPost={fetchEditPost} /> */}
-          <ViewPopOut post={convertedPost} />
+          <PopOut action={'edit'} postId={post?.id || postId} fetchEditPost={fetchEditPost} />
+          { initialPost && <ViewPopOut post={convertedPost} />}
         </span>
         <Stack direction="horizontal" className="" >
           <h6 className="Post-subtitle">Context:</h6>

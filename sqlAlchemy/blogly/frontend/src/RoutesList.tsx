@@ -28,7 +28,7 @@ type RoutesListProps = {
  */
 
 function RoutesList({ signup, login, currentUser }: RoutesListProps) {
-  { console.log(currentUser) }
+ console.log(currentUser)
   return (
     <>
       <Routes>
