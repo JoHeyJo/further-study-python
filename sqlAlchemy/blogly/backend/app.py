@@ -6,6 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 # from werkzeug.exceptions import BadRequest
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from datetime import timedelta
 
 ######## Double check exception key works ##########
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = 'i-have-a-secret'
 app.config["JWT_SECRET_KEY"] = "super-duper-secret"
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
 app.app_context().push()
 jwt = JWTManager(app)
 
@@ -75,6 +77,7 @@ def login():
     email = request.json['email']
     password = request.json['password']
     token = User.authenticate(email=email, password=password)
+    # print('CREDENTIALS',email, password)
     try:
         if token:
             return jsonify({"token": token})
@@ -101,17 +104,19 @@ def users_all():
         return jsonify({"error": error})
 
 
-@app.get("/users/<int:id>")
+@app.get("/users/<id>")
 def users_get(id):
     """Retrieves user with matching ID"""
-    print('in users_get',id)
-    user = User.query.get_or_404(id) if type(id) == int else User.query.filter(User.email == id).first()
+    try:
+        user = User.query.filter(User.email == id).first() if type(id) == str else User.query.get_or_404(int(id))
 
-    serialized = User.serialize(user)
-    user_data = {'id': serialized['id'], 'email': serialized['email'], 'firstName': serialized['first_name'],
-                 'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
-
-    return jsonify(user_data)
+        serialized = User.serialize(user)
+        user_data = {'id': serialized['id'], 'email': serialized['email'], 'firstName': serialized['first_name'],
+                     'lastName': serialized['last_name'], 'imageUrl': serialized['image_url']}
+        return jsonify(user_data)
+    except LookupError as error:
+        print('Lookup error >>>>>>>>>', error)
+        return jsonify({"error": error})
 
 
 @app.post("/users/new")
