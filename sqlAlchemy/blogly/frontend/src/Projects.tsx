@@ -56,7 +56,6 @@ function Projects({ userId }: ProjectProps) {
   /**gets projects */
   async function getProject() {
     const res = await projectsGet(userId);
-    console.log('getting projects')
     setProjects(res);
   }
 
@@ -72,6 +71,7 @@ function Projects({ userId }: ProjectProps) {
   /** retrieves project's posts */
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectData.id)
+    console.log('fetching project posts',res)
     setPosts(res)
   }
 
@@ -92,7 +92,6 @@ function Projects({ userId }: ProjectProps) {
       setOpen(false)
       // setIsPostsShowing(false)
     }
-    console.log('slide over toggled')
   }
 
   const handleParentStateChange = () => {

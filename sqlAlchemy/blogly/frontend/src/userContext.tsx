@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { Dispatch, SetStateAction, createContext } from 'react';
 import { IUser } from './interface';
 
 export type UserContextType = {
@@ -6,7 +6,7 @@ export type UserContextType = {
 }
 
 export const UserContext = createContext<UserContextType>({
-  user: { id:0, firstName:'', lastName:'', image:'', email:'' }
+  user: { id: 0, firstName: '', lastName: '', image: '', email: '' }
 })
 
 export type ProjectContextType = {
@@ -18,16 +18,18 @@ export type ProjectContextType = {
 export const ProjectContext = createContext<ProjectContextType>({
   projectId: undefined,
   projectName: undefined,
-  fetchProjectPosts: () => {},
+  fetchProjectPosts: () => { },
 });
 
 
 export type PostContextType = {
-  fetchEditPost: (userId: number) => void;
-  number?: number
+  fetchEditPost: ((userId: number) => void) | undefined ;
+  number?: number;
+  setIsPostRendering: Dispatch<SetStateAction<boolean>>
 };
 
 export const PostContext = createContext<PostContextType>({
-  fetchEditPost: () => {},
-  number: undefined
-})
+  fetchEditPost: () => { },
+  number: undefined,
+  setIsPostRendering: () => { },
+});

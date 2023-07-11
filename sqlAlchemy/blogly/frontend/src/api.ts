@@ -11,7 +11,9 @@ type ApiResponse = {
   headers: object; 
   config: object;
 }
+
 const BASE_URL = "http://127.0.0.1:5000";
+
 // try {
 //   return (await axios({ url, method, data, params, headers })).data;
 // } catch (err) {
@@ -181,10 +183,9 @@ async function postUpdate(postId: number, postData: IPost) {
 }
 
 /** Deletes post with matching id*/
-async function postDelete(postId: number) {
+async function postDelete(postId: number | undefined) {
   try {
     const res = await axios.delete(`${BASE_URL}/posts/${postId}/delete`)
-    console.log('post delete', res.data)
     return res.data;
   } catch (error: any) {
     console.error(`Error in postDelete => ${error}`)

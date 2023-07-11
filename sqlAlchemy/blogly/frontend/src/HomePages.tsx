@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { postsGetAll } from './api'
 //Components & models
 import { Link } from 'react-router-dom';
-import { IPosts, IPost } from "./interface";
+import { IPost } from "./interface";
+import DraftEditorConvertFromRaw from "./DraftEditorConvertFromRaw";
 
 /** Homepage for Bugly. Shows 5 most recent posts 
  * 
@@ -34,6 +35,7 @@ function HomePage() {
             <h2>{post.title}</h2>
           </Link>
           <h4>{post.content}</h4>
+          {/* <h4>{<DraftEditorConvertFromRaw rawContent={post.content} />}</h4> */}
           <h6>By {post.firstName} {post.lastName} {post.createdAt}</h6>
         </section>
       )}

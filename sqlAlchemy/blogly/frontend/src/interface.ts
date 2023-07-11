@@ -8,7 +8,7 @@ export interface IUser {
 
 export interface IPost {
   title: string | undefined;
-  content: string | undefined;
+  content: string;
   userId: number;
   firstName: string | undefined;
   lastName: string | undefined;

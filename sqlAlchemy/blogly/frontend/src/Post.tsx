@@ -62,15 +62,16 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
   const solution = post ? <DraftEditorConvertFromRaw rawContent={post.solution} /> : null;
   const content = post ? <DraftEditorConvertFromRaw rawContent={post.content} /> : null;
 
-  const convertedPost = { 'title': post, 'problem': problem, 'solution': solution, 'content': content }
-
+  const convertedPost = { 'title': title, 'problem': problem, 'solution': solution, 'content': content };
+  // debugger
   return (
     <Container>
       <Stack gap={3}>
         <h2 className="Post-title bg-light border">{title}</h2>
         <span className="d-flex justify-content-end">
           <PopOut action={'edit'} postId={post?.id || postId} fetchEditPost={fetchEditPost} />
-          { initialPost && <ViewPopOut post={convertedPost} />}
+          {/* { initialPost && <ViewPopOut post={convertedPost} />} */}
+          <ViewPopOut post={convertedPost} />
         </span>
         <Stack direction="horizontal" className="" >
           <h6 className="Post-subtitle">Context:</h6>
@@ -84,17 +85,8 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
           <h6 className="Post-subtitle">Solution:</h6>
           <div className="Post-solution container ms-2">{solution}</div>
         </Stack>
-        {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */} 
+        {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */}
       </Stack>
-      <div className="Post-controls">
-
-        <Button onClick={() => {
-          deletePost();
-          handlePostRender(false)
-        }
-        } variant="danger">Delete</Button>
-      </div>
-
     </Container>
   )
 }

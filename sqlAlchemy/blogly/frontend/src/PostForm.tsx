@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 //modules/components
-import { userGet, postAdd, postEdit, postUpdate, projectPostAdd } from './api';
+import { userGet, postAdd, postEdit, postUpdate, projectPostAdd, postDelete } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
 import { ProjectContext, PostContext } from "./userContext";
@@ -34,13 +34,11 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [rawData, setRawData] = useState<any>();
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
+  const { setIsPostRendering } = useContext(PostContext);
 
   const params = useParams();
   const userId = +params.user_id!;
-  // const postId = +params.post_id!;
-  // const projectId = +params.project_id!;
 
-  const navigate = useNavigate();
 
   /** fetches data on mount*/
   useEffect(() => {
@@ -81,6 +79,16 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     setPostData(res);
     setRawData(extractRaw(res));
     return res
+  }
+
+  /** Delete post */
+  async function deletePost() {
+    try {
+      const res = await postDelete(postId)
+      fetchProjectPosts();
+    } catch (error: any) {
+      console.error(`Error inPostForm deletePost => ${error}`)
+    }
   }
 
   /** handles changes in form */
@@ -166,6 +174,15 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
             <div className="">
               <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
               <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+            </div>
+            <div className="Post-controls">
+
+              <Button onClick={() => {
+                deletePost();
+                handleClose();
+                setIsPostRendering(false);
+              }
+              } variant="danger">Delete</Button>
             </div>
           </Form>
         </Col>

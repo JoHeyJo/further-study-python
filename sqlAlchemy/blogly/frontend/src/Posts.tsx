@@ -16,9 +16,11 @@ import { IPost } from './interface';
 import { postGet } from './api'
 import Post from "./Post";
 import PopOut from "./PopOut";
+import { PostContextType, PostContext } from "./userContext";
 
 //styles
 import './style/Posts.css';
+import { ProjectContextType } from "./userContext";
 
 type PostsProps = {
   posts: IPost[];
@@ -43,11 +45,17 @@ type PostsProps = {
   imageUrl: '' | null;}
   ,{},{}]
  * 
- *  - Posts
+ *  Projects - Posts
  */
 function Posts({ posts, isPostsShowing }: PostsProps) {
   const [isPostRendering, setIsPostRendering] = useState<boolean>(false)
   const [post, setPost] = useState<IPost>()
+
+
+  const PostData: PostContextType = {
+    fetchEditPost: undefined,
+    setIsPostRendering,
+  }
 
   /** fetches Project post onClick */
   async function fetchPost(postId: number) {
@@ -97,7 +105,9 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
               </Card>
             </Col>
             <Col>
+            <PostContext.Provider value={PostData}>
               {isPostRendering && post && <Post initialPost={post} handlePostRender={setIsPostRendering} fetchEditPost={fetchPost}/>}
+            </PostContext.Provider>
             </Col>
           </Row>
         </Container>

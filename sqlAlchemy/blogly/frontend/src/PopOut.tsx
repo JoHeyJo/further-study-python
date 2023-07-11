@@ -44,9 +44,9 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   }
 
   function modalHeader(){
-    return action === 'new project'
-    ? "Create new project"
-    : `create post for ${projectName}`
+    if( action === 'new project') return 'create new project'
+    if( action === 'new post') return 'create new post'
+    if (action === 'edit') return `edit post for ${ projectName }`
   }
   
   return (
