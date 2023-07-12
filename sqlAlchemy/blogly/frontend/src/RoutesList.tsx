@@ -32,10 +32,7 @@ function RoutesList({ signup, login, currentUser }: RoutesListProps) {
   return (
     <>
       <Routes>
-        <Route path='/' element={currentUser
-          ? <Users />
-          : <LoginForm login={login} />}
-        />
+        <Route path='/' element={<HomePage />}/>
         <Route path='/signup' element={<SignupForm signup={signup} />} />
         <Route path="/login" element={<LoginForm login={login} />} />
         <Route path="/projects" element={<Projects userId={currentUser?.id} />} />

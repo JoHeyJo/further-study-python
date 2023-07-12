@@ -35,7 +35,7 @@ async function signup(userData: IUser) {
   try {
     const res: ApiResponse = await axios.post(`${BASE_URL}/signup`, userData);
     return res.data.token;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Signup Error:", error);
     throw error;
   }
@@ -63,6 +63,7 @@ async function usersGet() {
     return res.data;
   } catch (error: any) {
     console.error("API get all users Error:" + error.response);
+    throw error;
   }
 }
 

@@ -47,16 +47,6 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
     }
   }
 
-  /** Deletes user post */
-  async function deletePost() {
-    try {
-      const res = await postDelete(post.id)
-      fetchProjectPosts();
-    } catch (error: any) {
-      console.error(`Error in deletePost => ${error}`)
-    }
-  }
-
   const title = post ? post.title : null;
   const problem = post ? <DraftEditorConvertFromRaw rawContent={post.problem} /> : null;
   const solution = post ? <DraftEditorConvertFromRaw rawContent={post.solution} /> : null;

@@ -3,10 +3,12 @@ import { IUser } from './interface';
 
 export type UserContextType = {
   user: IUser | null;
+  token: string | null;
 }
 
 export const UserContext = createContext<UserContextType>({
-  user: { id: 0, firstName: '', lastName: '', image: '', email: '' }
+  user: { id: 0, firstName: '', lastName: '', image: '', email: '' },
+  token: ''
 })
 
 export type ProjectContextType = {

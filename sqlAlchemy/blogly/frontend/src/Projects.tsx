@@ -1,15 +1,16 @@
 //dependencies
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Collapse from 'react-bootstrap/Collapse';
+import decode from "jwt-decode";
 
 // components/ modules
 import { IProject, IPost } from './interface';
 import { projectsGet, projectPostsGet } from './api';
 import Posts from "./Posts";
-import { ProjectContextType, ProjectContext } from "./userContext";
+import { ProjectContextType, ProjectContext, UserContext } from "./userContext";
 import AlertModal from "./AlertModal";
 import PopOut from "./PopOut";
 
@@ -46,6 +47,8 @@ function Projects({ userId }: ProjectProps) {
   const [projectData, setProjectData] = useState<ProjectData>({ name: '', id: 0 });
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isPostsShowing, setIsPostsShowing] = useState<boolean | undefined | number>(false);
+
+  const { user } = useContext(UserContext);
 
   const ProjectData: ProjectContextType = {
     projectId: projectData.id,

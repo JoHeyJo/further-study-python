@@ -32,7 +32,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const UserData: UserContextType = {
-    user: currentUser
+    user: currentUser,
+    token: token
   }
 
   async function signUp(formData: IUser) {
@@ -46,13 +47,13 @@ function App() {
   }
 
   async function loginUser(formData: IUser) {
-    try {
+    // try {
       const token = await login(formData);
       BuglyApi.token = token;
       setToken(token);
-    } catch (error: any) {
-      console.error('App userLogin error:', error)
-    }
+    // } catch (error: any) {
+    //   console.error('App userLogin error:', error)
+    // }
   }
 
   async function logout() {

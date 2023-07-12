@@ -19,7 +19,7 @@ function LoginForm({ login }:any) {
     email: "",
     password: "",
   });
-  const [formErrors, setFormErrors] = useState([]);
+  const [formErrors, setFormErrors] = useState<string[]>([]);
 
   console.debug(
     "LoginForm",
@@ -35,10 +35,11 @@ function LoginForm({ login }:any) {
   async function handleSubmit(evt: any) {
     evt.preventDefault();
     try {
-      await login(formData);
-      navigate("/users")
+      const res = await login(formData);
+      navigate("/")
     } catch (err: any) {
-      setFormErrors(err);
+      console.error('error in LoginForm',err)
+      setFormErrors([err.response.data.error]);
     }
   }
 

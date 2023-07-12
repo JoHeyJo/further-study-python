@@ -28,7 +28,7 @@ function HomePage() {
 
   return (
     <>
-      <h1 className="bg-light border">Blogly Recent Posts</h1>
+      <h1 className="bg-light border">Bugly Recent Posts</h1>
       {posts.map((post, i) =>
         <section key={i}>
           <Link to={`/posts/${post.id}`}>

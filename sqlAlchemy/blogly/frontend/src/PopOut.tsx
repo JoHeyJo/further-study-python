@@ -8,6 +8,8 @@ import PostForm from './PostForm';
 import { ProjectContext } from './userContext';
 import ProjectForm from './ProjectForm';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { UserContext } from './userContext';
+import AlertBubble from './AlertBubble';
 
 type PopOutProp = {
   action: string;
@@ -24,6 +26,7 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   const [show, setShow] = useState(false);
   const { projectName } = useContext(ProjectContext);
 
+  const { user } = useContext(UserContext);
 
   const handleClose = () => setShow(false);
 
@@ -32,9 +35,13 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   const customDialogClassName = 'custom-modal-dialog';
 
   function buttonStyle() {
-    if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
-    if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
-    if (action === 'new project') return <Button onClick={handleShow} className="m-0" variant="light" style={{ marginRight: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+    if(user?.email === 'j@est.com'){
+      if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+      if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
+      if (action === 'new project') return <Button onClick={handleShow} className="m-0" variant="light" style={{ marginRight: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
+    } else {
+      return <AlertBubble action={<FontAwesomeIcon icon={faPlus} />}/>
+    }
   }
 
   function modalAction() {
