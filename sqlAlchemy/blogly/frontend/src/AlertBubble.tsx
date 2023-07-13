@@ -2,59 +2,14 @@ import { useState, useRef, ReactNode } from 'react';
 import Button from 'react-bootstrap/Button';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { actionProperties } from './utils/properties';
 
 type AlertBubbleProp = {
   action: string;
   icon?: ReactNode;
 }
 
-type actionProperties = {
-  [key: string] : {
-    label: string;
-    class: string;
-    variant: string;
-    style: string;
-    message: string;
-  }
-}
 
-const actionProperties: actionProperties = {
-  addPost: {
-    label: 'Add Post',
-    class: "my-0 py-0",
-    variant: "light",
-    style: "marginLeft: 'auto'",
-    message: "You need to be logged in to add a Post"
-  },
-  editPost: {
-    label: 'Edit Post',
-    class: "my-0 py-0",
-    variant: "light",
-    style: "marginLeft: 'auto'",
-    message: "You need to be logged in to edit a Post"
-  },
-  addProject: {
-    label: 'Add Project',
-    class: "my-0 py-0",
-    variant: "light",
-    style: "marginLeft: 'auto'",
-    message: "You need to be logged in to add a Project"
-  },
-  deletePost: {
-    label: 'Delete Post',
-    class: "my-0 py-0",
-    variant: "light",
-    style: "marginLeft: 'auto'",
-    message: "You need to be logged in to delete a Post"
-  },
-  deleteProject: {
-    label: 'Delete Project',
-    class: "my-0 py-0",
-    variant: "light",
-    style: "marginLeft: 'auto'",
-    message: "You need to be logged in to delete a Project"
-  }
-}
 
 function AlertBubble({action, icon}: AlertBubbleProp) {
   const [show, setShow] = useState(false);

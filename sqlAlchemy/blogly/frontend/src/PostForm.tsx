@@ -1,6 +1,6 @@
 //dependencies
 import React, { useState, useEffect, useContext } from "react";
-import { useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -153,6 +153,38 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
     }
   }
 
+  /** Adjusts submit button label if post exists. Disables button and renders
+   *  overlay if there is no logged in user  */
+  function renderSubmitButton() {
+    return <div className="">
+      {user?.email === 'j@test.com'
+        ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
+        : <AlertBubble action={postData.id === 0 ? 'addPost' : 'editPost'} />
+      }
+      <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+    </div>
+  }
+
+  /** Adjusts submit button label if post exists. Disables button and renders
+ *  overlay if there is no logged in user  */
+  function renderDeleteButton() {
+    return <div className="Post-controls">
+      {/* render delete button if data exists */}
+      {postData.id !== 0 &&
+      // handle overlay if user is logged in
+        (user?.email === 'j@test.com'
+
+          ? <Button onClick={() => {
+            deletePost();
+            handleClose();
+            setIsPostRendering(false);
+          }
+          } variant="danger">Delete</Button>
+          : <AlertBubble action={'deletePost'} />
+        )
+      }
+    </div>
+  }
   useEffect(() => { }, [postData])
 
   return (
@@ -172,29 +204,8 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
               />
             </Form.Group>
             <DraftEditor raw={rawData} onEditorDataChange={handleEditorData} />
-            {/* consider refactoring this....super messy looking... */}
-            <div className="">
-              {user?.email === 'j@test.com'
-                ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
-                : <AlertBubble action={postData.id === 0 ? 'addPost' : 'editPost'} />
-              }
-              <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-            </div>
-            <div className="Post-controls">
-              { postData.id !== 0 && 
-                (user?.email === 'j@test.com' 
-
-                ? <Button onClick={() => {
-                  deletePost();
-                  handleClose();
-                  setIsPostRendering(false);
-                }
-                } variant="danger">Delete</Button>
-                : <AlertBubble action={'deletePost'} />
-              )
-              }
-
-            </div>
+            {renderSubmitButton()}
+            {renderDeleteButton()}
           </Form>
         </Col>
       </Row>
