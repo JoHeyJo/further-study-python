@@ -19,15 +19,15 @@ type actionProperties = {
 }
 
 const actionProperties: actionProperties = {
-  newPost: {
+  addPost: {
     label: 'Add Post',
     class: "my-0 py-0",
     variant: "light",
     style: "marginLeft: 'auto'",
-    message: "You need to be logged in to add a Project"
+    message: "You need to be logged in to add a Post"
   },
-  edit: {
-    label: 'Edit Project',
+  editPost: {
+    label: 'Edit Post',
     class: "my-0 py-0",
     variant: "light",
     style: "marginLeft: 'auto'",

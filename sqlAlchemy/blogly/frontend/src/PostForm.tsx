@@ -176,7 +176,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
             <div className="">
               {user?.email === 'j@test.com'
                 ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
-                : <AlertBubble action={!project.id ? 'addProject' : 'updateProject'} />
+                : <AlertBubble action={postData.id === 0 ? 'addPost' : 'editPost'} />
               }
               <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
