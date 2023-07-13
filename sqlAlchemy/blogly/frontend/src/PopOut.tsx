@@ -35,13 +35,12 @@ function PopOut({ action, postId, fetchEditPost }: PopOutProp) {
   const customDialogClassName = 'custom-modal-dialog';
 
   function buttonStyle() {
-    if(user?.email === 'j@est.com'){
       if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0" variant="light" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
       if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
       if (action === 'new project') return <Button onClick={handleShow} className="m-0" variant="light" style={{ marginRight: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
-    } else {
-      return <AlertBubble action={<FontAwesomeIcon icon={faPlus} />}/>
-    }
+      // if (action === 'new post') return <AlertBubble action={'newPost'} icon={<FontAwesomeIcon icon={faPlus} />}/>
+      // if (action === 'edit') return <AlertBubble action={'edit'} icon={<FontAwesomeIcon icon={faPenToSquare} />}/>
+      // if (action === 'new project') return <AlertBubble action={'newProject'} icon={<FontAwesomeIcon icon={faPlus} />}/>
   }
 
   function modalAction() {

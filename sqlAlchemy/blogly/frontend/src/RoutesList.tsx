@@ -41,7 +41,7 @@ function RoutesList({ signup, login, currentUser }: RoutesListProps) {
         <Route path='/users/:user_id/edit' element={<UserForm />} />
         <Route path="posts/:post_id" element={<Post />} />
         <Route path='/homepage' element={<HomePage />} />
-        <Route path='/users/:user_id/projects/new' element={<ProjectForm />} />
+        {/* <Route path='/users/:user_id/projects/new' element={<ProjectForm />} /> */}
         <Route path='/users/:user_id/projects/:project_id' element={<Project />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

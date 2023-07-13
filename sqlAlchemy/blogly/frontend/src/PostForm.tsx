@@ -1,6 +1,6 @@
 //dependencies
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -8,8 +8,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { userGet, postAdd, postEdit, postUpdate, projectPostAdd, postDelete } from './api';
 import { IUser, IPost, IAlert } from "./interface";
 import AlertPopUp from './AlertPopUp';
-import { ProjectContext, PostContext } from "./userContext";
+import { ProjectContext, PostContext, UserContext } from "./userContext";
 import DraftEditor from "./DraftEditor";
+import AlertBubble from "./AlertBubble";
 //styles
 import './style/PostForm.css';
 
@@ -34,6 +35,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const [rawData, setRawData] = useState<any>();
   const [alert, setAlert] = useState<IAlert>(defaultAlert);
   const { fetchProjectPosts, projectId } = useContext(ProjectContext);
+  const { user } = useContext(UserContext);
   const { setIsPostRendering } = useContext(PostContext);
 
   const params = useParams();
@@ -172,7 +174,10 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
             <DraftEditor raw={rawData} onEditorDataChange={handleEditorData} />
             {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
             <div className="">
-              <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
+              {user?.email === 'j@test.com'
+                ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
+                : <AlertBubble action={!project.id ? 'addProject' : 'updateProject'} />
+              }
               <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
             <div className="Post-controls">

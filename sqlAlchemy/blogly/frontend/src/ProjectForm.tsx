@@ -1,10 +1,12 @@
 //dependencies
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Alert, Button } from "react-bootstrap";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 //components
 import { projectAdd, projectUpdate, projectEdit } from './api';
 import { IAlert, IProject } from './interface';
+import AlertBubble from './AlertBubble';
+import { UserContext } from './userContext';
 // style
 import AlertPopUp from './AlertPopUp';
 
@@ -25,11 +27,11 @@ function ProjectForm() {
   const [alert, setAlert] = useState<IAlert>(defaultAlert)
   const navigate = useNavigate();
 
-  // const location = useLocation();
-  // const userId = location.state?.userId;
   const params = useParams();
   const userId = +params.user_id!;
   const projectId = undefined;
+
+  const { user } = useContext(UserContext);
 
 
   /** Handles changes to form state */
@@ -103,12 +105,10 @@ function ProjectForm() {
           value={project.description}>
         </input>
 
-        <Button type='submit'>{!project.id ? 'Add Project' : 'Update Project'}</Button>
-        {project.id !== 0
-          ? <Button type='submit' onClick={() => navigate(`/users/${project.id}/`)}>Cancel</Button>
-          : <Button type='submit' onClick={() => navigate('/')}>Cancel</Button>
+        {user?.email === 'j@test.com'
+          ? <Button type='submit'>{!project.id ? 'Add Project' : 'Update Project'}</Button>
+          : <AlertBubble action={!project.id ? 'addProject' : 'updateProject'} />
         }
-
         {
           alert.error &&
           <AlertPopUp variant={'danger'} message={[alert.error]} />
