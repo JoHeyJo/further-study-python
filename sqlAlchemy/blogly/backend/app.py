@@ -89,7 +89,6 @@ def login():
 
 ######### User routes ########### ########### ########### ########### ###################### ########### ########### ########### ###########
 @app.get("/users")
-# @jwt_required()
 def users_all():
     """Retrieves all users in database"""
     try:
@@ -220,8 +219,9 @@ def posts_all_user(user_id):
     
 
 @app.post("/users/<int:user_id>/posts/new")
+@jwt_required()
 def posts_add(user_id):
-    """Adds new posts"""
+    """Adds new post"""
     try:
         title = request.json['title']
         content = request.json['content']
@@ -371,8 +371,10 @@ def projects_get(user_id):
 
 
 @app.post("/users/<int:user_id>/projects/new")
+@jwt_required()
 def projects_add(user_id):
     """Adds project corresponding to user"""
+
     try:
         project = Project(
             name=request.json['name'],
@@ -384,13 +386,18 @@ def projects_add(user_id):
         return jsonify(serialized)
     except Exception as e:
         print('projects_add error =>', e)
-        return jsonify({"error": f"Missing {str(e)}"})
+        return jsonify({"error": f"Missing {str(e)}"}), 404
     
 
 @app.post("/users/<int:user_id>/projects/<int:project_id>/posts/new")
+@jwt_required()
 def projects_posts_add(user_id, project_id):
     """Adds new posts corresponding to project"""
-    print('******json',request.json)
+
+    jwt_email = get_jwt_identity()
+    user_identity = User.serialize(User.query.filter(User.email == jwt_email).first())
+    if user_identity['id'] != user_id:
+        return jsonify({"error": "Unauthorized access"}), 401
     try:
         title = request.json['title']
         content = request.json['content']
@@ -405,10 +412,9 @@ def projects_posts_add(user_id, project_id):
         serialized = [Post.serialize(post) for post in posts]
         print('serialized', serialized)
         return jsonify(serialized)
-        # return redirect(f"/users/{user_id}/posts")
     except Exception as e:
         print("keyerror>>>>>>", e)
-        return jsonify({"error": f"Missing {str(e)}"}), 401
+        return jsonify({"error": f"Missing {str(e)}"}), 404
 
 
 @app.get("/users/<int:user_id>/projects/<int:project_id>")
@@ -435,5 +441,35 @@ def projects_delete(project_id):
         db.session.commit()
         return jsonify({'message':'Project deleted'})
     except Exception as e:
-        print('********projects_delete error =>', e)
+        print('projects_delete error =>', e)
         return jsonify({"error": f"{str(e)}"})
+
+
+
+
+# Error handling for missing or invalid JWT
+
+# from flask_jwt_extended import jwt_required, JWTManager, get_jwt_identity
+
+# app = Flask(__name__)
+# jwt = JWTManager(app)
+
+# @app.route('/protected')
+# @jwt_required()
+# def protected_route():
+#     # Get the JWT identity
+#     current_user = get_jwt_identity()
+#     # Rest of your code...
+
+# @app.errorhandler(Exception)
+# def handle_jwt_errors(e):
+#     if isinstance(e, JWTError):
+#         # Handle JWT-related errors
+#         response = {
+#             'message': 'Invalid or missing token',
+#             'error': str(e)
+#         }
+#         return jsonify(response), 401
+#     else:
+#         # Handle other exceptions
+#         return 'Internal Server Error', 500

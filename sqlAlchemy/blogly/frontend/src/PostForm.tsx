@@ -39,7 +39,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   const { setIsPostRendering } = useContext(PostContext);
 
   const params = useParams();
-  const userId = +params.user_id!;
+  const userId = user?.id;
 
 
   /** fetches data on mount*/
@@ -127,7 +127,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
         setPostData(defaultPost);
       } catch (error: any) {
         setAlert(error)
-        console.error(`Error adding new post => ${error}`)
+        console.error(`Error adding new post => ${error.error}`)
       }
     }
     //edit individual post
@@ -138,7 +138,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
         fetchProjectPosts();
         fetchEditPost(postId);
       } catch (error: any) {
-        console.error(`Error updating post => ${error}`)
+        console.error(`Error updating post => ${error.error}`)
       }
     }
     //adds post corresponding to project
@@ -148,7 +148,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
         setPostData(defaultPost);
         fetchProjectPosts();
       } catch (error: any) {
-        console.error(`Error adding project post => ${error}`);
+        console.error(`Error adding project post => ${error.error}`);
       }
     }
   }
@@ -157,21 +157,21 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
    *  overlay if there is no logged in user  */
   function renderSubmitButton() {
     return <div className="">
-      {user?.email === 'j@test.com'
+      {true
         ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
         : <AlertBubble action={postData.id === 0 ? 'addPost' : 'editPost'} />
       }
-      <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+      {/* <Button variant="dark" onClick={handleClose}>Cancel</Button> */}
     </div>
   }
 
   /** Adjusts submit button label if post exists. Disables button and renders
  *  overlay if there is no logged in user  */
   function renderDeleteButton() {
-    return <div className="Post-controls">
+    return <>
       {/* render delete button if data exists */}
       {postData.id !== 0 &&
-      // handle overlay if user is logged in
+        // handle overlay if user is logged in
         (user?.email === 'j@test.com'
 
           ? <Button onClick={() => {
@@ -183,7 +183,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
           : <AlertBubble action={'deletePost'} />
         )
       }
-    </div>
+    </>
   }
   useEffect(() => { }, [postData])
 
@@ -204,8 +204,10 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
               />
             </Form.Group>
             <DraftEditor raw={rawData} onEditorDataChange={handleEditorData} />
-            {renderSubmitButton()}
-            {renderDeleteButton()}
+            <div className="PostForm-controls d-flex">
+              {renderSubmitButton()}
+              {renderDeleteButton()}
+            </div>
           </Form>
         </Col>
       </Row>

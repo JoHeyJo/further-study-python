@@ -8,7 +8,7 @@ type ApiResponse = {
   };
   status: number;
   statusText: string;
-  headers: object; 
+  headers: object;
   config: object;
 }
 
@@ -45,7 +45,7 @@ async function signup(userData: IUser) {
 async function login(userData: IUser) {
   try {
     const res: ApiResponse = await axios.post(`${BASE_URL}/login`, userData);
-    console.log('login res =====',res)
+    console.log('login res =====', res)
     console.log('signup', res)
     return res.data.token;
   } catch (error: any) {
@@ -56,7 +56,7 @@ async function login(userData: IUser) {
 
 /**Returns first and last of all users */
 async function usersGet() {
-  console.log('TOKEN in api',BuglyApi.token)
+  console.log('TOKEN in api', BuglyApi.token)
   const headers = { Authorization: `Bearer ${BuglyApi.token}` }; // Replace `token` with your actual token value
   try {
     const res = await axios.get(`${BASE_URL}/users`, { headers });
@@ -130,17 +130,6 @@ async function postsGetAll() {
   }
 }
 
-async function postsGet(userId: number) {
-  try {
-    // console.log(id)
-    const res = await axios.get(`${BASE_URL}/users/${userId}/posts`)
-    console.log('post data', res.data)
-    return res.data;
-  } catch (error: any) {
-    console.error(`API get posts error: ${error}`)
-  }
-}
-
 /**Get user post */
 async function postGet(id: number) {
   try {
@@ -153,8 +142,10 @@ async function postGet(id: number) {
 
 /** Routes new post data */
 async function postAdd(postData: IPost) {
+  console.log('token in api',BuglyApi.token)
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` };
   try {
-    const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData)
+    const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData, { headers })
     return res.data;
   } catch (error: any) {
     console.error(`API post form error: ${error}`)
@@ -225,14 +216,16 @@ async function projectsGet(userId: number | undefined) {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects`);
     return res.data;
   } catch (error: any) {
-    console.error('Error in projectsGet',error);
+    console.log('>>>>>',error)
+    console.error('Error in projectsGet', error);
     console.log(error)
     throw error.response.data
   }
 }
 
-/** Routes new project data to project route */
+/** Adds new project data to via project route */
 async function projectAdd(userId: number, projectData: IProject) {
+  const headers = { Authorization: `Bearer ${BuglyApi.token}`}
   try {
     const res = await axios.post(`${BASE_URL}/users/${userId}/projects/new`, projectData);
     return res.data;
@@ -262,12 +255,14 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
   }
 }
 
-/** Adds posts to corresonding project */
-async function projectPostAdd(userId: number, projectId: number | undefined, postData: IPost) {
+/** Adds posts to corresponding project */
+async function projectPostAdd(userId: number | undefined, projectId: number | undefined, postData: IPost) {
+  const headers = {Authorization: `Bearer ${BuglyApi.token}`};
   try {
-    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/${projectId}/posts/new`, postData);
+    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/${projectId}/posts/new`, postData, { headers });
     return res.data;
   } catch (error: any) {
+    console.log(error)
     console.error(`Error in projectPostAdd => ${error}`)
     throw error.response.data
   }
@@ -298,5 +293,5 @@ async function projectDelete(projectId?: number) {
 }
 
 
-export { login, signup, projectDelete, projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postsGet, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
+export { login, signup, projectDelete, projectPostsGet, projectPostAdd, projectGet, projectsGetAll, userGet, usersGet, userAdd, userUpdate, userDelete, userEdit, postsGetAll, postGet, postAdd, postEdit, postUpdate, postDelete, projectAdd, projectUpdate, projectEdit, projectsGet };
 
