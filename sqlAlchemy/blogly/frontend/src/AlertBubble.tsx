@@ -39,6 +39,20 @@ const actionProperties: actionProperties = {
     variant: "light",
     style: "marginLeft: 'auto'",
     message: "You need to be logged in to add a Project"
+  },
+  deletePost: {
+    label: 'Delete Post',
+    class: "my-0 py-0",
+    variant: "light",
+    style: "marginLeft: 'auto'",
+    message: "You need to be logged in to delete a Post"
+  },
+  deleteProject: {
+    label: 'Delete Project',
+    class: "my-0 py-0",
+    variant: "light",
+    style: "marginLeft: 'auto'",
+    message: "You need to be logged in to delete a Project"
   }
 }
 

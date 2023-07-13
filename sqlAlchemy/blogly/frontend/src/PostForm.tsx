@@ -172,7 +172,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
               />
             </Form.Group>
             <DraftEditor raw={rawData} onEditorDataChange={handleEditorData} />
-            {/* <Button variant="outline-primary" href={`/users/${userId ? userId : postData.userId}`}>Cancel</Button> */}
+            {/* consider refactoring this....super messy looking... */}
             <div className="">
               {user?.email === 'j@test.com'
                 ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
@@ -181,13 +181,19 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
               <Button variant="secondary" onClick={handleClose}>Cancel</Button>
             </div>
             <div className="Post-controls">
+              { postData.id !== 0 && 
+                (user?.email === 'j@test.com' 
 
-              <Button onClick={() => {
-                deletePost();
-                handleClose();
-                setIsPostRendering(false);
+                ? <Button onClick={() => {
+                  deletePost();
+                  handleClose();
+                  setIsPostRendering(false);
+                }
+                } variant="danger">Delete</Button>
+                : <AlertBubble action={'deletePost'} />
+              )
               }
-              } variant="danger">Delete</Button>
+
             </div>
           </Form>
         </Col>

@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import "./style/AlertModal.css";
 import { projectDelete } from './api';
+import { UserContextType, UserContext } from './userContext';
+import AlertBubble from './AlertBubble';
 
 type ProjectData = {
   name?: string;
@@ -23,6 +25,7 @@ type AlertModalProps = {
  */
 function AlertModal({ projectData, projectGet, isOpen }: AlertModalProps) {
   const [show, setShow] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -53,12 +56,17 @@ function AlertModal({ projectData, projectGet, isOpen }: AlertModalProps) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => {
-            deleteProject();
-            handleClose();
-          }}>
-            Delete
-          </Button>
+          {user?.email === 'j@test.com'
+            ? <Button variant="danger" onClick={() => {
+              deleteProject();
+              handleClose();
+            }}>
+              Delete
+            </Button>
+            : <AlertBubble action={'deleteProject'} />
+          }
+
+
         </Modal.Footer>
       </Modal>
     </>
