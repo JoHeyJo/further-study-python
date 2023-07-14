@@ -355,7 +355,8 @@ def projects_get_all():
         serialized = [Project.serialize(project) for project in projects]
         return jsonify(serialized)
     except Exception as e:
-        print('errrro')
+        print(f"Error in projects_get_all => {e}")
+        return jsonify({"error": f"{str(e)}"})
 
 @app.get("/users/<int:user_id>/projects")
 def projects_get(user_id):
@@ -374,7 +375,13 @@ def projects_get(user_id):
 @jwt_required()
 def projects_add(user_id):
     """Adds project corresponding to user"""
-
+    
+    jwt_email = get_jwt_identity()
+    user_identity = User.serialize(
+        User.query.filter(User.email == jwt_email).first())
+    if user_identity['id'] != user_id:
+        return jsonify({"error": "Unauthorized access"}), 401
+    
     try:
         project = Project(
             name=request.json['name'],
