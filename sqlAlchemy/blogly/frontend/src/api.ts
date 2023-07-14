@@ -223,11 +223,11 @@ async function projectsGet(userId: number | undefined) {
   }
 }
 
-/** Adds new project data to via project route */
-async function projectAdd(userId: number, projectData: IProject) {
+/** Adds new project data */
+async function projectAdd(userId: number | undefined, projectData: IProject) {
   const headers = { Authorization: `Bearer ${BuglyApi.token}`}
   try {
-    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/new`, projectData);
+    const res = await axios.post(`${BASE_URL}/users/${userId}/projects/new`, projectData, { headers });
     return res.data;
   } catch (error: any) {
     console.error(`Error in projectAdd => ${error}`)

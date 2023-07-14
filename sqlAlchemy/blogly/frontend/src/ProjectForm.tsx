@@ -3,16 +3,20 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Alert, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 //components
-import { projectAdd, projectUpdate, projectEdit } from './api';
+import { projectAdd, projectUpdate, projectEdit, projectsGet } from './api';
 import { IAlert, IProject } from './interface';
 import AlertBubble from './AlertBubble';
-import { UserContext } from './userContext';
+import { UserContext, ProjectContext } from './userContext';
 // style
 import AlertPopUp from './AlertPopUp';
 
 const defaultProject: IProject = { id: undefined, name: undefined, description: undefined, userId: undefined };
 const defaultAlert: IAlert = { error: null };
 
+type ProjectFormProp = {
+  handleClose: () => void;
+  getProject: () => void;
+}
 /** Handles user information and renders form for new/edit project
  * 
  * Props:
@@ -22,7 +26,7 @@ const defaultAlert: IAlert = { error: null };
  * 
  * App -> Form
  */
-function ProjectForm() {
+function ProjectForm({ getProject, handleClose }: ProjectFormProp) {
   const [project, setProject] = useState<IProject>(defaultProject);
   const [alert, setAlert] = useState<IAlert>(defaultAlert)
   const navigate = useNavigate();
@@ -32,6 +36,7 @@ function ProjectForm() {
   const projectId = undefined;
 
   const { user } = useContext(UserContext);
+  const { setProjects } = useContext(ProjectContext);
 
 
   /** Handles changes to form state */
@@ -43,7 +48,7 @@ function ProjectForm() {
     }))
   }
 
-  /** Fetches existing user to edit though API*/
+  /** Fetches existing Project*/
   async function fetchProject(id: number | undefined) {
     try {
       let res = await projectEdit(id)
@@ -59,14 +64,17 @@ function ProjectForm() {
     try {
       if (projectId) {
         // update project
-        let res = await projectUpdate(userId, project)
+        let res = await projectUpdate(user?.id, project)
         setProject(defaultProject)
         navigate('/')
       } else {
         // add project
-        let res = await projectAdd(userId, project)
+        const res = await projectAdd(user?.id, project)
         setProject(defaultProject);
-        navigate('/');
+        const projects = await projectsGet(user?.id);
+        setProjects(projects);
+        getProject();
+        handleClose()
       }
     } catch (error: any) {
       setAlert(error)
@@ -74,11 +82,11 @@ function ProjectForm() {
     }
   }
 
-  /** calls fetchProject on mount, if a user id is passed on render */
+  /** for editing a project. Calls fetchProject on mount, if a user id is passed on render */
   useEffect(() => {
     try {
       if (userId) {
-        fetchProject(userId);
+        // fetchProject(userId);
       }
     } catch (error: any) {
       console.error(error)

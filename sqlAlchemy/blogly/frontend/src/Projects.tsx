@@ -54,11 +54,14 @@ function Projects({ userId }: ProjectProps) {
     projectId: projectData.id,
     projectName: projectData.name,
     fetchProjectPosts,
+    setProjects,
+    getProject,
   }
 
   /**gets projects */
   async function getProject() {
     const res = await projectsGet(userId);
+    console.log('project get in Projects')
     setProjects(res);
   }
 
@@ -110,7 +113,7 @@ function Projects({ userId }: ProjectProps) {
     <>
       <h3 className="Projects-title">
         Projects
-        <PopOut action={'new project'} postId={undefined} fetchEditPost={undefined} />
+        <PopOut getProject={getProject} action={'new project'} postId={undefined} fetchEditPost={undefined} />
       </h3>
       <div>
 

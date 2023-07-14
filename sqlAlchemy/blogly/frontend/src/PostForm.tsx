@@ -148,7 +148,8 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
         setPostData(defaultPost);
         fetchProjectPosts();
       } catch (error: any) {
-        console.error(`Error adding project post => ${error.error}`);
+        console.log(error)
+        console.error(`Error adding project post => ${error}`);
       }
     }
   }
@@ -157,7 +158,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
    *  overlay if there is no logged in user  */
   function renderSubmitButton() {
     return <div className="">
-      {true
+      {user?.email === 'j@test.com'
         ? <Button type="submit" variant="primary" onClick={handleClose}>Submit</Button>
         : <AlertBubble action={postData.id === 0 ? 'addPost' : 'editPost'} />
       }

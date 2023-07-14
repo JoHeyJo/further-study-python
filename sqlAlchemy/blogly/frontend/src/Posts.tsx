@@ -83,7 +83,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             <Col className="col-4">
               <Card body style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
-                  <PopOut action={'new post'} postId={undefined} fetchEditPost={fetchPost} />
+                  <PopOut getProject={()=>{}} action={'new post'} postId={undefined} fetchEditPost={fetchPost} />
                   {
                     posts.map(p =>
                       <ListGroup.Item key={p.id} className="Posts-post" onClick={() => {
