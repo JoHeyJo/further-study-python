@@ -1,3 +1,4 @@
+from flask_jwt_extended.exceptions import JWTDecodeError
 import os
 from flask import Flask, request, redirect, jsonify, url_for
 from models import db, connect_db, User, Post, Project
@@ -287,8 +288,27 @@ def posts_edit(post_id):
 
 
 @app.patch("/posts/<int:post_id>/edit")
+@jwt_required()
 def posts_update(post_id):
     """Updates post with new data"""
+
+    jwt_email = get_jwt_identity()
+
+    post = Post.serialize(
+        Post.query.filter(Post.id == post_id).first())
+    print('post****',post)
+    
+    user = User.serialize(
+        User.query.filter((User.id == post['user_id'])).first())
+    print('user****',user)
+    
+    user_identity = User.serialize(
+        User.query.filter(User.email == jwt_email).first())
+    print('user_identity****',user_identity)
+
+    print('****IDENTITY',user, user_identity)
+    if user_identity['id'] != user['id']:
+        return jsonify({"error": "Unauthorized access"}), 401
     try:
         post = Post.query.get_or_404(post_id)
         post.title = request.json['title']
@@ -375,7 +395,7 @@ def projects_get(user_id):
 @jwt_required()
 def projects_add(user_id):
     """Adds project corresponding to user"""
-    
+
     jwt_email = get_jwt_identity()
     user_identity = User.serialize(
         User.query.filter(User.email == jwt_email).first())
@@ -480,3 +500,29 @@ def projects_delete(project_id):
 #     else:
 #         # Handle other exceptions
 #         return 'Internal Server Error', 500
+
+
+# try this out for error handling in the future
+
+# @app.patch("/posts/<int:post_id>/edit")
+# @jwt_required()
+# def posts_update(post_id):
+#     """Updates post with new data"""
+
+#     try:
+#         post = Post.query.get_or_404(post_id)
+#         post.title = request.json['title']
+#         post.content = request.json['content']
+#         post.problem = request.json['problem']
+#         post.solution = request.json['solution']
+
+#         db.session.add(post)
+#         db.session.commit()
+
+#         return redirect(f"users/{post.user_id}/posts")
+#     except JWTDecodeError as e:
+#         print("JWTDecodeError:", e)
+#         return jsonify({"error": "Invalid or expired token"}), 401
+#     except Exception as e:
+#         print("post_update error:", e)
+#         return jsonify({"error": "An error occurred"}), 500
