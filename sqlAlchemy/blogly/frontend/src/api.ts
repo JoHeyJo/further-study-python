@@ -142,7 +142,7 @@ async function postGet(id: number) {
 
 /** Routes new post data */
 async function postAdd(postData: IPost) {
-  console.log('token in api',BuglyApi.token)
+  console.log('token in api', BuglyApi.token)
   const headers = { Authorization: `Bearer ${BuglyApi.token}` };
   try {
     const res = await axios.post(`${BASE_URL}/users/${postData.userId}/posts/new`, postData, { headers })
@@ -166,8 +166,9 @@ async function postEdit(postId: number) {
 
 /** Updates post with matching id */
 async function postUpdate(postId: number, postData: IPost) {
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }
   try {
-    const res = await axios.patch(`${BASE_URL}/posts/${postId}/edit`, postData)
+    const res = await axios.patch(`${BASE_URL}/posts/${postId}/edit`, postData, { headers })
     return res.data;
   } catch (error: any) {
     console.error(`API postUpdate error => ${error}`)
@@ -216,7 +217,7 @@ async function projectsGet(userId: number | undefined) {
     const res = await axios.get(`${BASE_URL}/users/${userId}/projects`);
     return res.data;
   } catch (error: any) {
-    console.log('>>>>>',error)
+    console.log('>>>>>', error)
     console.error('Error in projectsGet', error);
     console.log(error)
     throw error.response.data
@@ -225,7 +226,7 @@ async function projectsGet(userId: number | undefined) {
 
 /** Adds new project data */
 async function projectAdd(userId: number | undefined, projectData: IProject) {
-  const headers = { Authorization: `Bearer ${BuglyApi.token}`}
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }
   try {
     const res = await axios.post(`${BASE_URL}/users/${userId}/projects/new`, projectData, { headers });
     return res.data;
@@ -257,7 +258,7 @@ async function projectUpdate(projectId: number | undefined, projectData: IProjec
 
 /** Adds posts to corresponding project */
 async function projectPostAdd(userId: number | undefined, projectId: number | undefined, postData: IPost) {
-  const headers = {Authorization: `Bearer ${BuglyApi.token}`};
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` };
   try {
     const res = await axios.post(`${BASE_URL}/users/${userId}/projects/${projectId}/posts/new`, postData, { headers });
     return res.data;
