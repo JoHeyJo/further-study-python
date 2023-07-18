@@ -110,8 +110,9 @@ async function userUpdate(id: number, data: IUser) {
 
 /** deletes user with matching id */
 async function userDelete(id: number) {
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }
   try {
-    const res = await axios.delete(`${BASE_URL}/users/${id}/delete`)
+    const res = await axios.delete(`${BASE_URL}/users/${id}/delete`, { headers })
     return res.data
   } catch (error: any) {
     console.error(`API Delete error: ${error}`)
@@ -177,8 +178,9 @@ async function postUpdate(postId: number, postData: IPost) {
 
 /** Deletes post with matching id*/
 async function postDelete(postId: number | undefined) {
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }
   try {
-    const res = await axios.delete(`${BASE_URL}/posts/${postId}/delete`)
+    const res = await axios.delete(`${BASE_URL}/posts/${postId}/delete`, { headers })
     return res.data;
   } catch (error: any) {
     console.error(`Error in postDelete => ${error}`)
@@ -282,8 +284,9 @@ async function projectPostsGet(userId: number | undefined, projectId: number | u
 
 /** Deletes project and all associated posts */
 async function projectDelete(projectId?: number) {
+  const headers = { Authorization: `Bearer ${BuglyApi.token}` }
   try {
-    const res = await axios.delete(`${BASE_URL}/projects/${projectId}/delete`)
+    const res = await axios.delete(`${BASE_URL}/projects/${projectId}/delete`, { headers })
     console.log('post delete', res.data)
     return res.data
   } catch (error: any) {
