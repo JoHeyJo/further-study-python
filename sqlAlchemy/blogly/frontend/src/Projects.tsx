@@ -83,20 +83,17 @@ function Projects({ userId }: ProjectProps) {
 
   /** controls when slideover opens/closes */
   function isOpen(id: number | undefined, e: any) {
-    const target = e.target.innerText;
     if (!open) {
+      // if closed, open slideover
       setOpen(true)
-      // setIsPostsShowing(true)
-    } else if (target !== projectData.name) {
-      console.log('open new project', projectData.id, id)
+    }  else if (id !== projectData.id) {
+      // if opening a different project, close current and open new project
       setOpen(!open);
       setTimeout(() => {
         setOpen(true);
       }, 500)
-      // setIsPostsShowing(true)
-    } else {
+    }  else {
       setOpen(false)
-      // setIsPostsShowing(false)
     }
   }
 
@@ -130,7 +127,7 @@ function Projects({ userId }: ProjectProps) {
                   }}>
                     <div
                       style={{ all: 'unset' }} onClick={(e) => {
-                        isOpen(projectData.id, e)
+                        isOpen(project.id, e)
                       }}
                     >
                       {project.name}
