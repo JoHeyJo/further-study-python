@@ -77,21 +77,34 @@ function Projects({ userId }: ProjectProps) {
   /** retrieves project's posts */
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectData.id)
-    console.log('fetching project posts',res)
+    console.log('fetching project posts>>>>>>>>',res)
     setPosts(res)
   }
 
+  async function fetchPosts(id: number | undefined) {
+    const res = await projectPostsGet(id, projectData.id)
+    console.log('fetching project posts>>>>>>>>', res)
+    setPosts(res)
+  }
+
+  async function openIfClosed (){
+    await fetchProjectPosts();
+    setOpen(true)
+  }
   /** controls when slideover opens/closes */
-  function isOpen(id: number | undefined, e: any) {
+  async function isOpen(id: number | undefined) {
     if (!open) {
       // if closed, open slideover
+      await fetchPosts(id);
       setOpen(true)
     }  else if (id !== projectData.id) {
       // if opening a different project, close current and open new project
-      setOpen(!open);
-      setTimeout(() => {
-        setOpen(true);
-      }, 500)
+
+      setOpen(false);
+      // await fetchProjectPosts();
+      // setTimeout(() => {/
+        // setOpen(true);
+      // }, 500)
     }  else {
       setOpen(false)
     }
@@ -101,9 +114,14 @@ function Projects({ userId }: ProjectProps) {
     setIsPostsShowing(!isPostsShowing);
   };
 
-  useEffect(() => {
-    setTimeout(() => fetchProjectPosts(), 520)
-  }, [projectData])
+  // useEffect(() => {
+  //   async function fetch(){
+
+  //     await fetchProjectPosts();
+  //   } 
+  //   fetch();
+    // setTimeout(() => fetchProjectPosts(), 520)
+  // }, [projectData])
 
 
   return (
@@ -126,8 +144,8 @@ function Projects({ userId }: ProjectProps) {
                     ))
                   }}>
                     <div
-                      style={{ all: 'unset' }} onClick={(e) => {
-                        isOpen(project.id, e)
+                      style={{ all: 'unset' }} onClick={async (e) => {
+                        await isOpen(project.id)
                       }}
                     >
                       {project.name}

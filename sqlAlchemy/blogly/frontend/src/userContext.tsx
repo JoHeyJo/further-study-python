@@ -14,7 +14,7 @@ export const UserContext = createContext<UserContextType>({
 export type ProjectContextType = {
   projectId: number | undefined;
   projectName: string | undefined;
-  fetchProjectPosts: () => void;
+  fetchProjectPosts: () => void ;
   setProjects: Dispatch<SetStateAction<IProject[]>>;
   getProject: () => void;
 }
