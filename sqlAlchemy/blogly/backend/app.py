@@ -78,7 +78,6 @@ def login():
     email = request.json['email']
     password = request.json['password']
     token = User.authenticate(email=email, password=password)
-    # print('CREDENTIALS',email, password)
     try:
         if token:
             return jsonify({"token": token})
@@ -163,9 +162,16 @@ def users_update(user_id):
 
 
 @app.delete("/users/<int:user_id>/delete")
+@jwt_required()
 def user_delete(user_id):
     """Delete user"""
-    # User.query.filter_by(id=user_id).delete()
+    jwt_identity = get_jwt_identity()
+
+    user = User.serialize(User.query.get_or_404(user_id))
+
+    if user['email'] != jwt_identity:
+        return jsonify({"error": "Unauthorize access"}), 401
+
     user = User.query.get_or_404(user_id)
     posts = posts = Post.query.filter(Post.user_id == user_id).all()
     for post in posts:
@@ -229,7 +235,6 @@ def posts_add(user_id):
         content = request.json['content']
         problem = request.json['problem']
         solution = request.json['solution']
-        # user = User.query.get_or_404(user_id)
         post = Post(title=title, content=content, user_id=user_id,
                     problem=problem, solution=solution)
 
@@ -299,7 +304,7 @@ def posts_update(post_id):
         Post.query.filter(Post.id == post_id).first())
     
     user = User.serialize(
-        User.query.filter((User.id == post['user_id'])).first())
+        User.query.filter(User.id == post['user_id']).first())
 
     if user['email'] != jwt_email:
         return jsonify({"error": "Unauthorized access"}), 401
@@ -328,9 +333,9 @@ def posts_delete(post_id):
 
     post = Post.serialize(Post.query.filter(Post.id == post_id).first())
 
-    user = User.serialize(User.query.filter(User.id == post['id']).first())
+    user = User.serialize(User.query.filter(User.id == post['user_id']).first())
 
-    if user.email != jwt_identity:
+    if user['email'] != jwt_identity:
         return jsonify({"error": "Unauthorize access"}), 401
     try:
         post = Post.query.get_or_404(post_id)
@@ -460,8 +465,18 @@ def projects_posts_get(user_id, project_id):
 
 
 @app.delete("/projects/<int:project_id>/delete")
+@jwt_required()
 def projects_delete(project_id):
     """Deletes project and all associate posts"""
+    jwt_identity = get_jwt_identity()
+
+    project = Project.serialize(Project.query.filter(Project.id == project_id).first())
+
+    user = User.serialize(User.query.filter(
+        User.id == project['user_id']).first())
+
+    if user['email'] != jwt_identity:
+        return jsonify({"error": "Unauthorize access"}), 401
     try:
         project = Project.query.get_or_404(project_id)
         posts = Post.query.filter(Post.project_id==project_id).all()
