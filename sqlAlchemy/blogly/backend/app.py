@@ -221,6 +221,7 @@ def posts_all_user(user_id):
 
 @app.post("/users/<int:user_id>/posts/new")
 @jwt_required()
+
 def posts_add(user_id):
     """Adds new post"""
     try:
@@ -296,18 +297,11 @@ def posts_update(post_id):
 
     post = Post.serialize(
         Post.query.filter(Post.id == post_id).first())
-    print('post****',post)
     
     user = User.serialize(
         User.query.filter((User.id == post['user_id'])).first())
-    print('user****',user)
-    
-    user_identity = User.serialize(
-        User.query.filter(User.email == jwt_email).first())
-    print('user_identity****',user_identity)
 
-    print('****IDENTITY',user, user_identity)
-    if user_identity['id'] != user['id']:
+    if user['email'] != jwt_email:
         return jsonify({"error": "Unauthorized access"}), 401
     try:
         post = Post.query.get_or_404(post_id)
@@ -326,8 +320,18 @@ def posts_update(post_id):
 
 
 @app.delete("/posts/<int:post_id>/delete")
+@jwt_required()
 def posts_delete(post_id):
     """"Deletes post with corresponding id"""
+
+    jwt_identity = get_jwt_identity()
+
+    post = Post.serialize(Post.query.filter(Post.id == post_id).first())
+
+    user = User.serialize(User.query.filter(User.id == post['id']).first())
+
+    if user.email != jwt_identity:
+        return jsonify({"error": "Unauthorize access"}), 401
     try:
         post = Post.query.get_or_404(post_id)
         db.session.delete(post)
