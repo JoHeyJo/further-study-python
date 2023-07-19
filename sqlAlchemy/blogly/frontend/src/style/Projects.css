@@ -14,38 +14,63 @@
 
 /* corrects the curved affect of the bottom border due to margin-collapsing  */
 .Projects-project {
-  /* position: relative; */
-  border: none;
+  width: 100%;
+  border-radius: 0 !important;
+  /* `rounded-0` inline achieves this as well */
+  /* margin: 5px; */
 
+  background-color: #cf9c04;
+  border: none;
+  border-bottom: 1px solid #808080;
+
+  /* border-radius: 10px; */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  /* position: relative; */
 }
 
 .selected {
-  /* border: none; */
-  /* border-bottom: 1px solid grey; */
-  color: darkgray;
+  border-radius: 0;
+  border: none;
+  /* margin-bottom: 15px; */
+  border-bottom: 1px solid grey;
+  color: #808080;
   font-weight: 300;
+
+  /* ************depressed effect************ */
+  /* transform: translateY(5px); */
+  transition: box-shadow .2s;
+  /* box-shadow: */
+  /* inset 5px 5px 10px 0 #664D02, */
+  /* inset 0 0 100px 0 #664D02; */
+
+  background: #cf9c04;
+  -webkit-box-shadow: inset 0px 0px 5px #664D02;
+  -moz-box-shadow: inset 0px 0px 5px #664D02;
+  box-shadow: inset 0px 0px 5px #664D02;
+  outline: none;
 }
 
 .Projects-project::after {
-  content: "";
+  /* content: "";
   display: block;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #808080;
+  background-color: #cf9c04; */
 }
 
 .selected::after {
-  content: "";
+  /* content: "";
   display: block;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1px;
-  border-bottom: 4px solid rgba(211, 211, 211, .9);
+  height: 1px; */
+
+  /* border-bottom: 4px solid rgba(211, 211, 211, .9); */
 }
 
 .Projects-title {
@@ -53,4 +78,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.Projects-project-title {
+  /* display: block; */
+  /* or display: inline-block; */
+  /* text-align: left; */
 }

@@ -82,9 +82,7 @@ function Projects({ userId }: ProjectProps) {
   }
 
   async function fetchPosts(userIdFromProject: number | undefined, projectId?: number) {
-    console.log('fetching project posts>>>>>>>>', userIdFromProject, projectId)
     const res = await projectPostsGet(userIdFromProject, projectId)
-    console.log('fetching project posts>>>>>>>>', res)
     setPosts(res)
   }
 
@@ -92,12 +90,8 @@ function Projects({ userId }: ProjectProps) {
   async function isOpen(id?: number, projectId?: number) {
     if (!open) {
       // if closed, open slideover
-      try {
         await fetchPosts(id, projectId)
         setOpen(true)
-      } catch (error: any) {
-        console.log('not loaded');
-      }
     } else if (projectId !== projectData.id) {
       // if opening a different project, close current and open new project
       setOpen(false);
@@ -125,16 +119,16 @@ function Projects({ userId }: ProjectProps) {
 
         <Row className="Projects-container">
           <Col className="col-6">
-            <ListGroup className="align-items-start">
+            <ListGroup className="">
               {
                 projects.map(project =>
-                  <ListGroup.Item key={project.id} className={projectData.id === project.id ? "Projects-project selected" : "Projects-project"} onClick={(e) => {
+                  <ListGroup.Item key={project.id} className={projectData.id === project.id ? "Projects-project selected" : "Projects-project "} onClick={(e) => {
                     setProjectData(p => ({
                       ...p, name: project.name, id: project.id
                     }
                     ))
                   }}>
-                    <div
+                    <div className="Projects-project-title"
                       style={{ all: 'unset' }} onClick={async (e) => {
                         console.log('projectd', project.user_id)
                         await isOpen(project.user_id, project.id)
@@ -153,7 +147,7 @@ function Projects({ userId }: ProjectProps) {
         </Row>
         <Row className="User-post-details">
           <Col>
-            <h3 style={{ width: '400px' }}>Posts</h3>
+            <h3 style={{ width: '400px', textAlign: 'center' }}>Posts</h3>
             <Collapse in={open} dimension="width">
               <Col>
                 <div className="User-posts">

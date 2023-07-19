@@ -59,7 +59,6 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
 
   /** fetches Project post onClick */
   async function fetchPost(postId: number) {
-    console.log('Posts - fetching edited post')
     const res = await postGet(postId);
     setPost(res);
   }
@@ -92,7 +91,6 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                       }
                       }>
                         <span className={`${p.id === (post && post.id) ? 'title-selected' : ''}`}>{p.title}
-                          {/* <FontAwesomeIcon className={`${p.id === (post && post.id) ? "Posts-post-icon-right-selected" : "Posts-post-icon-right" }`}icon={faAnglesRight} /> */}
                           </span>
                         {p.id === (post && post.id)
                         && 
