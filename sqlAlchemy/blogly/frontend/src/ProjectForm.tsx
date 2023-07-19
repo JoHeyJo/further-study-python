@@ -10,7 +10,7 @@ import { UserContext, ProjectContext } from './userContext';
 // style
 import AlertPopUp from './AlertPopUp';
 
-const defaultProject: IProject = { id: undefined, name: undefined, description: undefined, userId: undefined };
+const defaultProject: IProject = { id: undefined, name: undefined, description: undefined, user_id: undefined };
 const defaultAlert: IAlert = { error: null };
 
 type ProjectFormProp = {

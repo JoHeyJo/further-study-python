@@ -13,7 +13,7 @@ import { IProject, IPost } from "./interface";
 
 
 const defaultProject: IProject = {
-  id: undefined, name: '', description: '', userId: undefined
+  id: undefined, name: '', description: '', user_id: undefined
 }
 /** Renders project 
  * 

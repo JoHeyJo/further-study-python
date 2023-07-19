@@ -44,5 +44,5 @@ export interface IProject {
   id: number | undefined;
   name:string | undefined;
   description: string | undefined;
-  userId: number | undefined;
+  user_id: number | undefined;
 }

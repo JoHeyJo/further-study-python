@@ -77,35 +77,33 @@ function Projects({ userId }: ProjectProps) {
   /** retrieves project's posts */
   async function fetchProjectPosts() {
     const res = await projectPostsGet(userId, projectData.id)
-    console.log('fetching project posts>>>>>>>>',res)
-    setPosts(res)
-  }
-
-  async function fetchPosts(id: number | undefined) {
-    const res = await projectPostsGet(id, projectData.id)
     console.log('fetching project posts>>>>>>>>', res)
     setPosts(res)
   }
 
-  async function openIfClosed (){
-    await fetchProjectPosts();
-    setOpen(true)
+  async function fetchPosts(userIdFromProject: number | undefined, projectId?: number) {
+    console.log('fetching project posts>>>>>>>>', userIdFromProject, projectId)
+    const res = await projectPostsGet(userIdFromProject, projectId)
+    console.log('fetching project posts>>>>>>>>', res)
+    setPosts(res)
   }
+
   /** controls when slideover opens/closes */
-  async function isOpen(id: number | undefined) {
+  async function isOpen(id?: number, projectId?: number) {
     if (!open) {
       // if closed, open slideover
-      await fetchPosts(id);
-      setOpen(true)
-    }  else if (id !== projectData.id) {
+      try {
+        await fetchPosts(id, projectId)
+        setOpen(true)
+      } catch (error: any) {
+        console.log('not loaded');
+      }
+    } else if (projectId !== projectData.id) {
       // if opening a different project, close current and open new project
-
       setOpen(false);
-      // await fetchProjectPosts();
-      // setTimeout(() => {/
-        // setOpen(true);
-      // }, 500)
-    }  else {
+      await fetchPosts(id, projectId);
+      setOpen(true)
+    } else {
       setOpen(false)
     }
   }
@@ -113,16 +111,6 @@ function Projects({ userId }: ProjectProps) {
   const handleParentStateChange = () => {
     setIsPostsShowing(!isPostsShowing);
   };
-
-  // useEffect(() => {
-  //   async function fetch(){
-
-  //     await fetchProjectPosts();
-  //   } 
-  //   fetch();
-    // setTimeout(() => fetchProjectPosts(), 520)
-  // }, [projectData])
-
 
   return (
     <>
@@ -145,7 +133,8 @@ function Projects({ userId }: ProjectProps) {
                   }}>
                     <div
                       style={{ all: 'unset' }} onClick={async (e) => {
-                        await isOpen(project.id)
+                        console.log('projectd', project.user_id)
+                        await isOpen(project.user_id, project.id)
                       }}
                     >
                       {project.name}
