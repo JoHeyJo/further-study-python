@@ -101,8 +101,11 @@ function Projects({ userId }: ProjectProps) {
     } else if (projectId !== projectData.id) {
       // if opening a different project, close current and open new project
       setOpen(false);
-      await fetchPosts(id, projectId);
-      setOpen(true)
+      setTimeout(async () => {
+        await fetchPosts(id, projectId);
+        setOpen(true)
+      },500)
+      
     } else {
       setOpen(false)
     }
