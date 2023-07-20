@@ -22,3 +22,11 @@
 .basicStyling, .public-DraftStyleDefault-block {
   background-color: #8C7A45;
 }
+
+.form-label { 
+  background-color: black;
+}
+
+.form-group {
+  background-color: red;
+}

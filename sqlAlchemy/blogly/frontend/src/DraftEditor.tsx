@@ -104,7 +104,7 @@ function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
     <>
       {/* <button onClick={_onBoldClick}>Bold</button> */}
       <Form.Group controlId="form-content">
-        <InputGroup.Text>Content:</InputGroup.Text>
+        <Form.Label>Content:</Form.Label>
         <Editor handleReturn={(event) => handleReturn(event, "content")}
           blockStyleFn={myBlockStyleFn}
           editorState={editorState.content}
@@ -112,7 +112,7 @@ function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
           onChange={(state) => onEditorChange('content', state)} />
       </Form.Group>
       <Form.Group controlId="form-problem">
-        <InputGroup.Text>Problem:</InputGroup.Text>
+        <Form.Label>Problem:</Form.Label>
         <Editor handleReturn={(event) => handleReturn(event, "problem")}
           blockStyleFn={myBlockStyleFn}
           editorState={editorState.problem}
@@ -120,7 +120,7 @@ function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
           onChange={(state) => onEditorChange('problem', state)} />
       </Form.Group>
       <Form.Group controlId="form-solution">
-        <InputGroup.Text>Solution:</InputGroup.Text>
+        <Form.Label>Solution:</Form.Label>
         <Editor handleReturn={(event) => handleReturn(event, "solution")}
           blockStyleFn={myBlockStyleFn}
           editorState={editorState.solution}

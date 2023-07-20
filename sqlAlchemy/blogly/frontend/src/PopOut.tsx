@@ -59,7 +59,7 @@ function PopOut({ getProject, action, postId, fetchEditPost }: PopOutProp) {
         <Modal.Header closeButton>
           <Modal.Title>{modalHeader()} </Modal.Title>
         </Modal.Header>
-        <Modal.Body >
+        <Modal.Body className="custom-modal-body">
           {modalAction()}
         </Modal.Body>
       </Modal>

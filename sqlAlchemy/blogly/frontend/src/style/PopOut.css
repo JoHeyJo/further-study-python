@@ -3,6 +3,11 @@
   /* Change to the desired background color */
   /* opacity: 1; */
 }
+.custom-modal-body {
+  background-color: #212529;
+  /* Change to the desired background color */
+  /* opacity: 1; */
+}
 
 .btn {
   border: none;
@@ -19,3 +24,4 @@
 .btn:focus {
   background-color: #cf9c04;
 }
+

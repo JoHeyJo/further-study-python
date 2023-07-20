@@ -14,6 +14,25 @@
   padding-top: .9rem;
 }
 
+/* changes text input box */
 .PostForm-title {
   background-color: #8C7A45;
+}
+
+.PostForm-col{
+  background-color: #212529;
+}
+
+/* changes title text box */
+.PostForm-label {
+  background-color: transparent;
+}
+
+/* this targets the desired area but the color is overwritten by the global color set in App.css... consider appying the color to indiivdual components.... */
+.PostForm-form {
+  background-color: red !important;
+}
+
+* {
+  background-color: transparent;
 }

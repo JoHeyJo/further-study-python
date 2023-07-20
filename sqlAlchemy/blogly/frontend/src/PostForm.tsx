@@ -191,10 +191,10 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
   return (
     <Container className="w-30">
       <Row >
-        <Col className="justify-content-center">
+        <Col className="justify-content-center PostForm-col">
           <Form onSubmit={handleSubmit} className="PostForm-form">
             <Form.Group controlId="form-title">
-              <InputGroup.Text>Title:</InputGroup.Text>
+              <Form.Label className="PostForm-label">Title:</Form.Label>
               <Form.Control
                 type="text"
                 className="PostForm-title"
