@@ -1,0 +1,16 @@
+.btn {
+  border: none;
+}
+
+/* Add hover effect */
+.btn:hover {
+  background-color: #cf9c04;
+  > svg {
+      color: grey;
+  }
+}
+
+.btn:focus {
+  background-color: #cf9c04;
+  /* box-shadow: none; */
+}
