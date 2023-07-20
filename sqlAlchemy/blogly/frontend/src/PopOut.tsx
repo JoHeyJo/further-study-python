@@ -23,7 +23,7 @@ type PopOutProp = {
  * [Projects, Posts, Post ] => PopOut
  */
 function PopOut({ getProject, action, postId, fetchEditPost }: PopOutProp) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const { projectName } = useContext(ProjectContext);
 
   const { user } = useContext(UserContext);
@@ -31,31 +31,31 @@ function PopOut({ getProject, action, postId, fetchEditPost }: PopOutProp) {
   const handleClose = () => setShow(false);
 
   const handleShow = () => setShow(true);
-  
+
   const customDialogClassName = 'custom-modal-dialog';
 
   function buttonStyle() {
     if (action === 'new post') return <Button onClick={handleShow} className="my-0 py-0 btn" variant="outline-dark" style={{ marginLeft: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
-      if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
+    if (action === 'edit') return <div onClick={handleShow}><FontAwesomeIcon icon={faPenToSquare} /></div>
     if (action === 'new project') return <Button onClick={handleShow} className="m-0 btn" variant="outline-dark" style={{ marginRight: 'auto' }}><FontAwesomeIcon icon={faPlus} /></Button>
   }
 
   function modalAction() {
     return action === 'new project'
-      ? <ProjectForm handleClose={handleClose} getProject={getProject }/>
+      ? <ProjectForm handleClose={handleClose} getProject={getProject} />
       : <PostForm handleClose={handleClose} postId={postId} fetchEditPost={fetchEditPost} />
   }
 
-  function modalHeader(){
-    if( action === 'new project') return 'Create new project'
-    if( action === 'new post') return 'Create new post'
-    if (action === 'edit') return `Edit post for ${ projectName }`
+  function modalHeader() {
+    if (action === 'new project') return 'Create new project'
+    if (action === 'new post') return 'Create new post'
+    if (action === 'edit') return `Edit post for ${projectName}`
   }
-  
+
   return (
     <>
       {buttonStyle()}
-      <Modal dialogClassName={action === 'new post' || action === 'edit' ? customDialogClassName : ''} show={show} onHide={handleClose}>
+      <Modal className="custom-modal" dialogClassName={action === 'new post' || action === 'edit' ? customDialogClassName : ''} show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{modalHeader()} </Modal.Title>
         </Modal.Header>

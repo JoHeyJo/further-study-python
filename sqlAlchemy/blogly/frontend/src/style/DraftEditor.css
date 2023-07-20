@@ -3,7 +3,6 @@
   border-radius: 5px;
   opacity: .5;
   height: 10rem;
-  /* width: 100%; */
 }
 
 .basicStyling {
@@ -16,4 +15,10 @@
   border: 1px solid rgba(128, 128, 128, 0.5);
   background-color: #fff;
   border-radius: 5px;
+}
+
+
+/* Styles Editor container */
+.basicStyling, .public-DraftStyleDefault-block {
+  background-color: #8C7A45;
 }

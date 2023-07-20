@@ -13,3 +13,7 @@
 .PostForm-controls {
   padding-top: .9rem;
 }
+
+.PostForm-title {
+  background-color: #8C7A45;
+}

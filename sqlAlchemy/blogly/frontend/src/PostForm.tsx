@@ -195,7 +195,6 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
           <Form onSubmit={handleSubmit} className="PostForm-form">
             <Form.Group controlId="form-title">
               <InputGroup.Text>Title:</InputGroup.Text>
-              {/* <Form.Label>Title:</Form.Label> */}
               <Form.Control
                 type="text"
                 className="PostForm-title"
