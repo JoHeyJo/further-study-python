@@ -36,6 +36,7 @@ function myBlockStyleFn(contentBlock: any) {
  * 
  */
 function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
+  const [editorFocused, setEditorFocused] = useState<string | null>(null);
   const [editorState, setEditorState] = useState<EditorStateObject>({
     content: EditorState.createEmpty(),
     problem: EditorState.createEmpty(),
@@ -81,51 +82,74 @@ function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
     onEditorDataChange(field, serialized)
   }
 
-  function convertToRich(raw: any){
-    console.log('raw in convertToRich:', raw);
+  function convertToRich(raw: any) {
     const contentState = convertFromRaw(JSON.parse(raw));
     const editorState = EditorState.createWithContent(contentState);
     return editorState;
   }
 
-  useEffect(() => {
-      if(raw){
-        console.log('raw in drafteditor', raw)
-        setEditorState((s) => ({
-          content: convertToRich(raw.content),
-          problem: convertToRich(raw.problem),
-          solution: convertToRich(raw.solution)
-        }))
+  const handleEditorFocus = (editorKey: string) => {
+    setEditorFocused(editorKey);
+  };
 
-      }
-  },[raw])
+  const handleEditorBlur = (editorKey: string) => {
+    setEditorFocused(null);
+  };
+
+  useEffect(() => {
+    if (raw) {
+      setEditorState((s) => ({
+        content: convertToRich(raw.content),
+        problem: convertToRich(raw.problem),
+        solution: convertToRich(raw.solution)
+      }))
+
+    }
+  }, [raw])
 
   return (
     <>
       {/* <button onClick={_onBoldClick}>Bold</button> */}
       <Form.Group controlId="form-content">
         <Form.Label>Content:</Form.Label>
-        <Editor handleReturn={(event) => handleReturn(event, "content")}
-          blockStyleFn={myBlockStyleFn}
-          editorState={editorState.content}
-          handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)}
-          onChange={(state) => onEditorChange('content', state)} />
+
+        <div className={`my-editor ${editorFocused === 'editor1' ? 'focused' : ''}`}>
+          <Editor handleReturn={(event) => handleReturn(event, "content")}
+            blockStyleFn={myBlockStyleFn}
+            editorState={editorState.content}
+            onFocus={() => handleEditorFocus('editor1')}
+            onBlur={() => handleEditorBlur('editor1')}
+            handleKeyCommand={(state) => handleKeyCommand('content', state, editorState)}
+            onChange={(state) => onEditorChange('content', state)} />
+        </div>
+
       </Form.Group>
       <Form.Group controlId="form-problem">
         <Form.Label>Problem:</Form.Label>
-        <Editor handleReturn={(event) => handleReturn(event, "problem")}
-          blockStyleFn={myBlockStyleFn}
-          editorState={editorState.problem}
-          handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)}
-          onChange={(state) => onEditorChange('problem', state)} />
+
+        <div className={`my-editor ${editorFocused === 'editor2' ? 'focused' : ''}`}>
+          <Editor handleReturn={(event) => handleReturn(event, "problem")}
+            blockStyleFn={myBlockStyleFn}
+            editorState={editorState.problem}
+            onFocus={() => handleEditorFocus('editor2')}
+            onBlur={() => handleEditorBlur('editor2')}
+            handleKeyCommand={(state) => handleKeyCommand('problem', state, editorState)}
+            onChange={(state) => onEditorChange('problem', state)} />
+        </div>
+
       </Form.Group>
       <Form.Group controlId="form-solution">
         <Form.Label>Solution:</Form.Label>
-        <Editor handleReturn={(event) => handleReturn(event, "solution")}
-          blockStyleFn={myBlockStyleFn}
-          editorState={editorState.solution}
-          handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)}
-          onChange={(state) => onEditorChange('solution', state)} />
+        <div className={`my-editor ${editorFocused === 'editor3' ? 'focused' : ''}`}>
+
+          <Editor handleReturn={(event) => handleReturn(event, "solution")}
+            blockStyleFn={myBlockStyleFn}
+            editorState={editorState.solution}
+            onFocus={() => handleEditorFocus('editor3')}
+            onBlur={() => handleEditorBlur('editor3')}
+            handleKeyCommand={(state) => handleKeyCommand('solution', state, editorState)}
+            onChange={(state) => onEditorChange('solution', state)} />
+        </div>
       </Form.Group>
     </>
   )

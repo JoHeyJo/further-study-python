@@ -17,18 +17,23 @@
   border-radius: 5px;
 }
 
+/* .public-DraftStyleDefault-block */
+.my-editor.focused {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
 
-/* Styles Editor container */
-.basicStyling, .public-DraftStyleDefault-block {
+.my-editor {
   background-color: #212529;
   color: #adb5bd;
 }
 
-/* .basicStyling, */
-.public-DraftStyleDefault-block:focus {
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+/* Styles Editor container */
+.basicStyling {
+  background-color: #212529;
+  color: #adb5bd;
 }
+
 
 .form-label { 
   background-color: #212529;
