@@ -19,8 +19,9 @@
 
 /* .public-DraftStyleDefault-block */
 .my-editor.focused {
-  border-color: #80bdff;
+  border:1px solid #86b7fe;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-radius: 5px;
 }
 
 .my-editor {
