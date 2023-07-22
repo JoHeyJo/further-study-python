@@ -1,8 +1,8 @@
 .PostForm-control{
   /* height: 150px;
  */
- border: 1px solid grey;
- border-radius: 5px;
+ /* border: 1px solid grey; */
+ /* border-radius: 5px; */
  opacity: .5;
 }
 
@@ -16,7 +16,13 @@
 
 /* changes text input box */
 .PostForm-title {
-  background-color: #8C7A45;
+  background-color: #212529;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  color: #adb5bd;
+}
+.PostForm-title:focus {
+  background-color: #212529;
+  color: #adb5bd;
 }
 
 .PostForm-col{
@@ -28,9 +34,8 @@
   background-color: transparent;
 }
 
-/* this targets the desired area but the color is overwritten by the global color set in App.css... consider appying the color to indiivdual components.... */
 .PostForm-form {
-  background-color: red !important;
+  background-color: #212529;
 }
 
 * {

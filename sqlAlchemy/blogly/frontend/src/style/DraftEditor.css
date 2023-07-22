@@ -20,13 +20,21 @@
 
 /* Styles Editor container */
 .basicStyling, .public-DraftStyleDefault-block {
-  background-color: #8C7A45;
+  background-color: #212529;
+  color: #adb5bd;
+}
+
+/* .basicStyling, */
+.public-DraftStyleDefault-block:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-label { 
-  background-color: black;
+  background-color: #212529;
+  color: #adb5bd;
 }
 
-.form-group {
-  background-color: red;
-}
+/* .form-group {
+  background-color: #f5f6f7;
+} */
