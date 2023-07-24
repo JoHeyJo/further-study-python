@@ -68,15 +68,15 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
           {/* { initialPost && <ViewPopOut post={convertedPost} />} */}
           <ViewPopOut post={convertedPost} />
         </span>
-        <Stack direction="horizontal" className="" >
+        <Stack direction="vertical" className="" >
           <h6 className="Post-subtitle">Context:</h6>
           <h5 className="Post-content ms-2">{content}</h5>
         </Stack>
-        <Stack direction="horizontal" className="" id="problem-stack">
+        <Stack direction="vertical" className="" id="problem-stack">
           <h6 className="Post-subtitle">Problem:</h6>
           <div className="Post-problem ms-2">{problem}</div>
         </Stack>
-        <Stack direction="horizontal" className="">
+        <Stack direction="vertical" className="">
           <h6 className="Post-subtitle">Solution:</h6>
           <div className="Post-solution container ms-2">{solution}</div>
         </Stack>

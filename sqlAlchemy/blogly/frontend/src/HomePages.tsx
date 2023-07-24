@@ -4,7 +4,7 @@ import { postsGetAll } from './api'
 //Components & models
 import { Link } from 'react-router-dom';
 import { IPost } from "./interface";
-import DraftEditorConvertFromRaw from "./DraftEditorConvertFromRaw";
+import "./style/HomePage.css"
 
 /** Homepage for Bugly. Shows 5 most recent posts 
  * 
@@ -28,7 +28,7 @@ function HomePage() {
 
   return (
     <>
-      <h1 className="bg-light border">Bugly Recent Posts</h1>
+      <h1 className="Homepage-title">Bugly Recent Posts</h1>
       {posts.map((post, i) =>
         <section key={i}>
           <Link to={`/posts/${post.id}`}>
