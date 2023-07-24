@@ -80,7 +80,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
         <Container>
           <Row className="justify-content-center">
             <Col className="col-4">
-              <Card body style={{ width: '380px' }}>
+              <Card className="custom-card" key={'Warning'} style={{ width: '380px' }}>
                 <ListGroup className="align-items-start">
                   <PopOut getProject={()=>{}} action={'new post'} postId={undefined} fetchEditPost={fetchPost} />
                   {

@@ -5,15 +5,18 @@
 
 }
 
+.custom-modal-footer{
+  background-color: #212529;
+  border-top: solid rgba(128, 128, 128, 0.5);
+}
+
 .custom-modal {
   background-color: transparent;
-  /* Change to the desired background color */
-  /* opacity: 1; */
+
 }
 .custom-modal-body {
   background-color: #212529;
-  /* Change to the desired background color */
-  /* opacity: 1; */
+  color: #adb5bd;
 }
 
 .btn {

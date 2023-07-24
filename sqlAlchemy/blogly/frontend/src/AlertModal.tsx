@@ -47,12 +47,12 @@ function AlertModal({ projectData, projectGet, isOpen }: AlertModalProps) {
         <FontAwesomeIcon icon={faPenToSquare} className="font-icon" />
       </button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+      <Modal className="custom-modal" show={show} onHide={handleClose}>
+        <Modal.Header className="custom-modal-header" closeButton>
           <Modal.Title>{`Delete ${projectData.name}`}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>...this will delete all associated posts as well.</Modal.Body>
-        <Modal.Footer>
+        </Modal.Header >
+        <Modal.Body className="custom-modal-body">...this will delete all associated posts as well.</Modal.Body>
+        <Modal.Footer className="custom-modal-footer">
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

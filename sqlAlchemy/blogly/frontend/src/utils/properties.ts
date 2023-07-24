@@ -12,7 +12,7 @@ export const actionProperties: actionProperties = {
   addPost: {
     label: 'Add Post',
     class: "my-0",
-    variant: "warning",
+    variant: "outline-warning",
     style: "",
     message: "You need to be logged in to add a Post"
   },

@@ -53,11 +53,16 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
   const content = post ? <DraftEditorConvertFromRaw rawContent={post.content} /> : null;
 
   const convertedPost = { 'title': title, 'problem': problem, 'solution': solution, 'content': content };
-  // debugger
-  return (
+
+  useEffect(
+    ()=>{
+      setPost(initialPost)
+    },[initialPost])
+
+    return (
     <Container>
       <Stack gap={3}>
-        <h2 className="Post-title bg-light border">{title}</h2>
+        <h2 className="Post-title">{title}</h2>
         <span className="d-flex justify-content-end">
           <PopOut getProject={()=>{}}  action={'edit'} postId={post?.id || postId} fetchEditPost={fetchEditPost} />
           {/* { initialPost && <ViewPopOut post={convertedPost} />} */}

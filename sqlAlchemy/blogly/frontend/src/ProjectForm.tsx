@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Alert, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
 //components
 import { projectAdd, projectUpdate, projectEdit, projectsGet } from './api';
 import { IAlert, IProject } from './interface';
@@ -95,23 +96,28 @@ function ProjectForm({ getProject, handleClose }: ProjectFormProp) {
 
   return (
     <>
-      <form className='Form-input' onSubmit={submitProject}>
-        <label htmlFor='name-input'>Project Name</label>
-        <input onChange={handleChange}
-          name="name"
-          id="name-input"
-          className='Form-name'
-          placeholder='Project Name:'
-          value={project.name}>
-        </input>
-        <label htmlFor='description-input'>Description</label>
-        <input onChange={handleChange}
-          name="description"
-          id="description-input"
-          className='Form-description'
-          placeholder='Description:'
-          value={project.description}>
-        </input>
+      <Form className='Form-input' onSubmit={submitProject}>
+        <Form.Group>
+          <Form.Label htmlFor='name-input'>Project Name</Form.Label>
+          <Form.Control onChange={handleChange}
+            name="name"
+            id="name-input"
+            className='Form-name'
+            placeholder='Project Name:'
+            value={project.name}>
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label htmlFor='description-input'>Description</Form.Label>
+          <Form.Control onChange={handleChange}
+            name="description"
+            id="description-input"
+            className='Form-description'
+            placeholder='Description:'
+            value={project.description}>
+          </Form.Control>
+
+        </Form.Group>
 
         {user?.email === 'j@test.com'
           ? <Button type='submit'>{!project.id ? 'Add Project' : 'Update Project'}</Button>
@@ -122,7 +128,7 @@ function ProjectForm({ getProject, handleClose }: ProjectFormProp) {
           <AlertPopUp variant={'danger'} message={[alert.error]} />
         }
 
-      </form>
+      </Form>
     </>
   )
 }

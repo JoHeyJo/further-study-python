@@ -36,7 +36,7 @@
   color: #808080;
   font-weight: 300;
 
-  /* ************depressed effect************ */
+  /* ************pushed in effect************ */
   /* transform: translateY(5px); */
   transition: box-shadow .2s;
   /* box-shadow: */

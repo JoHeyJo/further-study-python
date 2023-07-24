@@ -17,3 +17,13 @@ h6 {
 #problem-stack {
   align-items: baseline;
 }
+
+.Post-title {
+  text-align: center;
+  background: #cf9c04;
+  -webkit-box-shadow: inset 0px 0px 5px #664D02;
+  -moz-box-shadow: inset 0px 0px 5px #664D02;
+  box-shadow: inset 0px 0px 5px #664D02;
+  outline: none;
+  padding: 2px;
+}
