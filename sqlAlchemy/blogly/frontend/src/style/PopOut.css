@@ -1,3 +1,10 @@
+.custom-modal-header {
+  background-color: #212529;
+  color: #adb5bd;
+  border-bottom: solid rgba(128, 128, 128, 0.5);
+
+}
+
 .custom-modal {
   background-color: transparent;
   /* Change to the desired background color */

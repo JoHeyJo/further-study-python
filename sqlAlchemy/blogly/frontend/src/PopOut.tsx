@@ -56,7 +56,7 @@ function PopOut({ getProject, action, postId, fetchEditPost }: PopOutProp) {
     <>
       {buttonStyle()}
       <Modal className="custom-modal" dialogClassName={action === 'new post' || action === 'edit' ? customDialogClassName : ''} show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header className="custom-modal-header" closeButton>
           <Modal.Title>{modalHeader()} </Modal.Title>
         </Modal.Header>
         <Modal.Body className="custom-modal-body">
