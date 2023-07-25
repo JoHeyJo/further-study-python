@@ -1,5 +1,5 @@
 .Projects {
-    display: flex;
+  display: flex;
   flex-direction: column;
   min-height: 90vh;
   background: #cf9c04;
@@ -12,7 +12,7 @@
 ;
 
 .font-icon {
-  padding-left: 10px;
+  padding-left: 20px;
   opacity: 0;
 }
 
@@ -28,34 +28,30 @@
 
 /* corrects the curved affect of the bottom border due to margin-collapsing  */
 .Projects-project {
+  margin: 1px;
   width: 100%;
   border-radius: 0 !important;
-  /* `rounded-0` inline achieves this as well */
-  /* margin: 5px; */
-
   background-color: #cf9c04;
   border: none;
   border-bottom: 1px solid #808080;
-
-  /* border-radius: 10px; */
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-  /* position: relative; */
+}
+
+.Projects-project:hover {
+  /* color: rgb(85, 83, 83); */
+  /* font-weight: 450; */
 }
 
 .selected {
   border-radius: 0;
   border: none;
-  /* margin-bottom: 15px; */
   border-bottom: 1px solid grey;
   color: #808080;
   font-weight: 300;
 
   /* ************pushed in effect************ */
-  /* transform: translateY(5px); */
+  transform: translateY(1px);
   transition: box-shadow .2s;
-  /* box-shadow: */
-  /* inset 5px 5px 10px 0 #664D02, */
-  /* inset 0 0 100px 0 #664D02; */
 
   background: #cf9c04;
   -webkit-box-shadow: inset 0px 0px 5px #664D02;
@@ -88,7 +84,6 @@
 }
 
 .Projects-title {
-  /* border-top: 2px solid grey; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,25 +98,19 @@
 .Projects-post-title {
   border-bottom: 2px solid grey;
 }
+
 .Projects-posts-post {
-  /* height: 100vh; */
+  flex: 1;
 }
 
 .Project-collapse-background {
   margin: 10px;
   padding: 20px;
   width: 98%;
-        background-color: #cf9c04;
-          border-radius: 10px;
-          box-shadow: 
-            0 8px 12px rgba(0, 0, 0, 0.15),
-            0 -4px 6px rgba(0, 0, 0, 0.3);
-          position: relative;
-  /* position: absolute; */
-  /* height: 100%; */
-
-      /* -webkit-box-shadow: inset 0px 0px 5px #664D02;
-      -moz-box-shadow: inset 0px 0px 5px #664D02;
-      box-shadow: inset 0px 0px 5px #664D02;
-      outline: none; */
+  background-color: #cf9c04;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 12px rgba(0, 0, 0, 0.15),
+    0 -4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
