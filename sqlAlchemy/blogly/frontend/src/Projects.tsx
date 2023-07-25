@@ -90,16 +90,16 @@ function Projects({ userId }: ProjectProps) {
   async function isOpen(id?: number, projectId?: number) {
     if (!open) {
       // if closed, open slideover
-        await fetchPosts(id, projectId)
-        setOpen(true)
+      await fetchPosts(id, projectId)
+      setOpen(true)
     } else if (projectId !== projectData.id) {
       // if opening a different project, close current and open new project
       setOpen(false);
       setTimeout(async () => {
         await fetchPosts(id, projectId);
         setOpen(true)
-      },500)
-      
+      }, 500)
+
     } else {
       setOpen(false)
     }
@@ -115,38 +115,37 @@ function Projects({ userId }: ProjectProps) {
         Projects
         <PopOut getProject={getProject} action={'new project'} postId={undefined} fetchEditPost={undefined} />
       </h3>
-      <div>
 
-        <Row className="Projects-container">
-          <Col className="col-6 mx-2">
-            <ListGroup className="">
-              {
-                projects.map(project =>
-                  <ListGroup.Item key={project.id} className={projectData.id === project.id ? "Projects-project selected" : "Projects-project "} onClick={(e) => {
-                    setProjectData(p => ({
-                      ...p, name: project.name, id: project.id
-                    }
-                    ))
-                  }}>
-                    <div className="Projects-project-title"
-                      style={{ all: 'unset' }} onClick={async (e) => {
-                        console.log('projectd', project.user_id)
-                        await isOpen(project.user_id, project.id)
-                      }}
-                    >
-                      {project.name}
-                      {' - '}
-                      {project.description}
-                    </div>
-                    <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen} />
-                  </ListGroup.Item>
-                )
-              }
-            </ListGroup>
-          </Col>
-        </Row>
-        <Row className="Projects-posts-post m-0">
-            <div className="Project-collapse-background">
+      <Row className="Projects-container">
+        <Col className="col-6 mx-2">
+          <ListGroup className="">
+            {
+              projects.map(project =>
+                <ListGroup.Item key={project.id} className={projectData.id === project.id ? "Projects-project selected" : "Projects-project "} onClick={(e) => {
+                  setProjectData(p => ({
+                    ...p, name: project.name, id: project.id
+                  }
+                  ))
+                }}>
+                  <div className="Projects-project-title"
+                    style={{ all: 'unset' }} onClick={async (e) => {
+                      console.log('projectd', project.user_id)
+                      await isOpen(project.user_id, project.id)
+                    }}
+                  >
+                    {project.name}
+                    {' - '}
+                    {project.description}
+                  </div>
+                  <AlertModal projectData={projectData} projectGet={getProject} isOpen={setOpen} />
+                </ListGroup.Item>
+              )
+            }
+          </ListGroup>
+        </Col>
+      </Row>
+      <Row className="Projects-posts-post m-0">
+        <div className="Project-collapse-background">
           <Col>
             <h3 className='Projects-post-title' style={{ width: '400px', textAlign: 'center' }}>Posts</h3>
             <Collapse in={open} dimension="width">
@@ -158,14 +157,14 @@ function Projects({ userId }: ProjectProps) {
                 </div>
               </Col>
             </Collapse>
-              
-          </Col>
-            </div>
-        </Row>
 
-      </div>
+          </Col>
+        </div>
+      </Row>
+
     </div>
   )
 }
 
 export default Projects;
+

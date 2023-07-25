@@ -1,4 +1,6 @@
 .Projects {
+    display: flex;
+  flex-direction: column;
   min-height: 90vh;
   background: #cf9c04;
   -webkit-box-shadow: inset 0px 0px 5px #664D02;
@@ -20,7 +22,8 @@
 }
 
 .Projects-container {
-  min-height: 25vh;
+  margin-bottom: 1rem;
+  /* min-height: 25vh; */
 }
 
 /* corrects the curved affect of the bottom border due to margin-collapsing  */
@@ -101,11 +104,7 @@
   border-bottom: 2px solid grey;
 }
 .Projects-posts-post {
-  height: 100vh;
-      /* width: 200px; */
-      /* height: 200px; */
-      /* margin: 30px; */
-
+  /* height: 100vh; */
 }
 
 .Project-collapse-background {
