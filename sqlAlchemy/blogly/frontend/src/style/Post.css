@@ -1,3 +1,4 @@
+
 .Post-solution {
   max-width: 60vw;
   border-bottom: 2px solid grey;
@@ -6,7 +7,7 @@
 }
 
 h3 {
-  border-bottom: 2px solid grey;
+  /* border-bottom: 2px solid grey; */
 }
 
 h6 {
@@ -26,4 +27,8 @@ h6 {
   box-shadow: inset 0px 0px 5px #664D02;
   outline: none;
   padding: 2px;
+}
+
+.Post-subtitle { 
+  width: 100%;
 }

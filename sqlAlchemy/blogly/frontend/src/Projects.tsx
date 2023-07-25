@@ -110,7 +110,7 @@ function Projects({ userId }: ProjectProps) {
   };
 
   return (
-    <>
+    <div className="Projects">
       <h3 className="Projects-title">
         Projects
         <PopOut getProject={getProject} action={'new project'} postId={undefined} fetchEditPost={undefined} />
@@ -118,7 +118,7 @@ function Projects({ userId }: ProjectProps) {
       <div>
 
         <Row className="Projects-container">
-          <Col className="col-6">
+          <Col className="col-6 mx-2">
             <ListGroup className="">
               {
                 projects.map(project =>
@@ -145,23 +145,26 @@ function Projects({ userId }: ProjectProps) {
             </ListGroup>
           </Col>
         </Row>
-        <Row className="User-post-details">
+        <Row className="Projects-posts-post m-0">
+            <div className="Project-collapse-background">
           <Col>
-            <h3 style={{ width: '400px', textAlign: 'center' }}>Posts</h3>
+            <h3 className='Projects-post-title' style={{ width: '400px', textAlign: 'center' }}>Posts</h3>
             <Collapse in={open} dimension="width">
               <Col>
-                <div className="User-posts">
+                <div className="Project-User-posts">
                   <ProjectContext.Provider value={ProjectData}>
                     <Posts isPostsShowing={handleParentStateChange} posts={posts || []} />
                   </ProjectContext.Provider>
                 </div>
               </Col>
             </Collapse>
+              
           </Col>
+            </div>
         </Row>
 
       </div>
-    </>
+    </div>
   )
 }
 

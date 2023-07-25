@@ -76,8 +76,8 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
 
   return (
     <>
-      <div>
-        <Container>
+      <div className="Post">
+        
           <Row className="justify-content-center">
             <Col className="col-4">
               <Card className="custom-card" key={'Warning'} style={{ width: '380px' }}>
@@ -108,7 +108,7 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
             </PostContext.Provider>
             </Col>
           </Row>
-        </Container>
+        
       </div>
     </>
   )
