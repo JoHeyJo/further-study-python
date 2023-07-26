@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AlertPopUp from "../AlertPopUp";
 // import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
+import "../style/LoginForm.css";
 
 /** Login form.
  *
@@ -50,7 +51,7 @@ function LoginForm({ login }:any) {
   }
 
   return (
-    <div className="LoginForm">
+    <div id="LoginForm">
       <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
         <h3 className="mb-3">Log In</h3>
 
@@ -86,7 +87,7 @@ function LoginForm({ login }:any) {
                 : null}
 
               <div className="d-grid">
-                <button className="btn btn-primary" onClick={handleSubmit}>
+                <button className="btn btn-outline-primary" onClick={handleSubmit}>
                   Submit
                 </button>
               </div>
