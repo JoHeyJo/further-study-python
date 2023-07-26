@@ -109,7 +109,6 @@ function DraftEditor({ raw, onEditorDataChange }: DraftEditorProp) {
 
   return (
     <>
-      {/* <button onClick={_onBoldClick}>Bold</button> */}
       <Form.Group controlId="form-content">
         <Form.Label>Content:</Form.Label>
 

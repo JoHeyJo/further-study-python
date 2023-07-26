@@ -17,9 +17,14 @@
 /* changes text input box */
 .PostForm-title {
   background-color: #212529;
-  border: 1px solid rgba(128, 128, 128 0.502);
+  /* border: 1px solid rgba(128, 128, 128 0.502); */
   color: #adb5bd;
 }
+
+.form-control {
+  border: 1px solid grey;
+}
+
 .PostForm-title:focus {
   background-color: #212529;
   color: #adb5bd;
