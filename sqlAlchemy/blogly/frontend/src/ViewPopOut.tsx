@@ -18,11 +18,11 @@ function ViewPopOut({post}:any) {
         <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
       </span>
 
-      <Modal dialogClassName={customDialogClassName}  show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
+      <Modal className="custom-modal" dialogClassName={customDialogClassName}  show={show} onHide={handleClose} animation={false}>
+        <Modal.Header className="custom-modal-header" closeButton>
           <Modal.Title>{post.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="custom-modal-body">
           <h6> content:</h6>
         {post.content}
           <h6> problem:</h6>

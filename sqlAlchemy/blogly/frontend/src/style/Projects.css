@@ -30,16 +30,20 @@
 .Projects-project {
   margin: 1px;
   width: 100%;
-  border-radius: 0 !important;
+  /* border-radius: 0 !important; */
   background-color: #cf9c04;
   border: none;
-  border-bottom: 1px solid #808080;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid transparent;
+  /* box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); */
+    box-shadow:
+        0 8px 12px rgba(0, 0, 0, 0.15),
+        0 -1px 6px rgba(0, 0, 0, 0.3);
 }
 
 .Projects-project:hover {
-  /* color: rgb(85, 83, 83); */
-  /* font-weight: 450; */
+  cursor: pointer;
+  /* font-weight: 500; */
+  border-bottom: 1px solid #808080;
 }
 
 .selected {
@@ -58,6 +62,7 @@
   -moz-box-shadow: inset 0px 0px 5px #664D02;
   box-shadow: inset 0px 0px 5px #664D02;
   outline: none;
+  /* pointer-events: none; */
 }
 
 .Projects-project::after {
@@ -103,6 +108,7 @@
   flex: 1;
 }
 
+/* applies raised effect */
 .Project-collapse-background {
   margin: 10px;
   padding: 20px;

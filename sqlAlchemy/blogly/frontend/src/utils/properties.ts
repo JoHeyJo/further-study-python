@@ -19,7 +19,7 @@ export const actionProperties: actionProperties = {
   editPost: {
     label: 'Edit Post',
     class: "my-0",
-    variant: "warning",
+    variant: "outline-warning",
     style: "marginLeft: 'auto'",
     message: "You need to be logged in to edit a Post"
   },
@@ -33,14 +33,14 @@ export const actionProperties: actionProperties = {
   deletePost: {
     label: 'Delete Post',
     class: "my-0",
-    variant: "danger",
+    variant: "outline-danger",
     style: "",
     message: "You need to be logged in to delete a Post"
   },
   deleteProject: {
     label: 'Delete Project',
     class: "my-0",
-    variant: "danger",
+    variant: "outline-danger",
     style: "",
     message: "You need to be logged in to delete a Project"
   }

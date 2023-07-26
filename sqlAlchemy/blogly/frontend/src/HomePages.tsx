@@ -27,20 +27,20 @@ function HomePage() {
   }, [])
 
   return (
-    <>
+    <div id="Homepage">
       <h1 className="Homepage-title">Bugly Recent Posts</h1>
       {posts.map((post, i) =>
-        <section key={i}>
+        <section className="Homepage-post" key={i}>
           <Link to={`/posts/${post.id}`}>
-            <h2>{post.title}</h2>
+            <h2 className="Homepage-post-title">{post.title}</h2>
           </Link>
-          <h4>{post.content}</h4>
+          <h4>{post.problem}</h4>
           {/* <h4>{<DraftEditorConvertFromRaw rawContent={post.content} />}</h4> */}
-          <h6>By {post.firstName} {post.lastName} {post.createdAt}</h6>
+          <h6 className="Homepage-footer">By {post.firstName} {post.lastName} {post.createdAt}</h6>
         </section>
       )}
 
-    </>
+    </div>
   )
 }
 

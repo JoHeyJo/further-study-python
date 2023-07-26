@@ -60,7 +60,7 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
     },[initialPost])
 
     return (
-    <Container>
+    <div className="Post-post">
       <Stack gap={3}>
         <h2 className="Post-title">{title}</h2>
         <span className="d-flex justify-content-end">
@@ -82,7 +82,7 @@ function Post({ initialPost, handlePostRender, fetchEditPost }: any) {
         </Stack>
         {/* <h6 className="Post-author">By: {post.firstName} {post.lastName}</h6> */}
       </Stack>
-    </Container>
+    </div>
   )
 }
 

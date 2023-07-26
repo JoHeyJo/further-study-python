@@ -180,7 +180,7 @@ function PostForm({ handleClose, postId, fetchEditPost }: PostFormProp) {
             handleClose();
             setIsPostRendering(false);
           }
-          } variant="danger">Delete</Button>
+          } variant="outline-danger">Delete</Button>
           : <AlertBubble action={'deletePost'} />
         )
       }

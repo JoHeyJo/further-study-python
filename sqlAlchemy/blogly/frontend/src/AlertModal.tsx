@@ -53,11 +53,11 @@ function AlertModal({ projectData, projectGet, isOpen }: AlertModalProps) {
         </Modal.Header >
         <Modal.Body className="custom-modal-body">...this will delete all associated posts as well.</Modal.Body>
         <Modal.Footer className="custom-modal-footer">
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="outline-secondary" onClick={handleClose}>
             Close
           </Button>
           {user?.email === 'j@test.com'
-            ? <Button variant="danger" onClick={() => {
+            ? <Button variant="outline-danger" onClick={() => {
               deleteProject();
               handleClose();
             }}>
