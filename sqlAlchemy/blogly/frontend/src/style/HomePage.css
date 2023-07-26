@@ -1,5 +1,5 @@
 #Homepage {
-    background: #cf9c04;
+    background: #AC8307;
       -webkit-box-shadow: inset 0px 0px 5px #664D02;
       -moz-box-shadow: inset 0px 0px 5px #664D02;
       box-shadow: inset 0px 0px 5px #664D02;
@@ -9,7 +9,7 @@
 
 .Homepage-title {
   text-align: center;
-  background: #cf9c04;
+  background: #AC8307;
   -webkit-box-shadow: inset 0px 0px 5px #664D02;
   -moz-box-shadow: inset 0px 0px 5px #664D02;
   box-shadow: inset 0px 0px 5px #664D02;
@@ -27,7 +27,7 @@ text-transform: capitalize;
       margin: 10px;
       padding: 20px;
       width: 98%;
-      background-color: #cf9c04;
+      background-color: #AC8307;
       border-radius: 10px;
       box-shadow:
         0 8px 12px rgba(0, 0, 0, 0.15),
@@ -36,5 +36,5 @@ text-transform: capitalize;
 }
 
 .Homepage-footer {
-  border-bottom: 1px solid #808080;
+  border-bottom: 1px solid #5B5151;
 }

@@ -80,7 +80,8 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
         
           <Row className="justify-content-center">
             <Col className="col-4">
-              <Card className="custom-card" key={'Warning'} style={{ width: '380px' }}>
+              <Card className="custom-card" key={'Warning'} style={{ width: '400px' }}>
+                <div className="Posts-posts-container">
                 <ListGroup className="align-items-start">
                   <PopOut getProject={()=>{}} action={'new post'} postId={undefined} fetchEditPost={fetchPost} />
                   {
@@ -89,17 +90,19 @@ function Posts({ posts, isPostsShowing }: PostsProps) {
                         fetchPost(p.id);
                         handlePostRender();
                       }
-                      }>
+                    }>
                         <span className={`${p.id === (post && post.id) ? 'title-selected' : ''}`}>{p.title}
                           </span>
                         {p.id === (post && post.id)
                         && 
-                        <FontAwesomeIcon className="Posts-post-icon-right" icon={faAnglesRight} />
-                        }
+                        <FontAwesomeIcon className={`${p.id === (post && post.id) ? 'Posts-post-icon-right-selected' : 'Posts-post-icon-right'}`} icon={faAnglesRight} />
+                      }
                       </ListGroup.Item>
                     )
                   }
                 </ListGroup>
+              </div>
+
               </Card>
             </Col>
             <Col>

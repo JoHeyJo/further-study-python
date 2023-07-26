@@ -1,12 +1,13 @@
 .Posts-post {
-  position: relative;
   border: none;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
+/* removes margin collapse */
 .Posts-post::after {
+  /* border: none; */
   content: "";
   display: block;
   position: absolute;
@@ -14,14 +15,14 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #808080;
+  background-color: #545454;
 }
 
-.Posts-post{
+.Posts-post {
   cursor: pointer;
 }
 
-.Posts-post:hover{
+.Posts-post:hover {
   font-weight: 100;
 }
 
@@ -35,25 +36,33 @@ a:hover {
   color: rgb(112, 112, 11);
 }
 
-.Posts-post-icon-left{
+.Posts-post-icon-left {
   color: grey;
-  
+
 }
 
-.Posts-post-icon-right{
-color: #d3d3d3;
-/* padding-left: .5rem; */
+.Posts-post-icon-right {
+  color: #d3d3d3;
+  /* padding-left: .5rem; */
 }
 
-.Posts-post-icon-right-selected{
-color: rgba(211, 211, 211, 0);
+.Posts-post-icon-right-selected {
+  color: #655D43;
 }
 
 
 .title-selected {
-color: grey;
+  color: #5B5151;
 }
 
-.custom-card, .Posts-post {
-background-color: #cf9c04; 
+.custom-card,
+.Posts-post {
+  background-color: #AC8307;
+}
+
+.Posts-posts-container {
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #545454;
 }

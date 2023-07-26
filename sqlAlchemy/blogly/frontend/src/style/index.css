@@ -1,10 +1,10 @@
 #root {
-  background-color: #cf9c04;
+  background-color: #AC8307;
   padding-bottom: 1.5rem;
 }
 
 html {
-  background-color: #cf9c04f4;
+  background-color: #AC8307;
     /* margin: 10px; */
       padding: 10px;
 }
@@ -16,7 +16,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #cf9c04;
+  background-color: #AC8307;
 }
 
 code {

@@ -1,13 +1,13 @@
 .custom-modal-header {
   background-color: #212529;
   color: #adb5bd;
-  border-bottom: solid rgba(128, 128, 128, 0.5);
+  border-bottom: solid rgba(128, 128, 128 0.5);
 
 }
 
 .custom-modal-footer{
   background-color: #212529;
-  border-top: solid rgba(128, 128, 128, 0.5);
+  border-top: solid rgba(128, 128, 128 0.5);
 }
 
 .custom-modal {
@@ -25,13 +25,13 @@
 
 /* Add hover effect */
 .btn:hover {
-  background-color: #cf9c04;
+  background-color: #AC8307;
   > svg {
       color: grey;
   }
 }
 
 .btn:focus {
-  background-color: #cf9c04;
+  background-color: #AC8307;
 }
 
